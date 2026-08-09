@@ -58,6 +58,14 @@ class ClueTests(unittest.TestCase):
             Clue("bad", ClueType.EXACTLY, region=Region(RegionType.ROW, index=1), k=-1)
         with self.assertRaisesRegex(ValueError, "distinct"):
             Clue("bad", ClueType.SAME, characters=("A1", "A1"))
+        with self.assertRaisesRegex(ValueError, "only define"):
+            Clue(
+                "bad",
+                ClueType.FACT,
+                target="A1",
+                status=Status.CRIMINAL,
+                characters=("A1", "B1"),
+            )
 
 
 class PuzzleTests(unittest.TestCase):

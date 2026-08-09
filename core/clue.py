@@ -31,7 +31,8 @@ class Clue:
             if self.target is None or self.status is None:
                 raise ValueError("FACT requires target and status")
             validate_cell_id(self.target)
-            self._reject_extra(binary=False, region=False, count=False)
+            if self.characters or self.region is not None or self.k is not None:
+                raise ValueError("FACT may only define target and status")
         elif self.type in (ClueType.SAME, ClueType.DIFFERENT):
             if len(self.characters) != 2 or len(set(self.characters)) != 2:
                 raise ValueError("SAME/DIFFERENT require two distinct character ids")
@@ -48,11 +49,6 @@ class Clue:
                 raise ValueError("counting clues may only define region and k")
         else:
             raise ValueError(f"unsupported clue type: {self.type!r}")
-
-    def _reject_extra(self, *, binary: bool, region: bool, count: bool) -> None:
-        del binary, region, count
-        if self.characters or self.region is not None or self.k is not None:
-            raise ValueError("FACT may only define target and status")
 
     def display_text(self) -> str:
         if self.text:
