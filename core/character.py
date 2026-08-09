@@ -27,6 +27,17 @@ def cell_id_for(row: int, column: int) -> str:
     return f"{column_label(column)}{row}"
 
 
+def parse_cell_id(cell_id: str) -> tuple[int, int]:
+    """Return `(row, column)` for a validated canonical cell identifier."""
+    validate_cell_id(cell_id)
+    split_at = next(index for index, char in enumerate(cell_id) if char.isdigit())
+    letters, digits = cell_id[:split_at], cell_id[split_at:]
+    column = 0
+    for char in letters:
+        column = column * 26 + (ord(char) - ord("A") + 1)
+    return int(digits), column
+
+
 def validate_cell_id(cell_id: str) -> None:
     if not isinstance(cell_id, str) or not CELL_ID_PATTERN.fullmatch(cell_id):
         raise ValueError("cell_id must use uppercase column letters and a positive row, e.g. A1")

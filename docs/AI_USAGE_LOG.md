@@ -32,4 +32,21 @@
 - Human verification performed: PENDING team review.
 - Tests performed: 9/9 unittests passed; schema/sample JSON syntax, compile, and diff checks passed.
 - Related Prompt ID: PROMPT-001
+- Related Git commit hash: 81e5882
+
+## AI-003
+
+- Date: 2026-08-09
+- AI tool: OpenAI Codex
+- Model: GPT-5
+- Developer/member: Unassigned team member (confirm before submission)
+- Phase: 03
+- Purpose: Implement loading and a privacy-preserving progressive game engine.
+- Files affected: `agent/protocols.py`, `agent/mock_logic_agent.py`, `game/`, `tests/test_game.py`, `core/character.py`.
+- Summary of AI suggestion: Keep the agent input limited to immutable public snapshots and have the engine verify an accepted forced verdict against its authoritative hidden status before reveal.
+- Accepted: Public-only protocol, strict loader, copy-on-snapshot, integrity error with no mutation.
+- Rejected/deferred: Hidden-solution mock, accept-all mock, production entailment before its phase.
+- Human verification performed: PENDING team review.
+- Tests performed: Initial run 18/19 due to sandbox temp permission; test fixed to mock file input; final 20/20 passed plus compile/diff checks.
+- Related Prompt ID: PROMPT-001
 - Related Git commit hash: PENDING
