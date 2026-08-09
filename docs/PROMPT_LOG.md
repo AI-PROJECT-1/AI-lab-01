@@ -5,7 +5,7 @@
 - Date: 2026-08-09
 - Tool: OpenAI Codex
 - Model: GPT-5
-- Member: Unassigned team member (confirm before submission)
+- Member: Trần Hữu Phước - 24127511
 - Phase: Requirement audit and Phases 01-04
 - Goal: Read the official Project 2 PDF and master development prompt, then implement and publish Phases 01-04 to the supplied GitHub repository.
 - Full prompt: User supplied `[2526 HK3] IntroAI - Project 2.pdf`, the Master Development Prompt attachment, repository `https://github.com/AI-PROJECT-1/AI-lab-01.git`, and requested careful execution from Phase 01 through Phase 04.
