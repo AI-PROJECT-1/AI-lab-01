@@ -14,3 +14,7 @@ Only commands actually executed are recorded here.
 | 2026-08-09 | 03 | `python -m unittest discover -s tests -v` | PASS | 20/20 after making malformed-input test filesystem-independent |
 | 2026-08-09 | 03 | `python -m compileall -q core agent game tests` | PASS | Engine, loader, agent protocol/mock, and tests compile |
 | 2026-08-09 | 03 | `git diff --check` | PASS | No whitespace errors |
+| 2026-08-09 | 04 | `python -m unittest discover -s tests -v` | PASS | 25/25 total tests; controller/view-model tests included |
+| 2026-08-09 | 04 | `python -m compileall -q .` | PASS | Full repository compiles |
+| 2026-08-09 | 04 | Tkinter widget/layout smoke script | PASS | Window title set; 900x640 layout; 6 app children; clean destroy |
+| 2026-08-09 | 04 | `git diff --check` | PASS | No whitespace errors |

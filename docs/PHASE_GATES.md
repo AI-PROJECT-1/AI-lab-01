@@ -50,3 +50,19 @@ complete until its required checks actually pass.
 - Prompt Log entry: PROMPT-001
 - Recommended Git commit: `feat(game): implement core game engine`
 - Next phase: Phase 04 GUI skeleton and manual gameplay
+
+## Phase 04 - GUI Skeleton and Manual Gameplay
+
+- Status: COMPLETED
+- Requirements satisfied: application window, coordinate grid, public card metadata/face states, character selection, CRIMINAL/INNOCENT submission, outcome messages, Load, Restart, visible deferred Hint/Auto Solve controls
+- Files created/modified: see Phase 04 commit
+- Tests executed: `python -m compileall -q .`; `python -m unittest discover -s tests -v`; real Tk widget/layout smoke test; `git diff --check`
+- Test results: 25/25 tests passed; Tk window built at 900x640 with 6 top-level widgets and closed cleanly; compile/diff checks passed
+- Known issues: Hint/Auto Solve disabled until production agent integration; canonical clue-region highlighting deferred to Phase 11
+- Specification risks: desktop visual appearance varies by OS/Tk theme
+- AI suggestions accepted: pure view model/controller for headless tests and explicit development-agent banner
+- AI suggestions rejected: fake Hint/Auto Solve and GUI-side region semantics
+- AI Usage Log entry: AI-004
+- Prompt Log entry: PROMPT-001
+- Recommended Git commit: `feat(gui): implement playable game interface`
+- Next phase: STOP; requested scope ends at Phase 04

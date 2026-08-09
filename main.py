@@ -1,9 +1,11 @@
 """Griductive Solver application entry point."""
 
+from gui.app import main as run_gui
+
 
 def main() -> None:
-    """Start the application (wired to the GUI in Phase 04)."""
-    print("Griductive Solver repository foundation initialized.")
+    """Start the desktop application."""
+    run_gui()
 
 
 if __name__ == "__main__":

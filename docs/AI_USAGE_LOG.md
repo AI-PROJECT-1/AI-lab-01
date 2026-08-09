@@ -49,4 +49,21 @@
 - Human verification performed: PENDING team review.
 - Tests performed: Initial run 18/19 due to sandbox temp permission; test fixed to mock file input; final 20/20 passed plus compile/diff checks.
 - Related Prompt ID: PROMPT-001
+- Related Git commit hash: bcf0393
+
+## AI-004
+
+- Date: 2026-08-09
+- AI tool: OpenAI Codex
+- Model: GPT-5
+- Developer/member: Unassigned team member (confirm before submission)
+- Phase: 04
+- Purpose: Build the desktop GUI skeleton and manual gameplay loop without fake production reasoning.
+- Files affected: `main.py`, `gui/`, `tests/test_gui.py`, project logs.
+- Summary of AI suggestion: Render only public view models, route actions through a headless controller, label the FACT-only development agent, and disable features whose real reasoning is not implemented.
+- Accepted: Tkinter GUI, controller/view-model split, visible phase limitations, no direct hidden access.
+- Rejected/deferred: GUI-side clue region resolver, fabricated Hint/Auto Solve behavior.
+- Human verification performed: PENDING team visual review.
+- Tests performed: 25/25 unittests passed, full compile/diff checks passed, and a real Tk widget/layout smoke test completed cleanly.
+- Related Prompt ID: PROMPT-001
 - Related Git commit hash: PENDING
