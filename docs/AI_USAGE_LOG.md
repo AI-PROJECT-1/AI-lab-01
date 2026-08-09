@@ -66,4 +66,4 @@
 - Human verification performed: PENDING team visual review.
 - Tests performed: 25/25 unittests passed, full compile/diff checks passed, and a real Tk widget/layout smoke test completed cleanly.
 - Related Prompt ID: PROMPT-001
-- Related Git commit hash: PENDING
+- Related Git commit hash: 3dec8a9

@@ -8,7 +8,7 @@
 - Reason: It makes hidden-data access structurally unavailable and easy to test.
 - Consequences: Small copy cost; clearer interfaces; tests can inspect the DTO recursively.
 - Related requirement: PDF sections 4.1 and 4.2.
-- Related commit: PENDING
+- Related commit: `81e5882`, `bcf0393`
 
 ## DEC-002 - Standard-library desktop GUI for early phases
 
@@ -18,7 +18,7 @@
 - Reason: Ships with CPython, keeps the project Python-only, and allows business logic to remain headless-testable.
 - Consequences: GUI visual checks require a display; styling is intentionally modest.
 - Related requirement: PDF section 4.1.
-- Related commit: PENDING
+- Related commit: `3dec8a9`
 
 ## DEC-003 - Development mock recognizes public FACT clues only
 
@@ -28,4 +28,4 @@
 - Reason: It enables honest manual-flow testing without guessing or reading hidden data.
 - Consequences: The sample puzzle uses a FACT chain; general reasoning is deferred to Phases 05-10.
 - Related requirement: PDF sections 2.2 and 4.1.
-- Related commit: PENDING
+- Related commit: `bcf0393`, `3dec8a9`
