@@ -1,0 +1,2 @@
+# Phases 01-04 use only the Python 3.11+ standard library.
+# Tkinter must be present in the Python installation to run the desktop GUI.
