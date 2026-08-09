@@ -1,0 +1,16 @@
+{
+  "id": "sample-3x3-fact-chain",
+  "title": "The Gallery Shift",
+  "size": 3,
+  "cards": [
+    {"cell": "A1", "name": "Ada", "profession": "Archivist", "status": "CRIMINAL", "initially_revealed": true, "clue": {"id": "CL-01", "type": "FACT", "target": "B1", "status": "INNOCENT"}},
+    {"cell": "B1", "name": "Ben", "profession": "Baker", "status": "INNOCENT", "initially_revealed": false, "clue": {"id": "CL-02", "type": "FACT", "target": "C1", "status": "CRIMINAL"}},
+    {"cell": "C1", "name": "Cora", "profession": "Carpenter", "status": "CRIMINAL", "initially_revealed": false, "clue": {"id": "CL-03", "type": "FACT", "target": "A2", "status": "INNOCENT"}},
+    {"cell": "A2", "name": "Dax", "profession": "Designer", "status": "INNOCENT", "initially_revealed": false, "clue": {"id": "CL-04", "type": "FACT", "target": "B2", "status": "CRIMINAL"}},
+    {"cell": "B2", "name": "Eva", "profession": "Engineer", "status": "CRIMINAL", "initially_revealed": false, "clue": {"id": "CL-05", "type": "FACT", "target": "C2", "status": "INNOCENT"}},
+    {"cell": "C2", "name": "Finn", "profession": "Florist", "status": "INNOCENT", "initially_revealed": false, "clue": {"id": "CL-06", "type": "FACT", "target": "A3", "status": "CRIMINAL"}},
+    {"cell": "A3", "name": "Gia", "profession": "Geologist", "status": "CRIMINAL", "initially_revealed": false, "clue": {"id": "CL-07", "type": "FACT", "target": "B3", "status": "INNOCENT"}},
+    {"cell": "B3", "name": "Hugo", "profession": "Historian", "status": "INNOCENT", "initially_revealed": false, "clue": {"id": "CL-08", "type": "FACT", "target": "C3", "status": "CRIMINAL"}},
+    {"cell": "C3", "name": "Iris", "profession": "Illustrator", "status": "CRIMINAL", "initially_revealed": false, "clue": {"id": "CL-09", "type": "FACT", "target": "A1", "status": "CRIMINAL"}}
+  ]
+}

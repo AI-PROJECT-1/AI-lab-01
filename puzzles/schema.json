@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.edu/griductive/puzzle.schema.json",
+  "title": "Griductive Puzzle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "title", "size", "cards"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1},
+    "size": {"type": "integer", "minimum": 1},
+    "cards": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/card"}
+    }
+  },
+  "$defs": {
+    "cellId": {"type": "string", "pattern": "^[A-Z]+[1-9][0-9]*$"},
+    "status": {"enum": ["CRIMINAL", "INNOCENT"]},
+    "region": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "index"],
+          "properties": {"type": {"enum": ["ROW", "COLUMN"]}, "index": {"type": "integer", "minimum": 1}}
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "center"],
+          "properties": {"type": {"const": "NEIGHBORS"}, "center": {"$ref": "#/$defs/cellId"}}
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "cells"],
+          "properties": {
+            "type": {"const": "EXPLICIT"},
+            "cells": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/cellId"}}
+          }
+        }
+      ]
+    },
+    "clue": {
+      "oneOf": [
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "type", "target", "status"],
+          "properties": {"id": {"type": "string", "minLength": 1}, "type": {"const": "FACT"}, "target": {"$ref": "#/$defs/cellId"}, "status": {"$ref": "#/$defs/status"}, "text": {"type": "string", "minLength": 1}}
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "type", "characters"],
+          "properties": {"id": {"type": "string", "minLength": 1}, "type": {"enum": ["SAME", "DIFFERENT"]}, "characters": {"type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": {"$ref": "#/$defs/cellId"}}, "text": {"type": "string", "minLength": 1}}
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "type", "k", "region"],
+          "properties": {"id": {"type": "string", "minLength": 1}, "type": {"enum": ["EXACTLY", "AT_LEAST", "AT_MOST"]}, "k": {"type": "integer", "minimum": 0}, "region": {"$ref": "#/$defs/region"}, "text": {"type": "string", "minLength": 1}}
+        }
+      ]
+    },
+    "card": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cell", "name", "profession", "status", "initially_revealed", "clue"],
+      "properties": {
+        "cell": {"$ref": "#/$defs/cellId"},
+        "name": {"type": "string", "minLength": 1},
+        "profession": {"type": "string", "minLength": 1},
+        "status": {"$ref": "#/$defs/status"},
+        "initially_revealed": {"type": "boolean"},
+        "clue": {"$ref": "#/$defs/clue"}
+      }
+    }
+  }
+}
