@@ -161,4 +161,27 @@
 - Tests performed: supported full runner passed 96/96; compile, diff, boundary/external-solver/protected-module scans, 3x3 interaction/reset smoke, and 4x4 responsive smoke passed. `pytest` remains unavailable in this environment.
 - Approved Phase 2 commit: `48bea9d038c7425a691b09d2bd8a2049b3825d0e` (`feat(gui): redesign public character cards`).
 - Related Prompt ID: PROMPT-006
+- Related Git commit hash: `bd3926325795dce94afb9d719889e6071e823446`
+
+## AI-010
+
+- Date: 2026-08-13
+- AI tool: OpenAI Codex
+- Model: GPT-5
+- Developer/member: Trần Hữu Phước - 24127511
+- Phase: Griductive GUI fidelity refactor, UI Phase 4
+- Purpose: Replace the raw revealed-clue list with readable, selectable public clue cards while preserving canonical cell highlighting, full clue text, and all solver/game semantics.
+- Files affected: new `gui/clue_card.py`, redesigned `gui/clue_panel.py`, presentation integration in `gui/app.py`, clue tokens in `gui/theme.py`, new `tests/test_clue_presentation.py`, and audit logs.
+- Clue-card decision: `ClueCardViewModel` contains only owner name/coordinate, clue ID, and complete display text built from `PublicKnowledgeState.revealed_clues`. The ID is secondary, while owner and full wrapped text form the main hierarchy.
+- Selection design: `ClueCardModifiers` composes independent selected and newly-revealed outlines over a stable clue surface. Selecting a card stores only the existing controller owner selection and never mutates public/game state.
+- Canonical highlighting: The GUI continues to call `GameController.select_clue()`, which delegates to the existing `logic.region_resolver.referenced_cells()` path. No natural-language parsing or region reimplementation was added.
+- Hidden/public verification: `build_clue_views()` iterates only `revealed_clues`; tests confirm an unrevealed clue ID/text is absent and full public text remains accessible. ClueCard has no Puzzle or GameEngine access.
+- Newly-revealed presentation: Existing before/after public snapshot comparison supplies an owner ID to both CharacterCard and ClueCard modifiers. Manual verdict, Solve Next, and each Auto Solve step can emphasize the newly public clue; scrolling brings it into view. No DTO field was added.
+- Responsive decision: A Canvas-backed vertical list preserves board allocation and supports overflow scrolling. Clue text wrap length follows the live canvas width, and 4x4 with all 16 clues scrolls to the newest clue.
+- Accepted: reusable clue cards, owner-first hierarchy, secondary clue ID, complete responsive text, composable selection/new outlines, canonical resolver reuse, auto-scroll, and public empty state.
+- Rejected/deferred: parsing display text, copying RegionResolver logic into GUI, hidden clue lookups, clue semantics changes, two-stage Hint, proof-anchor causality, Solver Trace redesign, completion UI, and protected-module changes.
+- Human verification performed: DPI-aware screenshots inspected for empty, initial one clue, selected clue plus selected character, newly revealed clue, several clues, long text, highlighted Innocent/Criminal cards, and a completed scrolling 4x4 list.
+- Tests performed: supported full runner passed 105/105; compile, diff, boundary/external-solver/protected-module scans, 3x3 smoke, and 4x4 scrolling smoke passed. `pytest` remains unavailable.
+- Approved Phase 3 commit: `bd3926325795dce94afb9d719889e6071e823446` (`feat(gui): add contextual verdict feedback`).
+- Related Prompt ID: PROMPT-007
 - Related Git commit hash: PENDING

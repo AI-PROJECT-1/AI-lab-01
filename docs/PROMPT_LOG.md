@@ -80,6 +80,20 @@
 - Goal: Commit approved UI Phase 2, then implement contextual verdict controls, distinct public-only outcome feedback, reset-safe interaction state, and presentation-only newly-revealed emphasis without changing solver/game semantics.
 - Full prompt: User approved UI Phase 2, required atomic commit `feat(gui): redesign public character cards` with its real hash recorded, and authorized only contextual verdict interaction plus feedback for `ACCEPTED`, `NOT_PROVABLE`, `CONTRADICTED`, and `INCONSISTENT`, including Load/Restart resets and 3x3/4x4 verification.
 - Short summary of response: Created real Phase 2 commit `48bea9d038c7425a691b09d2bd8a2049b3825d0e`; added a public `VerdictContext`, reusable semantic `GameplayFeedback`, disabled submission without an unresolved selection, safe per-outcome wording, transient accepted-reveal emphasis, and reset-safe UI state.
-- Decision: ACCEPTED FOR UI PHASE 3 ONLY; final Phase 3 approval PENDING
+- Decision: ACCEPTED FOR UI PHASE 3 ONLY; approved by the user
 - Related AI Usage ID: AI-009
-- Related commits: UI Phase 2 `48bea9d`; UI Phase 3 PENDING
+- Related commits: UI Phase 2 `48bea9d`; UI Phase 3 `bd39263`
+
+## PROMPT-007
+
+- Date: 2026-08-13
+- Tool: OpenAI Codex
+- Model: GPT-5
+- Member: Trần Hữu Phước - 24127511
+- Phase: Griductive GUI refactor, UI Phase 4 only
+- Goal: Commit approved UI Phase 3, then redesign publicly revealed clue presentation and inspection with full text, public ownership, canonical highlighting, selection, new-clue emphasis, and responsive scrolling.
+- Full prompt: User approved UI Phase 3, required atomic commit `feat(gui): add contextual verdict feedback` and its real hash, then authorized only revealed-clue cards and inspection while protecting all reasoning, solver, game, public-state, puzzle, Hint, and Solver Trace semantics.
+- Short summary of response: Created real Phase 3 commit `bd3926325795dce94afb9d719889e6071e823446`; introduced public-only ClueCard models/components, scrollable responsive CluePanel, composable selected/newly-revealed states, canonical resolver reuse, full wrapped text, and presentation-only new-clue auto-scroll.
+- Decision: ACCEPTED FOR UI PHASE 4 ONLY; final Phase 4 approval PENDING
+- Related AI Usage ID: AI-010
+- Related commits: UI Phase 3 `bd39263`; UI Phase 4 PENDING

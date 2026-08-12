@@ -48,7 +48,7 @@
 - Reason: It prevents silent test omission and matches the existing repository policy.
 - Consequences: All implemented phases are covered by `python -m unittest discover -s tests -v`.
 - Related requirement: Master prompt sections 16, 24, and 25.
-- Related commit: `48bea9d038c7425a691b09d2bd8a2049b3825d0e`.
+- Related commit: `03584c3859a12e7a57385a7d860e48f084d0c210`.
 
 ## DEC-010 - Public contextual verdicts and semantic feedback
 
@@ -60,7 +60,7 @@
 - Privacy rule: Feedback never copies the engine's free-form verdict message, forced opposite status, hidden solution, or unrevealed clue. Accepted feedback refers to a clue only after it exists in the refreshed public state.
 - Responsive rule: Context identity and feedback use compact single-row surfaces; 4x4 cards use a one-row identity header and horizontal public status/preview row.
 - Related requirement: Griductive GUI fidelity refactor UI Phase 3 contextual verdict interaction and public feedback requirements.
-- Related commit: PENDING.
+- Related commit: `bd3926325795dce94afb9d719889e6071e823446`.
 
 ## DEC-006 - Extension selection: IMPLIES and ODD
 
@@ -74,7 +74,7 @@
 - Reason: They are semantically distinct from each other and from the six core templates; one demonstrates relational implication and the other parity over regions.
 - Consequences: `IMPLIES` adds no auxiliary variables and one clause. `ODD` uses one blocking clause per even-parity assignment, so it is intentionally limited to puzzle-sized regions and documented as combinatorial.
 - Related requirement: Master prompt sections 9, 15, and Phase 12; PDF extension requirement.
-- Related commit: PENDING.
+- Related commit: `03584c3859a12e7a57385a7d860e48f084d0c210`.
 
 ## DEC-007 - Progressive solving is orchestrated by GameEngine
 
@@ -109,4 +109,16 @@
 - Responsive consequence: Character identity uses a horizontal avatar/name/profession/coordinate header. The default geometry is bounded to the current screen, and 4x4 card height is kept within its allocated board row.
 - Accessibility consequence: Revealed cards always contain literal `CRIMINAL` or `INNOCENT` badges; color only reinforces the status.
 - Related requirement: Griductive GUI fidelity refactor UI Phase 2; Project 2 board, coordinate, verdict, clue, and privacy requirements.
+- Related commit: `48bea9d038c7425a691b09d2bd8a2049b3825d0e`.
+
+## DEC-011 - Public-only scrollable ClueCards with canonical selection
+
+- Context: The revealed-clue list exposed complete public data as raw log rows, but UI Phase 4 requires readable ownership, full text, selected/new states, and scalable inspection without changing clue semantics.
+- Options considered: retain Listbox strings; parse rendered text to infer highlights; duplicate region handling in GUI; build public clue view models/cards and retain the controller's canonical resolver path.
+- Chosen option: Build `ClueCardViewModel` only from `PublicKnowledgeState.revealed_clues`, render cards inside a scrollable Canvas, and compose selected/newly-revealed outlines independently.
+- Reason: Public DTO construction structurally excludes unrevealed clues, full text is preserved without packing it into board cards, and selection continues through the already tested canonical `referenced_cells()` function.
+- Consequences: Owner name/coordinate and full wrapped clue text are primary; clue ID remains secondary. Overflow scrolls without shrinking the board, and the newly public clue can auto-scroll into view.
+- State-composition rule: Character selected, clue-highlighted, base verdict, and newly-revealed modifiers remain independent; clue selection does not replace Criminal/Innocent identity.
+- Reset rule: Restart and successful Load clear clue selection, highlight, and new-clue emphasis through existing controller and app resets.
+- Related requirement: Griductive GUI fidelity refactor UI Phase 4 revealed clue presentation, canonical highlighting, privacy, and responsive inspection requirements.
 - Related commit: PENDING.

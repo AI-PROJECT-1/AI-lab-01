@@ -119,7 +119,11 @@ class GriductiveApp(ttk.Frame):
             self._highlighted_ids,
             self._newly_revealed_id,
         )
-        self._clues.render(state)
+        self._clues.render(
+            state,
+            self._controller.selected_clue_owner_id,
+            self._newly_revealed_id,
+        )
         self._trace.render(self._controller.trace())
         self._controls.set_verdict_context(selected_card)
 
@@ -214,6 +218,7 @@ class GriductiveApp(ttk.Frame):
 
     def _solve_next(self) -> None:
         self._newly_revealed_id = None
+        before = self._controller.state()
         try:
             result = self._controller.solve_next()
         except AgentIntegrityError:
@@ -224,6 +229,7 @@ class GriductiveApp(ttk.Frame):
         if result is None:
             self._feedback.show(notice_feedback("No forced verdict", "No unresolved verdict is currently forced."))
         else:
+            self._newly_revealed_id = newly_revealed_character(result, before, self._controller.state())
             self._feedback.show(notice_feedback("Solve Next", result.message, FeedbackTone.SUCCESS))
         self._render()
 
@@ -237,16 +243,19 @@ class GriductiveApp(ttk.Frame):
         self.after(1, self._auto_step)
 
     def _auto_step(self) -> None:
+        before = self._controller.state()
         try:
             result = self._controller.solve_next()
         except AgentIntegrityError:
             self._finish_auto("Auto Solve stopped after an internal integrity check failed.")
             return
-        self._render()
         if result is None:
+            self._render()
             message = "Auto Solve complete." if self._controller.state().is_complete else "Auto Solve stopped: no forced verdict."
             self._finish_auto(message)
             return
+        self._newly_revealed_id = newly_revealed_character(result, before, self._controller.state())
+        self._render()
         self._feedback.show(notice_feedback("Auto Solve", result.message, FeedbackTone.SUCCESS))
         self.after(120, self._auto_step)
 

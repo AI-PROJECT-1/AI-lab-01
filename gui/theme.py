@@ -35,6 +35,8 @@ COLORS = {
     "avatar_2": "#6E6688",
     "avatar_3": "#8A684D",
     "avatar_4": "#526F8A",
+    "clue_surface": "#FFFCF5",
+    "clue_border": "#D1C7B7",
 }
 
 SPACING = {

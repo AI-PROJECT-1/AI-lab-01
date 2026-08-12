@@ -56,3 +56,12 @@ Only commands actually executed are recorded here.
 | 2026-08-12 | UI Phase 3 | Tkinter 4x4 responsive smoke | PASS | 16 cards; accepted B1 emphasis and feedback rendered; verdict controls disabled after reveal; every board descendant remained within bounds |
 | 2026-08-12 | UI Phase 3 | DPI-aware visual inspection | PASS | Inspected no-selection, selected, contradicted, accepted 3x3, and accepted 4x4 views; corrected clipped context and compact status/clue presentation |
 | 2026-08-12 | UI Phase 3 | `git diff --check` | PASS | No whitespace errors; line-ending conversion warnings only |
+| 2026-08-13 | UI Phase 4 | `python -m pytest -q` | UNAVAILABLE | Environment reports `No module named pytest`; no external test dependency was added |
+| 2026-08-13 | UI Phase 4 | `python -m unittest discover -s tests` | PASS | 105/105 tests; 9 new tests cover public-only views, full text/owner/ID, clue state composition, canonical clue/region families, character-state composition, and reset/load selection clearing |
+| 2026-08-13 | UI Phase 4 | `python -m compileall -q .` | PASS | Full repository compiles after ClueCard refactor |
+| 2026-08-13 | UI Phase 4 | boundary and external SAT solver scans | PASS | Clue presentation iterates public reveals only; canonical resolver remains the sole cell-reference path; no forbidden import or external solver dependency found |
+| 2026-08-13 | UI Phase 4 | protected-module diff from `bd39263` | PASS | No changes in `agent/`, `game/`, `core/`, `logic/`, `sat/`, or `puzzles/` |
+| 2026-08-13 | UI Phase 4 | Tkinter 3x3 clue interaction smoke | PASS | Initial/selected/new/multiple clues rendered; selected character and canonical clue highlight coexisted; revealed Innocent and Criminal highlight identities remained visible |
+| 2026-08-13 | UI Phase 4 | Tkinter 4x4 scrolling smoke | PASS | All 16 public clue cards rendered; overflow scroll enabled and auto-scrolled to newly emphasized D4; board descendants remained within bounds |
+| 2026-08-13 | UI Phase 4 | DPI-aware visual inspection | PASS | Inspected empty, one/several, selected, long, newly revealed, Criminal/ Innocent highlighted, and scrolling 4x4 states; corrected fixed-width wrapping |
+| 2026-08-13 | UI Phase 4 | `git diff --check` | PASS | No whitespace errors; line-ending conversion warnings only |
