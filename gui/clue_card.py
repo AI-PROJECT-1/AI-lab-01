@@ -26,6 +26,7 @@ class ClueCardViewModel:
 class ClueCardModifiers:
     selected: bool = False
     newly_revealed: bool = False
+    hint_active: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -34,6 +35,7 @@ class ClueCardAppearance:
     border: str
     selection_outline: str | None
     reveal_outline: str | None
+    hint_outline: str | None
 
 
 def clue_appearance_for(modifiers: ClueCardModifiers) -> ClueCardAppearance:
@@ -42,6 +44,7 @@ def clue_appearance_for(modifiers: ClueCardModifiers) -> ClueCardAppearance:
         border=COLORS["clue_border"],
         selection_outline=COLORS["accent"] if modifiers.selected else None,
         reveal_outline=COLORS["focus"] if modifiers.newly_revealed else None,
+        hint_outline=COLORS["hint"] if modifiers.hint_active else None,
     )
 
 
@@ -80,7 +83,9 @@ class ClueCard(tk.Frame):
 
         self._reveal_frame = tk.Frame(self, borderwidth=0, highlightthickness=0)
         self._reveal_frame.pack(fill="both", expand=True)
-        self._content = tk.Frame(self._reveal_frame, borderwidth=0, highlightthickness=0)
+        self._hint_frame = tk.Frame(self._reveal_frame, borderwidth=0, highlightthickness=0)
+        self._hint_frame.pack(fill="both", expand=True)
+        self._content = tk.Frame(self._hint_frame, borderwidth=0, highlightthickness=0)
         self._content.pack(fill="both", expand=True)
         self._content.columnconfigure(0, weight=1)
 
@@ -129,6 +134,11 @@ class ClueCard(tk.Frame):
             background=appearance.reveal_outline or appearance.border,
             padx=2 if appearance.reveal_outline else 1,
             pady=2 if appearance.reveal_outline else 1,
+        )
+        self._hint_frame.configure(
+            background=appearance.hint_outline or appearance.surface,
+            padx=2 if appearance.hint_outline else 0,
+            pady=2 if appearance.hint_outline else 0,
         )
         self._content.configure(background=appearance.surface, padx=SPACING["sm"], pady=SPACING["sm"])
         self._owner.configure(background=appearance.surface, foreground=COLORS["ink"])

@@ -23,6 +23,7 @@ class CardAppearance:
     selection_outline: str | None
     highlight_outline: str | None
     reveal_outline: str | None
+    hint_outline: str | None
 
 
 def appearance_for(state: CardVisualState) -> CardAppearance:
@@ -53,6 +54,7 @@ def appearance_for(state: CardVisualState) -> CardAppearance:
         selection_outline=COLORS["accent"] if modifiers.selected else None,
         highlight_outline=COLORS["focus"] if modifiers.clue_highlighted else None,
         reveal_outline=COLORS["info"] if modifiers.newly_revealed else None,
+        hint_outline=COLORS["hint"] if modifiers.hint_target else None,
     )
 
 
@@ -87,7 +89,9 @@ class CharacterCard(tk.Frame):
 
         self._outline = tk.Frame(self, borderwidth=0, highlightthickness=0)
         self._outline.pack(fill="both", expand=True)
-        self._reveal_outline = tk.Frame(self._outline, borderwidth=0, highlightthickness=0)
+        self._hint_outline = tk.Frame(self._outline, borderwidth=0, highlightthickness=0)
+        self._hint_outline.pack(fill="both", expand=True)
+        self._reveal_outline = tk.Frame(self._hint_outline, borderwidth=0, highlightthickness=0)
         self._reveal_outline.pack(fill="both", expand=True)
         self._content = tk.Frame(self._reveal_outline, borderwidth=0, highlightthickness=0)
         self._content.pack(fill="both", expand=True)
@@ -185,10 +189,11 @@ class CharacterCard(tk.Frame):
         selected: bool,
         clue_highlighted: bool,
         newly_revealed: bool = False,
+        hint_target: bool = False,
     ) -> None:
         self.visual_state = CardVisualState(
             self.visual_state.base,
-            CardModifiers(selected, clue_highlighted, newly_revealed),
+            CardModifiers(selected, clue_highlighted, newly_revealed, hint_target),
         )
         self._apply_appearance()
 
@@ -203,6 +208,11 @@ class CharacterCard(tk.Frame):
             background=appearance.highlight_outline or appearance.base_border,
             padx=2 if appearance.highlight_outline else 1,
             pady=2 if appearance.highlight_outline else 1,
+        )
+        self._hint_outline.configure(
+            background=appearance.hint_outline or appearance.surface,
+            padx=2 if appearance.hint_outline else 0,
+            pady=2 if appearance.hint_outline else 0,
         )
         self._reveal_outline.configure(
             background=appearance.reveal_outline or appearance.surface,

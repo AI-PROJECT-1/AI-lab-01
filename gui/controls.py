@@ -42,9 +42,8 @@ class Controls(ttk.Frame):
 
         assistance = ControlGroup(self, CONTROL_GROUP_ORDER[2])
         assistance.grid(row=0, column=2, sticky="nsew", padx=(0, SPACING["sm"]))
-        ttk.Button(assistance, text="Hint", command=on_hint, style="Assist.TButton").grid(
-            row=0, column=0, sticky="ew", padx=2
-        )
+        self._hint_button = ttk.Button(assistance, text="Hint", command=on_hint, style="Assist.TButton")
+        self._hint_button.grid(row=0, column=0, sticky="ew", padx=2)
         assistance.columnconfigure(0, weight=1)
 
         solver = ControlGroup(self, CONTROL_GROUP_ORDER[3])
@@ -66,3 +65,10 @@ class Controls(ttk.Frame):
 
     def set_verdict_context(self, card: CardViewModel | None) -> None:
         self._verdict_panel.set_context(card)
+
+    @property
+    def hint_button_text(self) -> str:
+        return str(self._hint_button.cget("text"))
+
+    def set_hint_button_text(self, text: str) -> None:
+        self._hint_button.configure(text=text)

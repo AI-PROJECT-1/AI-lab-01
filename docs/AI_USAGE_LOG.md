@@ -184,4 +184,27 @@
 - Tests performed: supported full runner passed 105/105; compile, diff, boundary/external-solver/protected-module scans, 3x3 smoke, and 4x4 scrolling smoke passed. `pytest` remains unavailable.
 - Approved Phase 3 commit: `bd3926325795dce94afb9d719889e6071e823446` (`feat(gui): add contextual verdict feedback`).
 - Related Prompt ID: PROMPT-007
+- Related Git commit hash: `dff07f05a003fa966c200fc925e5da600846ec54`
+
+## AI-011
+
+- Date: 2026-08-13
+- AI tool: OpenAI Codex
+- Model: GPT-5
+- Developer/member: Trần Hữu Phước - 24127511
+- Phase: Griductive GUI fidelity refactor, UI Phase 5
+- Purpose: Present Hint progressively in two stages while avoiding duplicate reasoning calls, hidden-data leakage, and unsupported proof-causality claims.
+- Files affected: new `gui/hint_session.py`, presentation integration in `gui/app.py`, `gui/board_view.py`, `gui/character_card.py`, `gui/clue_card.py`, `gui/clue_panel.py`, `gui/controls.py`, `gui/theme.py`, new `tests/test_hint_ux.py`, and audit logs.
+- Two-stage decision: Stage 1 performs exactly one existing `get_hint()` request and emphasizes only active clue IDs that also exist in current public reveals. Stage 2 reuses the cached target for an unchanged fingerprint and identifies only the public character name/coordinate without displaying a verdict.
+- Solver-call rule: `progress_hint_session()` calls reasoning only when no matching Stage 1 session exists. Stage 2 is presentation-only, so it adds no solver/trace request; a later fresh cycle may call reasoning once again.
+- Causality rule: `active_clue_ids` are described only as currently active revealed clues. The UI explicitly does not call any individual clue a cause or unique/direct proof anchor because the API does not establish that relationship.
+- Session/fingerprint design: The cache stores only puzzle ID, public known verdict pairs, public revealed owner/clue-ID pairs, completion flag, public target ID, stage, and filtered active clue IDs. It does not cache `HintResult.message`, target verdict, unrevealed clue, Puzzle, GameEngine, or solver internals.
+- Invalidation rule: ACCEPTED public mutation, Solve Next, Auto Solve start and every reveal, Restart, and successful Load clear the session plus clue/target modifiers and reset the button label. Fingerprint mismatch independently prevents stale Stage 2 use. Character/clue selection alone preserves the session.
+- Modifier design: Character `hint_target` and clue `hint_active` are separate outline layers that compose with base verdict, selected, canonical highlight, and newly-revealed states.
+- Accepted: public fingerprint, one-call two-stage cycle, safe trace slicing/filtering, generic no-anchor fallback, progressive button label, composable outlines, and defense against stale cached targets.
+- Rejected/deferred: displaying the cached verdict, using `HintResult.message`, presenting the latest clue as causal, parsing clue text, additional DPLL calls for Stage 2, LogicAgent/trace changes, Solver Details, completion UI, and Phase 6 work.
+- Human verification performed: DPI-aware screenshots inspected before Hint, Stage 1 with one/multiple active clues, generic no-anchor Stage 1, Stage 2 target, manual ACCEPTED, Solve Next, Auto Solve lifecycle, Restart, and Load. No stale hint modifier survived mutation/reset.
+- Tests performed: supported full runner passed 117/117; compile, diff, boundary/external-solver/protected-module scans, 3x3 Hint lifecycle smoke, and 4x4 Auto Solve smoke passed. `pytest` remains unavailable.
+- Approved Phase 4 commit: `dff07f05a003fa966c200fc925e5da600846ec54` (`feat(gui): redesign revealed clue inspection`).
+- Related Prompt ID: PROMPT-008
 - Related Git commit hash: PENDING

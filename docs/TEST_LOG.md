@@ -65,3 +65,12 @@ Only commands actually executed are recorded here.
 | 2026-08-13 | UI Phase 4 | Tkinter 4x4 scrolling smoke | PASS | All 16 public clue cards rendered; overflow scroll enabled and auto-scrolled to newly emphasized D4; board descendants remained within bounds |
 | 2026-08-13 | UI Phase 4 | DPI-aware visual inspection | PASS | Inspected empty, one/several, selected, long, newly revealed, Criminal/ Innocent highlighted, and scrolling 4x4 states; corrected fixed-width wrapping |
 | 2026-08-13 | UI Phase 4 | `git diff --check` | PASS | No whitespace errors; line-ending conversion warnings only |
+| 2026-08-13 | UI Phase 5 | `python -m pytest -q` | UNAVAILABLE | Environment reports `No module named pytest`; no package was installed |
+| 2026-08-13 | UI Phase 5 | `python -m unittest discover -s tests` | PASS | 117/117 tests; 12 new tests cover call/trace counts, public filtering, no causal/hidden wording, cached target, fingerprint invalidation, selection stability, and modifier composition |
+| 2026-08-13 | UI Phase 5 | `python -m compileall -q .` | PASS | Full repository compiles after progressive Hint presentation refactor |
+| 2026-08-13 | UI Phase 5 | boundary and external SAT solver scans | PASS | Hint cache contains public identifiers/fingerprint only; no protected boundary change or external solver dependency found |
+| 2026-08-13 | UI Phase 5 | protected-module diff from `dff07f0` | PASS | No changes in `agent/`, `game/`, `core/`, `logic/`, `sat/`, or `puzzles/` |
+| 2026-08-13 | UI Phase 5 | Tkinter 3x3 progressive Hint smoke | PASS | Stage 1 called reasoning once; Stage 2 kept trace count unchanged and did not reveal B1; manual ACCEPTED, Solve Next, Restart, and Load cleared Hint state |
+| 2026-08-13 | UI Phase 5 | Tkinter 4x4 Auto Solve smoke | PASS | Hint session cleared on Auto Solve/reveal lifecycle; completed 16-card board had no stale clue/target Hint modifier |
+| 2026-08-13 | UI Phase 5 | DPI-aware visual inspection | PASS | Inspected pre-Hint, one/multiple/no-anchor Stage 1, Stage 2, manual accepted, Solve Next, Auto Solve, Restart, and Load states |
+| 2026-08-13 | UI Phase 5 | `git diff --check` | PASS | No whitespace errors; line-ending conversion warnings only |

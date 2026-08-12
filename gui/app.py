@@ -20,6 +20,11 @@ from gui.feedback import (
     newly_revealed_character,
     notice_feedback,
 )
+from gui.hint_session import (
+    HintPresentation,
+    HintVisualState,
+    progress_hint_session,
+)
 from gui.trace_panel import TracePanel
 from gui.components import AppHeader, FeedbackBar
 from gui.theme import SPACING, configure_theme
@@ -50,6 +55,7 @@ class GriductiveApp(ttk.Frame):
         self._controller = GameController(GameEngine(puzzle, LogicAgent()))
         self._highlighted_ids: tuple[str, ...] = ()
         self._newly_revealed_id: str | None = None
+        self._hint_state = HintVisualState()
         self._auto_running = False
         AppHeader(self).grid(row=0, column=0, sticky="ew")
 
@@ -118,11 +124,13 @@ class GriductiveApp(ttk.Frame):
             self._controller.selected_character_id,
             self._highlighted_ids,
             self._newly_revealed_id,
+            self._hint_state.target_character_id,
         )
         self._clues.render(
             state,
             self._controller.selected_clue_owner_id,
             self._newly_revealed_id,
+            self._hint_state.active_clue_ids,
         )
         self._trace.render(self._controller.trace())
         self._controls.set_verdict_context(selected_card)
@@ -169,6 +177,8 @@ class GriductiveApp(ttk.Frame):
             return
         after = self._controller.state()
         self._newly_revealed_id = newly_revealed_character(result, before, after)
+        if after != before:
+            self._invalidate_hint_session()
         card = self._card_for(after, result.character_id)
         if card is None:
             raise RuntimeError("verdict result references a character outside public state")
@@ -177,6 +187,7 @@ class GriductiveApp(ttk.Frame):
 
     def _restart(self) -> None:
         self._controller.restart()
+        self._invalidate_hint_session()
         self._highlighted_ids = ()
         self._newly_revealed_id = None
         self._feedback.show(
@@ -203,21 +214,35 @@ class GriductiveApp(ttk.Frame):
             return
         self._highlighted_ids = ()
         self._newly_revealed_id = None
+        self._invalidate_hint_session()
         self._feedback.show(
             notice_feedback("Puzzle loaded", f"Loaded {puzzle.title}. Selection was cleared.", FeedbackTone.NEUTRAL)
         )
         self._render()
 
     def _hint(self) -> None:
-        self._newly_revealed_id = None
-        hint = self._controller.hint()
-        self._feedback.show(notice_feedback("Hint", hint.message))
-        if hint.deduction:
-            self._controller.select_character(hint.deduction.character_id)
+        session, presentation, _reasoning_requested = progress_hint_session(
+            self._hint_state.session,
+            self._controller.state,
+            self._controller.hint,
+            self._controller.trace,
+        )
+        self._hint_state.apply(session, presentation)
+        self._apply_hint_presentation(presentation)
         self._render()
+
+    def _apply_hint_presentation(self, presentation: HintPresentation) -> None:
+        self._controls.set_hint_button_text(presentation.next_button_text)
+        self._feedback.show(notice_feedback(presentation.title, presentation.message, FeedbackTone.INFO))
+
+    def _invalidate_hint_session(self) -> None:
+        self._hint_state.invalidate()
+        if hasattr(self, "_controls"):
+            self._controls.set_hint_button_text("Hint")
 
     def _solve_next(self) -> None:
         self._newly_revealed_id = None
+        self._invalidate_hint_session()
         before = self._controller.state()
         try:
             result = self._controller.solve_next()
@@ -230,6 +255,7 @@ class GriductiveApp(ttk.Frame):
             self._feedback.show(notice_feedback("No forced verdict", "No unresolved verdict is currently forced."))
         else:
             self._newly_revealed_id = newly_revealed_character(result, before, self._controller.state())
+            self._invalidate_hint_session()
             self._feedback.show(notice_feedback("Solve Next", result.message, FeedbackTone.SUCCESS))
         self._render()
 
@@ -237,6 +263,7 @@ class GriductiveApp(ttk.Frame):
         if self._auto_running:
             return
         self._newly_revealed_id = None
+        self._invalidate_hint_session()
         self._auto_running = True
         self._controls.set_auto_running(True)
         self._feedback.show(notice_feedback("Auto Solve", "Progressive solving started."))
@@ -255,6 +282,7 @@ class GriductiveApp(ttk.Frame):
             self._finish_auto(message)
             return
         self._newly_revealed_id = newly_revealed_character(result, before, self._controller.state())
+        self._invalidate_hint_session()
         self._render()
         self._feedback.show(notice_feedback("Auto Solve", result.message, FeedbackTone.SUCCESS))
         self.after(120, self._auto_step)

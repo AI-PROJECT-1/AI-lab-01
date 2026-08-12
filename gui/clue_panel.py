@@ -41,6 +41,7 @@ class CluePanel(ttk.LabelFrame):
         state: PublicKnowledgeState,
         selected_owner_id: str | None = None,
         newly_revealed_owner_id: str | None = None,
+        hint_active_clue_ids: tuple[str, ...] = (),
     ) -> None:
         for child in self._content.winfo_children():
             child.destroy()
@@ -62,6 +63,7 @@ class CluePanel(ttk.LabelFrame):
                 ClueCardModifiers(
                     selected=clue.owner_id == selected_owner_id,
                     newly_revealed=clue.owner_id == newly_revealed_owner_id,
+                    hint_active=clue.clue_id in hint_active_clue_ids,
                 ),
                 self._on_select,
             )

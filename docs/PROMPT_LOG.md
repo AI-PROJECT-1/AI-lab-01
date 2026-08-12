@@ -94,6 +94,20 @@
 - Goal: Commit approved UI Phase 3, then redesign publicly revealed clue presentation and inspection with full text, public ownership, canonical highlighting, selection, new-clue emphasis, and responsive scrolling.
 - Full prompt: User approved UI Phase 3, required atomic commit `feat(gui): add contextual verdict feedback` and its real hash, then authorized only revealed-clue cards and inspection while protecting all reasoning, solver, game, public-state, puzzle, Hint, and Solver Trace semantics.
 - Short summary of response: Created real Phase 3 commit `bd3926325795dce94afb9d719889e6071e823446`; introduced public-only ClueCard models/components, scrollable responsive CluePanel, composable selected/newly-revealed states, canonical resolver reuse, full wrapped text, and presentation-only new-clue auto-scroll.
-- Decision: ACCEPTED FOR UI PHASE 4 ONLY; final Phase 4 approval PENDING
+- Decision: ACCEPTED FOR UI PHASE 4 ONLY; approved by the user
 - Related AI Usage ID: AI-010
-- Related commits: UI Phase 3 `bd39263`; UI Phase 4 PENDING
+- Related commits: UI Phase 3 `bd39263`; UI Phase 4 `dff07f0`
+
+## PROMPT-008
+
+- Date: 2026-08-13
+- Tool: OpenAI Codex
+- Model: GPT-5
+- Member: Trần Hữu Phước - 24127511
+- Phase: Griductive GUI refactor, UI Phase 5 only
+- Goal: Commit approved UI Phase 4, then implement a public-only two-stage Hint UX with one reasoning request per unchanged-state cycle, safe active-clue wording, cached target presentation, and complete invalidation.
+- Full prompt: User approved UI Phase 4, required atomic commit `feat(gui): redesign revealed clue inspection` and its real hash, then authorized only progressive Hint UX while explicitly prohibiting unique proof-anchor claims, Stage 2 solver calls, hidden verdict/clue exposure, solver/trace redesign, and protected-module changes.
+- Short summary of response: Created real Phase 4 commit `dff07f05a003fa966c200fc925e5da600846ec54`; added a public fingerprinted HintSession, Stage 1 active-revealed-clue presentation, Stage 2 cached target-only emphasis, composable clue/card modifiers, progressive button text, and mutation/reset invalidation.
+- Decision: ACCEPTED FOR UI PHASE 5 ONLY; final Phase 5 approval PENDING
+- Related AI Usage ID: AI-011
+- Related commits: UI Phase 4 `dff07f0`; UI Phase 5 PENDING

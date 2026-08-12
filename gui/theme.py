@@ -23,6 +23,7 @@ COLORS = {
     "focus_soft": "#F7E9C7",
     "success": "#356247",
     "info": "#365C78",
+    "hint": "#6B4FA1",
     "warning": "#875B18",
     "error": "#843C37",
     "card_unresolved": "#F2EEE6",

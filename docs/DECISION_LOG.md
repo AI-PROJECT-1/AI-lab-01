@@ -121,4 +121,17 @@
 - State-composition rule: Character selected, clue-highlighted, base verdict, and newly-revealed modifiers remain independent; clue selection does not replace Criminal/Innocent identity.
 - Reset rule: Restart and successful Load clear clue selection, highlight, and new-clue emphasis through existing controller and app resets.
 - Related requirement: Griductive GUI fidelity refactor UI Phase 4 revealed clue presentation, canonical highlighting, privacy, and responsive inspection requirements.
+- Related commit: `dff07f05a003fa966c200fc925e5da600846ec54`.
+
+## DEC-012 - Fingerprinted two-stage Hint presentation
+
+- Context: Repeated Hint clicks called `get_hint()` repeatedly, duplicated reasoning trace entries, and risked overclaiming an active clue as the direct proof cause even though the current API establishes no unique proof anchor.
+- Options considered: call reasoning on every click; expose the full existing Hint message/verdict; infer a causal clue from order; cache only public presentation fields and split assistance into active-clue review then target identity.
+- Chosen option: Stage 1 calls the unchanged Hint API once and filters trace `active_clue_ids` through current public reveals. Stage 2 uses the cached public target only when the public-state fingerprint is unchanged.
+- Reason: The first step guides review without causal invention; the second provides more assistance without another DPLL/trace request, verdict reveal, or game mutation.
+- Fingerprint rule: Puzzle ID, ordered public known verdicts, public revealed owner/clue IDs, and completion identify knowledge. Character/clue selection is intentionally excluded because it is presentation-only.
+- Privacy rule: Do not cache or display `HintResult.message`, deduction status, unrevealed clue content, Puzzle state, GameEngine fields, or solver internals. Active clues are not described as proof anchors.
+- Invalidation rule: Manual accepted mutation, Solve Next, Auto Solve, Restart, Load, or any fingerprint mismatch clear/prevent cached target use; selection alone does not.
+- Composition rule: Active clue and target hint outlines remain independent from selected clue/character, canonical clue highlight, newly revealed outline, and Criminal/Innocent base identity.
+- Related requirement: Griductive GUI fidelity refactor UI Phase 5 progressive Hint UX and public-boundary requirements.
 - Related commit: PENDING.
