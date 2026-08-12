@@ -65,4 +65,130 @@ complete until its required checks actually pass.
 - AI Usage Log entry: AI-004
 - Prompt Log entry: PROMPT-001
 - Recommended Git commit: `feat(gui): implement playable game interface`
-- Next phase: STOP; requested scope ends at Phase 04
+- Next phase: Phase 05 region resolution and direct semantics
+
+## Phase 05 - Regions and Semantic Evaluator
+
+- Status: COMPLETED
+- Requirements satisfied: one canonical resolver for ROW, COLUMN, NEIGHBORS, and EXPLICIT; direct evaluator for all six core clues; evaluator does not call CNF or DPLL
+- Files created/modified: `logic/region_resolver.py`, `logic/semantic_evaluator.py`, `tests/test_logic.py`
+- Tests executed: exhaustive 3x3 assignment equivalence tests plus row/column/corner/edge/interior/explicit boundary tests
+- Test results: PASS in the 2026-08-12 65-test regression run
+- Known issues: GUI highlighting is intentionally deferred to Phase 11
+- Specification risks: none confirmed for core regions after audit
+- AI suggestions accepted: extract the resolver from the CNF module and reuse it in the independent evaluator
+- AI suggestions rejected: duplicate region logic in the evaluator and GUI
+- AI Usage Log entry: AI-005
+- Prompt Log entry: PROMPT-002
+- Recommended Git commit: `fix(logic): enforce canonical region semantics`
+- Next phase: Phase 06 variable mapping and CNF
+
+## Phase 06 - Variable Mapping and CNF
+
+- Status: COMPLETED
+- Requirements satisfied: deterministic primary mapping, automatic six-template CNF, known-verdict unit clauses, public-only KB builder, clause/variable counts, direct combinational cardinality encoding
+- Files created/modified: `logic/cnf_encoder.py`, `tests/test_logic.py`
+- Tests executed: exhaustive 512 primary assignments per representative clue; k=0, k=|R|, |R|=1, invalid k/cells/regions, duplicate explicit cells
+- Test results: PASS in the 2026-08-12 65-test regression run
+- Known issues: extensions are not part of Phase 06 and remain unimplemented
+- Specification risks: no auxiliary variables are used by the direct combinational encoding; this is allowed by PDF section 3.3
+- AI suggestions accepted: validate `k <= |R|` after canonical resolution for every counting clue
+- AI suggestions rejected: treating an invalid `AT_MOST(k > |R|)` as a tautology
+- AI Usage Log entry: AI-005
+- Prompt Log entry: PROMPT-002
+- Recommended Git commit: `fix(cnf): reject invalid counting regions`
+- Next phase: Phase 07 baseline DPLL
+
+## Phase 07 - DPLL Baseline
+
+- Status: COMPLETED
+- Requirements satisfied: unit propagation, conflict detection, deterministic branching, recursive backtracking, SAT/UNSAT, complete assignments, assumptions, decisions/propagations/backtracks/runtime
+- Files created/modified: `sat/dpll.py`, `tests/test_dpll.py`
+- Tests executed: 13 discoverable DPLL tests including a deterministic 500-case brute-force oracle comparison
+- Test results: PASS in the 2026-08-12 65-test regression run
+- Known issues: no production agent integration, as required until Phase 08
+- Specification risks: recursive baseline is intentionally unoptimized
+- AI suggestions accepted: standard-library `unittest` discovery and strict integer literal validation
+- AI suggestions rejected: adding pytest solely to run a file that can use the existing test framework
+- AI Usage Log entry: AI-005
+- Prompt Log entry: PROMPT-002
+- Recommended Git commit: `test(sat): make DPLL verification discoverable`
+- Next phase: Phase 08 production LogicAgent
+
+## Phase 08 - LogicAgent
+
+- Status: COMPLETED
+- Requirements satisfied: public-only KB construction; assumption-based entailment; `classify`, `classify_all`, and `check_verdict`; all four classifications; no inference from a single model
+- Files created/modified: `agent/logic_agent.py`, `agent/protocols.py`, `tests/test_logic_agent.py`
+- Tests executed: targeted agent tests and full regression
+- Test results: CRIMINAL/INNOCENT/UNKNOWN/INCONSISTENT and verdict outcomes PASS
+- Known issues: baseline solver intentionally prioritizes clarity over optimization
+- AI Usage Log entry: AI-006
+- Prompt Log entry: PROMPT-003
+- Recommended Git commit: `feat(agent): implement logical entailment agent`
+- Next phase: Phase 09 progressive deduction
+
+## Phase 09 - Progressive Deduction
+
+- Status: COMPLETED
+- Requirements satisfied: non-mutating Hint; deterministic Solve Next; progressive Auto Solve; SAT query trace; strict complete-clue uniqueness check with primary-model blocking
+- Files created/modified: `agent/deduction_trace.py`, `agent/uniqueness.py`, `agent/logic_agent.py`, `game/game_engine.py`
+- Tests executed: hint mutation guard, reveal-chain integration, trace fields, incomplete-clue rejection, unique complete set
+- Test results: PASS in 77-test regression
+- Known issues: trace display is concise; export formatting can be added with report support
+- AI Usage Log entry: AI-006
+- Prompt Log entry: PROMPT-003
+- Recommended Git commit: `feat(agent): add progressive deduction workflow`
+- Next phase: Phase 10 game/agent integration
+
+## Phase 10 - Game/Agent Integration
+
+- Status: COMPLETED
+- Requirements satisfied: GUI uses production LogicAgent; manual verdicts and automated deductions share engine integrity checks; Hint/Solve Next/Auto Solve controls; progressive UI updates
+- Files created/modified: `game/game_engine.py`, `gui/app.py`, `gui/controller.py`, `gui/controls.py`, `gui/trace_panel.py`
+- Tests executed: controller integration and real Tk smoke test
+- Test results: PASS
+- Known issues: Tk callbacks execute SAT synchronously; current 3x3/4x4 suite remains responsive
+- AI Usage Log entry: AI-006
+- Prompt Log entry: PROMPT-003
+- Recommended Git commit: `feat(integration): connect game engine and logic agent`
+- Next phase: Phase 11 clue highlighting
+
+## Phase 11 - Clue Highlighting
+
+- Status: COMPLETED
+- Requirements satisfied: every revealed clue is selectable; FACT/binary/region cells resolve through `logic.region_resolver.referenced_cells`; board visibly highlights the canonical set
+- Files created/modified: `logic/region_resolver.py`, `gui/controller.py`, `gui/board_view.py`, `tests/test_gui.py`
+- Tests executed: FACT, IMPLIES, and ODD selection/highlight mapping plus GUI smoke test
+- Test results: PASS
+- Known issues: highlight color depends on OS display rendering
+- AI Usage Log entry: AI-006
+- Prompt Log entry: PROMPT-003
+- Recommended Git commit: `feat(gui): add clue region highlighting`
+- Next phase: Phase 12 two extensions
+
+## Phase 12 - Two Extensions
+
+- Status: COMPLETED
+- Requirements satisfied: formal candidate review; `IMPLIES` and `ODD` domain validation, loader/schema, display, direct evaluator, CNF encoder, highlighting, and tests
+- Files created/modified: core clue contracts, loader/schema, logic modules, `tests/test_extensions.py`, DEC-006
+- Tests executed: exhaustive 512-assignment evaluator/CNF equivalence for both extensions and malformed-contract tests
+- Test results: PASS
+- Known issues: direct ODD encoding is exponential in region size by documented choice
+- AI Usage Log entry: AI-006
+- Prompt Log entry: PROMPT-003
+- Recommended Git commit: `feat(logic): implement required clue extensions`
+- Next phase: Phase 13 puzzle validation
+
+## Phase 13 - Puzzle Validation
+
+- Status: COMPLETED
+- Requirements satisfied: two 3x3 and two 4x4 distributable puzzles; every clue true under declared solution; clue-only consistency and primary uniqueness; progressive no-guess completion
+- Files created/modified: `puzzles/*.json`, `tests/test_puzzle_suite.py`
+- Tests executed: automated truth, uniqueness, and full Auto Solve gates over all four puzzles
+- Test results: PASS
+- Known issues: difficulty variety is modest; experiments must quantify behavior in Phase 14
+- AI Usage Log entry: AI-006
+- Prompt Log entry: PROMPT-003
+- Recommended Git commit: `test(puzzles): add validated puzzle suite`
+- Next phase: Phase 14 reproducible experiments

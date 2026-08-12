@@ -53,12 +53,17 @@
         {
           "type": "object", "additionalProperties": false,
           "required": ["id", "type", "characters"],
-          "properties": {"id": {"type": "string", "minLength": 1}, "type": {"enum": ["SAME", "DIFFERENT"]}, "characters": {"type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": {"$ref": "#/$defs/cellId"}}, "text": {"type": "string", "minLength": 1}}
+          "properties": {"id": {"type": "string", "minLength": 1}, "type": {"enum": ["SAME", "DIFFERENT", "IMPLIES"]}, "characters": {"type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": {"$ref": "#/$defs/cellId"}}, "text": {"type": "string", "minLength": 1}}
         },
         {
           "type": "object", "additionalProperties": false,
           "required": ["id", "type", "k", "region"],
           "properties": {"id": {"type": "string", "minLength": 1}, "type": {"enum": ["EXACTLY", "AT_LEAST", "AT_MOST"]}, "k": {"type": "integer", "minimum": 0}, "region": {"$ref": "#/$defs/region"}, "text": {"type": "string", "minLength": 1}}
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "type", "region"],
+          "properties": {"id": {"type": "string", "minLength": 1}, "type": {"const": "ODD"}, "region": {"$ref": "#/$defs/region"}, "text": {"type": "string", "minLength": 1}}
         }
       ]
     },

@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from agent.mock_logic_agent import MockLogicAgent
+from agent.logic_agent import LogicAgent
 from core.enums import Status, VerdictOutcome
 from game.game_engine import GameEngine
 from game.puzzle_loader import PuzzleLoader
@@ -64,6 +65,28 @@ class ControllerTests(unittest.TestCase):
     def test_default_puzzle_exists(self) -> None:
         self.assertEqual(DEFAULT_PUZZLE.resolve(), SAMPLE_PATH.resolve())
         self.assertTrue(DEFAULT_PUZZLE.is_file())
+
+    def test_canonical_clue_highlighting(self) -> None:
+        self.assertEqual(self.controller.select_clue("A1"), ("B1",))
+
+        extension_path = SAMPLE_PATH.with_name("extension_chain_3x3.json")
+        controller = GameController(GameEngine(PuzzleLoader.load(extension_path), LogicAgent()))
+        controller.solve_next()
+        self.assertEqual(controller.select_clue("B1"), ("B1", "C1"))
+        controller.solve_next()
+        self.assertEqual(controller.select_clue("C1"), ("C1", "A2"))
+
+    def test_progressive_controls_use_real_agent(self) -> None:
+        controller = GameController(GameEngine(PuzzleLoader.load(SAMPLE_PATH), LogicAgent()))
+        before = controller.state()
+        hint = controller.hint()
+        self.assertEqual(controller.state(), before)
+        self.assertEqual(hint.deduction.character_id, "B1")
+        first = controller.solve_next()
+        self.assertEqual(first.character_id, "B1")
+        remaining = controller.auto_solve()
+        self.assertEqual(len(remaining), 7)
+        self.assertTrue(controller.state().is_complete)
 
 
 if __name__ == "__main__":

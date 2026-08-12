@@ -1,1 +1,1 @@
-"""Clue semantics and CNF encoding (implemented in later phases)."""
+"""Canonical regions, direct clue semantics, and automatic CNF encoding."""

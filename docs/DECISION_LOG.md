@@ -29,3 +29,47 @@
 - Consequences: The sample puzzle uses a FACT chain; general reasoning is deferred to Phases 05-10.
 - Related requirement: PDF sections 2.2 and 4.1.
 - Related commit: `bcf0393`, `3dec8a9`
+
+## DEC-004 - Direct combinational cardinality encoding
+
+- Context: Core puzzle regions are small and the PDF explicitly permits direct combinational encoding.
+- Options considered: direct combinations; sequential counters with auxiliary variables; external SAT/cardinality library.
+- Chosen option: Encode AT_LEAST and AT_MOST using combinations of primary literals; EXACTLY is their conjunction.
+- Reason: It is dependency-free, explainable in an oral interview, and easy to verify exhaustively for 3x3 cases.
+- Consequences: Auxiliary-variable count is zero; clause growth is combinatorial and may be slower for large regions.
+- Related requirement: PDF sections 3.3 and 4.2.
+- Related commit: `2409aa7`; validation corrections are PENDING.
+
+## DEC-005 - One standard-library test runner
+
+- Context: The repository documented `unittest`, but the DPLL tests were written as pytest functions and were skipped by the documented command.
+- Options considered: add pytest as a test dependency; convert DPLL tests to `unittest`; maintain two commands.
+- Chosen option: Convert DPLL tests to `unittest` and keep one dependency-free discovery command.
+- Reason: It prevents silent test omission and matches the existing repository policy.
+- Consequences: All implemented phases are covered by `python -m unittest discover -s tests -v`.
+- Related requirement: Master prompt sections 16, 24, and 25.
+- Related commit: PENDING.
+
+## DEC-006 - Extension selection: IMPLIES and ODD
+
+- Context: The specification requires at least two distinct extensions and a formal review of at least three candidates before selection.
+- Options considered:
+  - `IMPLIES(A,B)`: low semantic complexity; one CNF clause; straightforward exhaustive tests; easy to explain as material implication.
+  - `ODD(region)`: medium semantic complexity; truth-table blocking CNF grows exponentially with the region but remains practical for 3x3/4x4 clue regions; exhaustive tests are direct; demonstrates parity reasoning clearly.
+  - `NOT_BOTH(A,B)`: low semantic/CNF/test complexity, but semantically duplicates `AT_MOST(1)` over a two-cell explicit region and adds little report value.
+  - `MAJORITY(region)`: low-medium complexity, but reduces directly to an existing `AT_LEAST(ceil(|R|/2))` clue and is not sufficiently distinct.
+- Chosen option: `IMPLIES` and `ODD`.
+- Reason: They are semantically distinct from each other and from the six core templates; one demonstrates relational implication and the other parity over regions.
+- Consequences: `IMPLIES` adds no auxiliary variables and one clause. `ODD` uses one blocking clause per even-parity assignment, so it is intentionally limited to puzzle-sized regions and documented as combinatorial.
+- Related requirement: Master prompt sections 9, 15, and Phase 12; PDF extension requirement.
+- Related commit: PENDING.
+
+## DEC-007 - Progressive solving is orchestrated by GameEngine
+
+- Context: Auto Solve must update the public KB and reveal a new clue only after a verdict is proved, while the LogicAgent must never receive hidden puzzle state.
+- Options considered: give the agent the engine; let the agent mutate public state; compute all answers from one snapshot; let the engine request one public deduction per wave.
+- Chosen option: `LogicAgent.solve_next(public_state)` returns one proof-backed deduction, and `GameEngine` verifies/reveals it before creating the next snapshot.
+- Reason: This preserves the hidden/public boundary and ensures every wave includes only clues legitimately revealed by earlier proofs.
+- Consequences: More SAT calls than a batch mutation approach, but deterministic traceability and correct progressive semantics.
+- Related requirement: Master prompt sections 11-13, 17-18, and Phases 09-10.
+- Related commit: PENDING.

@@ -16,7 +16,13 @@ PuzzleLoader --> Puzzle (contains hidden solution and every clue)
           PublicKnowledgeState
                     |
                     v
-              LogicAgent protocol
+          SAT-backed LogicAgent
+              |          |
+              v          v
+          CNFEncoder   deduction trace
+              |
+              v
+             DPLL
 ```
 
 Only `GameEngine` and loader-side domain objects may hold hidden labels and
@@ -24,8 +30,8 @@ unrevealed clue objects. Agents receive a freshly constructed immutable
 `PublicKnowledgeState`; they never receive `Puzzle` or `GameEngine`.
 
 The GUI calls engine methods and renders public snapshots. It does not inspect
-private puzzle state. In later phases the mock agent is replaced behind the same
-protocol by the CNF/DPLL-backed agent.
+private puzzle state. The production `LogicAgent` receives only those snapshots;
+the mock remains isolated to legacy tests.
 
 ## Dependency direction
 
@@ -42,6 +48,15 @@ protocol by the CNF/DPLL-backed agent.
 - `GameEngine.submit_verdict(character_id, status) -> VerdictResult`
 - `GameEngine.restart() -> PublicKnowledgeState`
 - `LogicAgentProtocol.classify(public_state, character_id) -> Classification`
+- `GameEngine.get_hint() -> HintResult` (non-mutating)
+- `GameEngine.solve_next() -> VerdictResult | None`
+- `GameEngine.auto_solve() -> tuple[VerdictResult, ...]`
+- `LogicAgent.check_uniqueness(complete_clue_state) -> UniquenessResult`
+
+Auto Solve is progressive: after each proved verdict, `GameEngine` reveals that
+card and calls the agent again with a fresh public snapshot. Puzzle uniqueness is
+a separate clue-only operation that requires every clue and rejects verdict unit
+clauses.
 
 ## JSON design
 

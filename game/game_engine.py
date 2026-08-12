@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from agent.protocols import LogicAgentProtocol
+from agent.deduction_trace import DeductionTraceStep, HintResult
+from agent.protocols import LogicAgentProtocol, ProgressiveLogicAgentProtocol
 from core.enums import Classification, Status, VerdictOutcome
 from core.public_state import KnownVerdict, PublicKnowledgeState, RevealedClue
 from core.puzzle import Puzzle
@@ -21,6 +22,7 @@ class GameEngine:
         self._puzzle = puzzle
         self._revealed_ids: set[str] = set()
         self._known_statuses: dict[str, Status] = {}
+        self._trace: list[DeductionTraceStep] = []
         self.restart()
 
     def load(self, puzzle: Puzzle) -> PublicKnowledgeState:
@@ -33,7 +35,14 @@ class GameEngine:
             character_id: self._puzzle.card_by_id(character_id).hidden_status
             for character_id in self._puzzle.initially_revealed_ids
         }
+        self._trace = []
+        if hasattr(self._agent, "reset_trace"):
+            self._agent.reset_trace()
         return self.public_state()
+
+    @property
+    def deduction_trace(self) -> tuple[DeductionTraceStep, ...]:
+        return tuple(self._trace)
 
     def public_state(self) -> PublicKnowledgeState:
         cards = self._puzzle.ordered_cards
@@ -82,6 +91,7 @@ class GameEngine:
             )
 
         classification = self._agent.classify(self.public_state(), character_id)
+        self._capture_agent_trace()
         if classification is Classification.INCONSISTENT:
             return VerdictResult(
                 VerdictOutcome.INCONSISTENT,
@@ -109,14 +119,58 @@ class GameEngine:
             raise AgentIntegrityError(
                 f"agent verdict {forced_status.value} for {character_id} conflicts with puzzle data"
             )
+        return self._accept_deduction(character_id, forced_status)
 
-        self._known_statuses[character_id] = forced_status
+    def get_hint(self) -> HintResult:
+        agent = self._progressive_agent()
+        hint = agent.get_hint(self.public_state())
+        self._capture_agent_trace()
+        return hint
+
+    def solve_next(self) -> VerdictResult | None:
+        agent = self._progressive_agent()
+        deduction = agent.solve_next(self.public_state())
+        self._capture_agent_trace()
+        if deduction is None:
+            return None
+        return self._accept_deduction(deduction.character_id, deduction.status)
+
+    def auto_solve(self) -> tuple[VerdictResult, ...]:
+        """Progressively rebuild the public KB after every accepted reveal."""
+
+        results: list[VerdictResult] = []
+        while not self.public_state().is_complete:
+            result = self.solve_next()
+            if result is None:
+                break
+            results.append(result)
+        return tuple(results)
+
+    def _accept_deduction(self, character_id: str, status: Status) -> VerdictResult:
+        card = self._puzzle.card_by_id(character_id)
+        if card.hidden_status is not status:
+            raise AgentIntegrityError(
+                f"agent verdict {status.value} for {character_id} conflicts with puzzle data"
+            )
+        self._known_statuses[character_id] = status
         self._revealed_ids.add(character_id)
+        if self._trace:
+            self._trace[-1] = self._trace[-1].with_revealed_clue(card.clue.id)
         return VerdictResult(
             VerdictOutcome.ACCEPTED,
             character_id,
             status,
-            forced_status=forced_status,
+            forced_status=status,
             revealed_clue=card.clue,
-            message=f"{character_id} is proved {forced_status.value}; clue {card.clue.id} revealed.",
+            message=f"{character_id} is proved {status.value}; clue {card.clue.id} revealed.",
         )
+
+    def _progressive_agent(self) -> ProgressiveLogicAgentProtocol:
+        if not isinstance(self._agent, ProgressiveLogicAgentProtocol):
+            raise RuntimeError("the configured agent does not support progressive deduction")
+        return self._agent
+
+    def _capture_agent_trace(self) -> None:
+        trace = getattr(self._agent, "last_trace", ())
+        if trace:
+            self._trace.extend(trace)

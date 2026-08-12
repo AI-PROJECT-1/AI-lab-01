@@ -19,7 +19,7 @@ as recommendations, not as course requirements.
 | R-09 | Deterministic character-to-variable mapping; separate primary/auxiliary variables | 3.1, 4.2 (10) | `logic/variable_manager.py` | Member B | mapping tests |
 | R-10 | Support FACT, SAME, DIFFERENT, EXACTLY, AT_LEAST, AT_MOST | 3.2, 4.2 | `core/clue.py`, `logic/` | Member B | semantic and CNF equivalence tests |
 | R-11 | Support row, column, 8-neighbor, and distinct explicit-list regions | 2.1, 3.2 | `core/region.py`, `logic/region_resolver.py` | Member A/B | boundary/validation tests |
-| R-12 | Implement at least two distinct clue extensions | 3.2 | `logic/extensions.py` | Member B | semantics/CNF/GUI tests |
+| R-12 | Implement at least two distinct clue extensions | 3.2 | `core/clue.py`, `logic/cnf_encoder.py`, `logic/semantic_evaluator.py` | Member B | exhaustive IMPLIES/ODD semantics-CNF tests |
 | R-13 | Reusable automatic CNF; no puzzle-specific formulas; validate inputs; count variables/clauses | 3.3, 4.2 | `logic/cnf_encoder.py` | Member B | exhaustive small-instance equivalence |
 | R-14 | KB contains only revealed clues and proved statuses | 2.2, 3.3, 4.2 | `logic/cnf_encoder.py` | Member B/C | privacy and KB-content tests |
 | R-15 | Independent direct semantic evaluator for every required clue template | 4.2 | `logic/semantic_evaluator.py` | Member B | evaluator unit tests; no forbidden imports |
@@ -75,4 +75,4 @@ as recommendations, not as course requirements.
 - Phase 01: importable package tree, README, dependency declaration, audit/log files.
 - Phase 02: immutable validated contracts, JSON schema/sample, round-trip/validation/privacy tests.
 - Phase 03: loader, restartable engine, mutation-safe public snapshots, public-only agent protocol, transition tests.
-- Phase 04: desktop GUI with required board display and manual controls; Hint/Auto Solve visibly deferred, never faked.
+- Phases 04 and 08-13: desktop GUI, production public-only agent, Hint/Solve Next/Auto Solve, trace, canonical highlighting, extensions, and validated puzzle suite.

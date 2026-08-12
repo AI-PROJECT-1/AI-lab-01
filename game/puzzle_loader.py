@@ -97,7 +97,7 @@ class PuzzleLoader:
             cls._keys(clue, common | {"target", "status"}, optional, context)
             kwargs["target"] = cls._text(clue["target"], f"{context}.target")
             kwargs["status"] = cls._enum(Status, clue["status"], f"{context}.status")
-        elif clue_type in (ClueType.SAME, ClueType.DIFFERENT):
+        elif clue_type in (ClueType.SAME, ClueType.DIFFERENT, ClueType.IMPLIES):
             cls._keys(clue, common | {"characters"}, optional, context)
             characters = clue["characters"]
             if not isinstance(characters, list):
@@ -106,10 +106,13 @@ class PuzzleLoader:
                 cls._text(item, f"{context}.characters[{index}]")
                 for index, item in enumerate(characters)
             )
-        else:
+        elif clue_type in (ClueType.EXACTLY, ClueType.AT_LEAST, ClueType.AT_MOST):
             cls._keys(clue, common | {"region", "k"}, optional, context)
             kwargs["region"] = cls._parse_region(clue["region"], f"{context}.region")
             kwargs["k"] = cls._integer(clue["k"], f"{context}.k")
+        else:
+            cls._keys(clue, common | {"region"}, optional, context)
+            kwargs["region"] = cls._parse_region(clue["region"], f"{context}.region")
         return Clue(**kwargs)
 
     @classmethod

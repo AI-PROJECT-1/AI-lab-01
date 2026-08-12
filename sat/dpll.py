@@ -25,6 +25,8 @@ class DPLLSolver:
         assumptions: Iterable[int] = (),
     ) -> SATResult:
 
+        if isinstance(variable_count, bool) or not isinstance(variable_count, int):
+            raise TypeError("variable_count must be an integer")
         if variable_count < 0:
             raise ValueError("variable_count must be non-negative")
 
@@ -309,6 +311,8 @@ class DPLLSolver:
 
         for clause in clauses:
             for literal in clause:
+                if isinstance(literal, bool) or not isinstance(literal, int):
+                    raise TypeError("CNF literals must be integers")
                 if literal == 0:
                     raise ValueError(
                         "literal 0 is invalid"
@@ -327,6 +331,8 @@ class DPLLSolver:
     ) -> None:
 
         for literal in assumptions:
+            if isinstance(literal, bool) or not isinstance(literal, int):
+                raise TypeError("assumption literals must be integers")
             if literal == 0:
                 raise ValueError(
                     "assumption literal cannot be 0"

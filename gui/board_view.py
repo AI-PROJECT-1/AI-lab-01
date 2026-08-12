@@ -18,7 +18,12 @@ class BoardView(ttk.LabelFrame):
         self._buttons: dict[str, tk.Button] = {}
         self._selected_id: str | None = None
 
-    def render(self, state: PublicKnowledgeState, selected_id: str | None = None) -> None:
+    def render(
+        self,
+        state: PublicKnowledgeState,
+        selected_id: str | None = None,
+        highlighted_ids: tuple[str, ...] = (),
+    ) -> None:
         for child in self.winfo_children():
             child.destroy()
         self._buttons.clear()
@@ -41,6 +46,8 @@ class BoardView(ttk.LabelFrame):
             background = "#d8f3dc" if card.face_up else "#e9ecef"
             if card.status is not None:
                 background = "#f8d7da" if card.status.value == "CRIMINAL" else "#dbeafe"
+            if card.character_id in highlighted_ids:
+                background = "#fff3a3"
             relief = tk.SUNKEN if card.character_id == selected_id else tk.RAISED
             button = tk.Button(
                 self,

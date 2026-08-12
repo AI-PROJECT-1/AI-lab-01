@@ -62,7 +62,7 @@ class Puzzle:
     def _validate_clue_references(self, clue: Clue, valid_ids: set[str]) -> None:
         if clue.type is ClueType.FACT and clue.target not in valid_ids:
             raise ValueError(f"clue {clue.id} references unknown target {clue.target}")
-        if clue.type in (ClueType.SAME, ClueType.DIFFERENT):
+        if clue.type in (ClueType.SAME, ClueType.DIFFERENT, ClueType.IMPLIES):
             unknown = set(clue.characters) - valid_ids
             if unknown:
                 raise ValueError(f"clue {clue.id} references unknown characters: {sorted(unknown)}")

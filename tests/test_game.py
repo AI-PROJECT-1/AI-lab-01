@@ -10,7 +10,7 @@ from unittest.mock import mock_open, patch
 
 from agent.mock_logic_agent import MockLogicAgent
 from core.enums import Classification, Status, VerdictOutcome
-from core.public_state import PublicKnowledgeState
+from core.public_state import KnownVerdict, PublicKnowledgeState
 from game.game_engine import AgentIntegrityError, GameEngine
 from game.puzzle_loader import PuzzleFormatError, PuzzleLoader
 
@@ -125,6 +125,22 @@ class GameEngineTests(unittest.TestCase):
         with self.assertRaises(AgentIntegrityError):
             engine.submit_verdict("B1", Status.CRIMINAL)
         self.assertEqual(engine.public_state(), before)
+
+    def test_mock_agent_detects_conflicting_public_fact_and_verdict(self) -> None:
+        state = self.engine.public_state()
+        conflicting = PublicKnowledgeState(
+            state.puzzle_id,
+            state.title,
+            state.size,
+            state.characters,
+            state.revealed_clues,
+            (*state.known_verdicts, KnownVerdict("B1", Status.CRIMINAL)),
+            False,
+        )
+        self.assertEqual(
+            MockLogicAgent().classify(conflicting, "B1"),
+            Classification.INCONSISTENT,
+        )
 
 
 if __name__ == "__main__":

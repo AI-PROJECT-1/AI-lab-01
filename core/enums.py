@@ -23,6 +23,8 @@ class ClueType(StrEnum):
     EXACTLY = "EXACTLY"
     AT_LEAST = "AT_LEAST"
     AT_MOST = "AT_MOST"
+    IMPLIES = "IMPLIES"
+    ODD = "ODD"
 
 
 class RegionType(StrEnum):

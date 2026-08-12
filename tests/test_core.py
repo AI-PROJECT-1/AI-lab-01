@@ -51,7 +51,17 @@ class ClueTests(unittest.TestCase):
             Clue("L", ClueType.AT_LEAST, region=Region(RegionType.COLUMN, index=1), k=0),
             Clue("M", ClueType.AT_MOST, region=Region(RegionType.NEIGHBORS, center="A1"), k=2),
         )
-        self.assertEqual({clue.type for clue in clues}, set(ClueType))
+        self.assertEqual(
+            {clue.type for clue in clues},
+            {
+                ClueType.FACT,
+                ClueType.SAME,
+                ClueType.DIFFERENT,
+                ClueType.EXACTLY,
+                ClueType.AT_LEAST,
+                ClueType.AT_MOST,
+            },
+        )
 
     def test_invalid_count_and_binary_parameters(self) -> None:
         with self.assertRaisesRegex(ValueError, "non-negative"):

@@ -8,9 +8,9 @@ from typing import Sequence
 
 from core.character import Character
 from core.clue import Clue
-from core.enums import ClueType, RegionType, Status
+from core.enums import ClueType, Status
 from core.public_state import PublicKnowledgeState
-from core.region import Region
+from logic.region_resolver import RegionResolver
 
 Clause = tuple[int, ...]
 
@@ -44,6 +44,9 @@ class VariableMapper:
     @classmethod
     def from_characters(cls, characters: Sequence[Character]) -> "VariableMapper":
         sorted_characters = tuple(sorted(characters, key=lambda item: (item.row, item.column, item.id)))
+        character_ids = [character.id for character in sorted_characters]
+        if len(character_ids) != len(set(character_ids)):
+            raise ValueError("character ids must be unique for variable mapping")
         mapping = {character.id: index + 1 for index, character in enumerate(sorted_characters)}
         inverse = {variable: character_id for character_id, variable in mapping.items()}
         return cls(len(sorted_characters), mapping, inverse)
@@ -63,48 +66,6 @@ class VariableMapper:
     @property
     def variables(self) -> tuple[int, ...]:
         return tuple(range(1, self.primary_variable_count + 1))
-
-
-class RegionResolver:
-    """Resolve structured regions to deterministic sets of character identifiers."""
-
-    def __init__(self, characters: Sequence[Character]) -> None:
-        self._characters = tuple(sorted(characters, key=lambda item: (item.row, item.column, item.id)))
-        self._characters_by_id = {character.id: character for character in self._characters}
-
-    def resolve(self, region: Region) -> tuple[str, ...]:
-        if region.kind is RegionType.ROW:
-            return tuple(character.id for character in self._characters if character.row == region.index)
-        if region.kind is RegionType.COLUMN:
-            return tuple(character.id for character in self._characters if character.column == region.index)
-        if region.kind is RegionType.NEIGHBORS:
-            return self._resolve_neighbors(region.center)
-        if region.kind is RegionType.EXPLICIT:
-            return self._resolve_explicit(region.cells)
-        raise ValueError(f"unsupported region kind: {region.kind!r}")
-
-    def _resolve_neighbors(self, center_id: str) -> tuple[str, ...]:
-        try:
-            center = self._characters_by_id[center_id]
-        except KeyError as exc:
-            raise ValueError(f"unknown neighbor center: {center_id}") from exc
-        return tuple(
-            character.id
-            for character in self._characters
-            if character.id != center.id
-            and abs(character.row - center.row) <= 1
-            and abs(character.column - center.column) <= 1
-        )
-
-    def _resolve_explicit(self, cells: tuple[str, ...]) -> tuple[str, ...]:
-        if not cells:
-            return ()
-        resolved = []
-        for cell_id in cells:
-            if cell_id not in self._characters_by_id:
-                raise ValueError(f"unknown explicit region cell: {cell_id}")
-            resolved.append(cell_id)
-        return tuple(resolved)
 
 
 class CNFEncoder:
@@ -140,12 +101,16 @@ class CNFEncoder:
             return self._encode_same(clue)
         if clue.type is ClueType.DIFFERENT:
             return self._encode_different(clue)
+        if clue.type is ClueType.IMPLIES:
+            return self._encode_implies(clue)
         if clue.type is ClueType.EXACTLY:
             return self._encode_exactly(clue)
         if clue.type is ClueType.AT_LEAST:
             return self._encode_at_least(clue)
         if clue.type is ClueType.AT_MOST:
             return self._encode_at_most(clue)
+        if clue.type is ClueType.ODD:
+            return self._encode_odd(clue)
         raise ValueError(f"unsupported clue type: {clue.type!r}")
 
     def _encode_fact(self, clue: Clue) -> list[Clause]:
@@ -163,17 +128,40 @@ class CNFEncoder:
         second_var = self.mapper.variable_for(second)
         return [(first_var, second_var), (-first_var, -second_var)]
 
+    def _encode_implies(self, clue: Clue) -> list[Clause]:
+        antecedent, consequent = clue.characters
+        return [(-self.mapper.variable_for(antecedent), self.mapper.variable_for(consequent))]
+
     def _encode_exactly(self, clue: Clue) -> list[Clause]:
-        region_ids = self.region_resolver.resolve(clue.region)
+        region_ids = self._resolve_counting_region(clue)
         return [*self._at_least_k(region_ids, clue.k), *self._at_most_k(region_ids, clue.k)]
 
     def _encode_at_least(self, clue: Clue) -> list[Clause]:
-        region_ids = self.region_resolver.resolve(clue.region)
+        region_ids = self._resolve_counting_region(clue)
         return self._at_least_k(region_ids, clue.k)
 
     def _encode_at_most(self, clue: Clue) -> list[Clause]:
-        region_ids = self.region_resolver.resolve(clue.region)
+        region_ids = self._resolve_counting_region(clue)
         return self._at_most_k(region_ids, clue.k)
+
+    def _encode_odd(self, clue: Clue) -> list[Clause]:
+        region_ids = self.region_resolver.resolve(clue.region)
+        variables = tuple(self.mapper.variable_for(cell_id) for cell_id in region_ids)
+        clauses: list[Clause] = []
+        for values in itertools.product((False, True), repeat=len(variables)):
+            if sum(values) % 2 == 0:
+                clauses.append(
+                    tuple(-variable if value else variable for variable, value in zip(variables, values, strict=True))
+                )
+        return clauses
+
+    def _resolve_counting_region(self, clue: Clue) -> tuple[str, ...]:
+        region_ids = self.region_resolver.resolve(clue.region)
+        if clue.k > len(region_ids):
+            raise ValueError(
+                f"clue {clue.id} has k={clue.k} greater than region size {len(region_ids)}"
+            )
+        return region_ids
 
     def _literal_for_status(self, character_id: str, status: Status) -> int:
         variable = self.mapper.variable_for(character_id)

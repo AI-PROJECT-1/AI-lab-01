@@ -1,0 +1,23 @@
+{
+  "id": "fact-chain-4x4",
+  "title": "The Museum Circuit",
+  "size": 4,
+  "cards": [
+    {"cell":"A1","name":"Aster","profession":"Architect","status":"CRIMINAL","initially_revealed":true,"clue":{"id":"F4-01","type":"FACT","target":"B1","status":"INNOCENT"}},
+    {"cell":"B1","name":"Birch","profession":"Baker","status":"INNOCENT","initially_revealed":false,"clue":{"id":"F4-02","type":"FACT","target":"C1","status":"CRIMINAL"}},
+    {"cell":"C1","name":"Cedar","profession":"Carpenter","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"F4-03","type":"FACT","target":"D1","status":"INNOCENT"}},
+    {"cell":"D1","name":"Dahlia","profession":"Doctor","status":"INNOCENT","initially_revealed":false,"clue":{"id":"F4-04","type":"FACT","target":"A2","status":"CRIMINAL"}},
+    {"cell":"A2","name":"Elm","profession":"Editor","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"F4-05","type":"FACT","target":"B2","status":"INNOCENT"}},
+    {"cell":"B2","name":"Flora","profession":"Florist","status":"INNOCENT","initially_revealed":false,"clue":{"id":"F4-06","type":"FACT","target":"C2","status":"CRIMINAL"}},
+    {"cell":"C2","name":"Grove","profession":"Geologist","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"F4-07","type":"FACT","target":"D2","status":"INNOCENT"}},
+    {"cell":"D2","name":"Hazel","profession":"Historian","status":"INNOCENT","initially_revealed":false,"clue":{"id":"F4-08","type":"FACT","target":"A3","status":"CRIMINAL"}},
+    {"cell":"A3","name":"Iris","profession":"Inspector","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"F4-09","type":"FACT","target":"B3","status":"INNOCENT"}},
+    {"cell":"B3","name":"Juniper","profession":"Journalist","status":"INNOCENT","initially_revealed":false,"clue":{"id":"F4-10","type":"FACT","target":"C3","status":"CRIMINAL"}},
+    {"cell":"C3","name":"Kale","profession":"Keeper","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"F4-11","type":"FACT","target":"D3","status":"INNOCENT"}},
+    {"cell":"D3","name":"Lily","profession":"Lawyer","status":"INNOCENT","initially_revealed":false,"clue":{"id":"F4-12","type":"FACT","target":"A4","status":"CRIMINAL"}},
+    {"cell":"A4","name":"Maple","profession":"Musician","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"F4-13","type":"FACT","target":"B4","status":"INNOCENT"}},
+    {"cell":"B4","name":"Nettle","profession":"Nurse","status":"INNOCENT","initially_revealed":false,"clue":{"id":"F4-14","type":"FACT","target":"C4","status":"CRIMINAL"}},
+    {"cell":"C4","name":"Olive","profession":"Optician","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"F4-15","type":"FACT","target":"D4","status":"INNOCENT"}},
+    {"cell":"D4","name":"Pine","profession":"Pilot","status":"INNOCENT","initially_revealed":false,"clue":{"id":"F4-16","type":"FACT","target":"A1","status":"CRIMINAL"}}
+  ]
+}

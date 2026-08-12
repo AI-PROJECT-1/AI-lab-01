@@ -33,9 +33,9 @@ class Clue:
             validate_cell_id(self.target)
             if self.characters or self.region is not None or self.k is not None:
                 raise ValueError("FACT may only define target and status")
-        elif self.type in (ClueType.SAME, ClueType.DIFFERENT):
+        elif self.type in (ClueType.SAME, ClueType.DIFFERENT, ClueType.IMPLIES):
             if len(self.characters) != 2 or len(set(self.characters)) != 2:
-                raise ValueError("SAME/DIFFERENT require two distinct character ids")
+                raise ValueError("SAME/DIFFERENT/IMPLIES require two distinct character ids")
             for character_id in self.characters:
                 validate_cell_id(character_id)
             if self.target is not None or self.status is not None or self.region is not None or self.k is not None:
@@ -47,6 +47,11 @@ class Clue:
                 raise ValueError("counting clue k must be a non-negative integer")
             if self.target is not None or self.status is not None or self.characters:
                 raise ValueError("counting clues may only define region and k")
+        elif self.type is ClueType.ODD:
+            if self.region is None:
+                raise ValueError("ODD requires a region")
+            if self.target is not None or self.status is not None or self.characters or self.k is not None:
+                raise ValueError("ODD may only define a region")
         else:
             raise ValueError(f"unsupported clue type: {self.type!r}")
 
@@ -59,6 +64,10 @@ class Clue:
             return f"{self.characters[0]} and {self.characters[1]} have the same status."
         if self.type is ClueType.DIFFERENT:
             return f"{self.characters[0]} and {self.characters[1]} have different statuses."
+        if self.type is ClueType.IMPLIES:
+            return f"If {self.characters[0]} is criminal, then {self.characters[1]} is criminal."
+        if self.type is ClueType.ODD:
+            return f"An odd number of criminals are in {self.region.describe()}."
         phrase = {
             ClueType.EXACTLY: "Exactly",
             ClueType.AT_LEAST: "At least",
