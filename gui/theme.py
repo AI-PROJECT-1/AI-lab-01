@@ -23,6 +23,16 @@ COLORS = {
     "focus_soft": "#F7E9C7",
     "success": "#356247",
     "info": "#365C78",
+    "card_unresolved": "#F2EEE6",
+    "card_unresolved_border": "#B8AFA1",
+    "card_criminal": "#F8E6E3",
+    "card_criminal_border": "#A94D47",
+    "card_innocent": "#E3EFEA",
+    "card_innocent_border": "#3F7460",
+    "avatar_1": "#547A72",
+    "avatar_2": "#6E6688",
+    "avatar_3": "#8A684D",
+    "avatar_4": "#526F8A",
 }
 
 SPACING = {
@@ -135,4 +145,3 @@ def _configure_button(
         background=[("active", active_background), ("disabled", COLORS["surface_alt"])],
         foreground=[("disabled", COLORS["muted"])],
     )
-

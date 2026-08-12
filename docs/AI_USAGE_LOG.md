@@ -119,4 +119,24 @@
 - Tests performed: pre-checkpoint 77/77 regression and boundary scan PASS; final 80/80 regression, compile, diff check, boundary scan, and Tkinter 3x3/4x4 smoke tests PASS.
 - Phase 08-13 checkpoint: `03584c3859a12e7a57385a7d860e48f084d0c210` (`feat(project): checkpoint phases 08-13`).
 - Related Prompt ID: PROMPT-004
+- Related Git commit hash: `f6b5713`
+
+## AI-008
+
+- Date: 2026-08-12
+- AI tool: OpenAI Codex
+- Model: GPT-5
+- Developer/member: Trần Hữu Phước - 24127511
+- Phase: Griductive GUI fidelity refactor, UI Phase 2
+- Purpose: Replace debug-style board buttons with responsive, game-style CharacterCard components while preserving public-only data and all existing gameplay behavior.
+- Files affected: `gui/character_card.py`, `gui/board_view.py`, `gui/view_model.py`, `gui/theme.py`, minor responsive integration in `gui/app.py`, `tests/test_character_card.py`, `tests/test_gui.py`, and audit logs.
+- Avatar strategy: Project-owned deterministic initials tiles. Initials derive only from the public name; palette choice derives deterministically from the public character ID. No downloaded, scraped, copyrighted, or generated external artwork is used.
+- Visual-state architecture: `CardBaseState` (`UNRESOLVED`, `CRIMINAL`, `INNOCENT`) composes independently with `CardModifiers` (`selected`, `clue_highlighted`, `newly_revealed`). Nested outlines preserve base status surface and textual badge when modifiers overlap.
+- Hidden/public isolation: CharacterCard accepts only `CardViewModel`, which is built from `PublicKnowledgeState`; unresolved visible text excludes verdict placeholders, face-state labels, clue placeholders, and unrevealed clue IDs.
+- Responsive decisions: horizontal avatar/identity/coordinate header; compact fonts and 28-character public clue preview for 4x4; 52-character preview for 3x3; complete clue remains in the unchanged Revealed Clues panel; window geometry respects screen bounds.
+- Accepted: deterministic initials avatars, textual status badges, independent modifier outlines, safe clue preview, size-aware composition, and visual QA at actual DPI.
+- Rejected/deferred: external portraits, copyrighted assets, full clue text in every 4x4 card, contextual verdict actions, CluePanel redesign, Hint changes, Solver Details drawer, completion metrics, and any protected-module change.
+- Human verification performed: DPI-aware screenshots inspected for unresolved, mixed revealed/unresolved, selected unresolved, Criminal, Innocent, highlighted revealed, and completed 4x4 states; final UI Phase 2 acceptance is PENDING.
+- Tests performed: `python -m pytest -q` unavailable because pytest is not installed; supported full runner passed 87/87; compile, diff, boundary/external-solver/protected-module scans, 3x3 smoke, and 4x4 smoke passed.
+- Related Prompt ID: PROMPT-005
 - Related Git commit hash: PENDING

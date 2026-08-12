@@ -54,4 +54,18 @@
 - Short summary of response: Audited GUI/GameEngine/LogicAgent, diagnosed repeated B1 trace entries as separate requests rather than repeated solved selection, created checkpoint `03584c3`, and implemented a presentation-only ttk visual foundation with no AI/gameplay changes.
 - Decision: ACCEPTED FOR UI PHASE 1 ONLY
 - Related AI Usage ID: AI-007
-- Related commits: Phase 08-13 checkpoint `03584c3`; UI Phase 1 PENDING
+- Related commits: Phase 08-13 checkpoint `03584c3`; UI Phase 1 `f6b5713`
+
+## PROMPT-005
+
+- Date: 2026-08-12
+- Tool: OpenAI Codex
+- Model: GPT-5
+- Member: Trần Hữu Phước - 24127511
+- Phase: Griductive GUI refactor, UI Phase 2 only
+- Goal: Redesign board character cards using public presentation data, deterministic avatars, accessible verdict badges, composable visual states, and responsive 3x3/4x4 layouts without changing gameplay or protected modules.
+- Full prompt: User approved UI Phase 1 and authorized only Character Card redesign, with explicit hidden/public isolation, no debug metadata on unresolved cards, textual Criminal/Innocent status, safe clue previews, composable selection/highlight/new-reveal modifiers, regression tests, visual inspection, and a stop before UI Phase 3.
+- Short summary of response: Committed UI Phase 1 as `f6b5713`, introduced a reusable public-only CharacterCard, removed unresolved debug text, preserved canonical selection/highlighting, adapted card/window sizing to actual screen DPI, and verified all required visual states.
+- Decision: ACCEPTED FOR UI PHASE 2 ONLY
+- Related AI Usage ID: AI-008
+- Related commits: UI Phase 1 `f6b5713`; UI Phase 2 PENDING

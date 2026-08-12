@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from enum import StrEnum
 
 from core.character import column_label
 from core.enums import Status
@@ -26,11 +27,71 @@ class CardViewModel:
         return f"{column_label(self.column)}{self.row}"
 
     @property
-    def button_text(self) -> str:
-        face = "FACE-UP" if self.face_up else "FACE-DOWN"
-        status = self.status.value if self.status else "UNKNOWN"
-        clue = f"Clue: {self.clue_id}" if self.clue_id else "Clue: hidden"
-        return "\n".join((self.coordinate, self.name, self.profession, status, face, clue))
+    def initials(self) -> str:
+        words = tuple(part for part in self.name.split() if part)
+        if len(words) >= 2:
+            return f"{words[0][0]}{words[-1][0]}".upper()
+        return self.name[:2].upper()
+
+    @property
+    def base_state(self) -> "CardBaseState":
+        if self.status is Status.CRIMINAL:
+            return CardBaseState.CRIMINAL
+        if self.status is Status.INNOCENT:
+            return CardBaseState.INNOCENT
+        return CardBaseState.UNRESOLVED
+
+    def clue_preview(self, max_length: int) -> str | None:
+        if self.clue_text is None:
+            return None
+        normalized = " ".join(self.clue_text.split())
+        if len(normalized) <= max_length:
+            return normalized
+        shortened = normalized[: max_length - 1].rsplit(" ", 1)[0]
+        return f"{shortened or normalized[: max_length - 1]}…"
+
+    def visible_text(self, max_clue_length: int = 84) -> str:
+        """Return only text that is safe to present from this public view model."""
+
+        parts = [self.coordinate, self.initials, self.name, self.profession]
+        if self.status is not None:
+            parts.append(self.status.value)
+        preview = self.clue_preview(max_clue_length)
+        if preview is not None:
+            parts.append(preview)
+        return "\n".join(parts)
+
+
+class CardBaseState(StrEnum):
+    UNRESOLVED = "UNRESOLVED"
+    CRIMINAL = "CRIMINAL"
+    INNOCENT = "INNOCENT"
+
+
+@dataclass(frozen=True, slots=True)
+class CardModifiers:
+    selected: bool = False
+    clue_highlighted: bool = False
+    newly_revealed: bool = False
+
+
+@dataclass(frozen=True, slots=True)
+class CardVisualState:
+    base: CardBaseState
+    modifiers: CardModifiers = CardModifiers()
+
+
+def compose_card_visual_state(
+    card: CardViewModel,
+    *,
+    selected: bool = False,
+    clue_highlighted: bool = False,
+    newly_revealed: bool = False,
+) -> CardVisualState:
+    return CardVisualState(
+        card.base_state,
+        CardModifiers(selected, clue_highlighted, newly_revealed),
+    )
 
 
 def build_card_views(state: PublicKnowledgeState) -> tuple[CardViewModel, ...]:

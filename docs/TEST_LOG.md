@@ -38,3 +38,12 @@ Only commands actually executed are recorded here.
 | 2026-08-12 | UI Phase 1 | external-solver and forbidden-import scan | PASS | No AI/game boundary change introduced by presentation refactor |
 | 2026-08-12 | UI Phase 1 | Tkinter 3x3/4x4 interaction and layout smoke script | PASS | Both requested 935x742 within 1180x800; 3x3 Hint/Solve Next and 4x4 Hint/Auto Solve passed; trace retained |
 | 2026-08-12 | UI Phase 1 | `git diff --check` | PASS | No whitespace errors; line-ending conversion warnings only |
+| 2026-08-12 | UI Phase 2 | `python -m pytest -q` | UNAVAILABLE | Command executed as requested; environment reports `No module named pytest`; no new external test dependency was added |
+| 2026-08-12 | UI Phase 2 | `python -m unittest discover -s tests` | PASS | 87/87 tests, including unresolved-data exclusion, textual verdicts, public clue timing, preview bounds, deterministic avatars, and visual-state composition |
+| 2026-08-12 | UI Phase 2 | `python -m compileall -q .` | PASS | Full repository compiles after CharacterCard refactor |
+| 2026-08-12 | UI Phase 2 | boundary and external SAT solver scans | PASS | No hidden/Puzzle/GameEngine import entered agent/logic/sat and no external SAT dependency was found |
+| 2026-08-12 | UI Phase 2 | protected-module diff from `f6b5713` | PASS | No changes in `agent/`, `game/`, `core/`, `logic/`, `sat/`, or `puzzles/` |
+| 2026-08-12 | UI Phase 2 | Tkinter 3x3 state-composition smoke | PASS | 9 cards; selected B2 remained unresolved; highlighted C1 remained Criminal; B1 remained Innocent; all card and clue widgets stayed within bounds |
+| 2026-08-12 | UI Phase 2 | Tkinter completed 4x4 smoke | PASS | 16 revealed cards; longest current name/profession rendered; every textual badge and compact public clue preview stayed within card/board bounds |
+| 2026-08-12 | UI Phase 2 | DPI-aware visual inspection | PASS | Inspected unresolved, mixed, selected, Criminal, Innocent, clue-highlighted, and completed 4x4 states; coordinate omission found and corrected; clipped 4x4 preview found and corrected |
+| 2026-08-12 | UI Phase 2 | `git diff --check` | PASS | No whitespace errors; line-ending conversion warnings only |

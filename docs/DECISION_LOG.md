@@ -84,4 +84,17 @@
 - Responsive rule: Default 1180x800 layout and size-aware board geometry must accommodate both current 3x3 and 4x4 puzzles; container columns retain flexible weights.
 - Hint rule: The UI must not describe a latest or active clue as a unique deduction cause because the agent does not provide a proof anchor.
 - Related requirement: Griductive GUI fidelity refactor sections 1-4, 13-16, 21-24; Project 2 GUI requirements.
+- Related commit: `f6b5713`.
+
+## DEC-009 - Public-only CharacterCard with composable base and modifier states
+
+- Context: Board cards must feel like character cards, remove unresolved debug metadata, preserve accessible verdict text, and retain selection plus canonical clue highlighting without altering game or solver behavior.
+- Options considered: continue rendering one multiline Button string; maintain one mutually exclusive style per state combination; use external portrait assets; introduce a reusable card component with deterministic initials and layered visual state.
+- Chosen option: `CharacterCard` consumes only `CardViewModel`; `CardBaseState` controls unresolved/criminal/innocent identity while independent modifier outlines represent selected, clue-highlighted, and newly-revealed states.
+- Reason: Layered state prevents highlight or selection from replacing verdict identity, and the public view-model boundary makes hidden-data leakage structurally unnecessary.
+- Avatar decision: Derive initials from public names and choose from a project-owned palette using public character IDs. No network, image dependency, or copyrighted asset is required.
+- Clue decision: Show a bounded preview only when `clue_text` exists publicly. Use 52 characters for 3x3 and 28 for 4x4; full public clue text remains in the existing clue panel.
+- Responsive consequence: Character identity uses a horizontal avatar/name/profession/coordinate header. The default geometry is bounded to the current screen, and 4x4 card height is kept within its allocated board row.
+- Accessibility consequence: Revealed cards always contain literal `CRIMINAL` or `INNOCENT` badges; color only reinforces the status.
+- Related requirement: Griductive GUI fidelity refactor UI Phase 2; Project 2 board, coordinate, verdict, clue, and privacy requirements.
 - Related commit: PENDING.

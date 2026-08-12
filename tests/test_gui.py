@@ -28,17 +28,33 @@ class ViewModelTests(unittest.TestCase):
         self.assertEqual(tuple(card.character_id for card in cards), ("A1", "B1", "C1", "A2", "B2", "C2", "A3", "B3", "C3"))
         self.assertTrue(cards[0].face_up)
         self.assertEqual(cards[0].status, Status.CRIMINAL)
-        self.assertIn("CL-01", cards[0].button_text)
+        self.assertIn("CRIMINAL", cards[0].visible_text())
+        self.assertIn("B1 is innocent", cards[0].visible_text())
         self.assertFalse(cards[1].face_up)
-        self.assertIn("Ben", cards[1].button_text)
-        self.assertIn("Baker", cards[1].button_text)
-        self.assertIn("Clue: hidden", cards[1].button_text)
+        unresolved_text = cards[1].visible_text()
+        self.assertIn("B1", unresolved_text)
+        self.assertIn("Ben", unresolved_text)
+        self.assertIn("Baker", unresolved_text)
+        for forbidden in ("UNKNOWN", "FACE-DOWN", "Clue: hidden", "CL-02"):
+            self.assertNotIn(forbidden, unresolved_text)
 
     def test_accepted_verdict_flips_card_view(self) -> None:
         self.engine.submit_verdict("B1", Status.INNOCENT)
         card = build_card_views(self.engine.public_state())[1]
         self.assertTrue(card.face_up)
         self.assertEqual((card.status, card.clue_id), (Status.INNOCENT, "CL-02"))
+        self.assertIn("INNOCENT", card.visible_text())
+        self.assertIn("C1 is criminal", card.visible_text())
+
+    def test_unrevealed_clue_appears_only_after_public_reveal(self) -> None:
+        before = build_card_views(self.engine.public_state())[1]
+        self.assertIsNone(before.clue_text)
+        self.assertNotIn("C1 is criminal", before.visible_text())
+
+        self.engine.submit_verdict("B1", Status.INNOCENT)
+        after = build_card_views(self.engine.public_state())[1]
+        self.assertEqual(after.clue_text, "C1 is criminal.")
+        self.assertIn("C1 is criminal", after.visible_text())
 
 
 class ControllerTests(unittest.TestCase):
