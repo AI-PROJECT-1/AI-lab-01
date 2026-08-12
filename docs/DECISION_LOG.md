@@ -72,4 +72,16 @@
 - Reason: This preserves the hidden/public boundary and ensures every wave includes only clues legitimately revealed by earlier proofs.
 - Consequences: More SAT calls than a batch mutation approach, but deterministic traceability and correct progressive semantics.
 - Related requirement: Master prompt sections 11-13, 17-18, and Phases 09-10.
+- Related commit: `03584c3`.
+
+## DEC-008 - Tokenized ttk visual foundation with semantic control groups
+
+- Context: The functional Tkinter GUI needs a clearer game-oriented hierarchy, but UI Phase 1 may not change gameplay, reasoning, trace data, or hidden/public boundaries.
+- Options considered: continue per-widget styling; adopt a third-party theme; replace Tkinter; define project-owned ttk design tokens and reusable presentation primitives.
+- Chosen option: Keep Tkinter/ttk and centralize color, spacing, typography, button styles, header, feedback shell, and control-group primitives in `gui/theme.py` and `gui/components.py`.
+- Reason: This creates a consistent visual language without adding dependencies, copying proprietary assets, or coupling presentation to AI/game state.
+- Consequences: Existing card and clue content remain intentionally unchanged until their approved phases. Controls are visually grouped as GAME, PLAYER VERDICT, ASSISTANCE, and SOLVER while retaining the same callbacks. The trace remains visible and intact in Phase 1.
+- Responsive rule: Default 1180x800 layout and size-aware board geometry must accommodate both current 3x3 and 4x4 puzzles; container columns retain flexible weights.
+- Hint rule: The UI must not describe a latest or active clue as a unique deduction cause because the agent does not provide a proof anchor.
+- Related requirement: Griductive GUI fidelity refactor sections 1-4, 13-16, 21-24; Project 2 GUI requirements.
 - Related commit: PENDING.

@@ -31,3 +31,10 @@ Only commands actually executed are recorded here.
 | 2026-08-12 | Boundary | external-solver and forbidden-import scan | PASS | No external SAT solver; `agent`, `logic`, and `sat` do not import `game`, `Puzzle`, or hidden solution data |
 | 2026-08-12 | 10-11 | Tkinter Hint + clue highlight + Auto Solve smoke test | PASS | Default puzzle reached COMPLETE; 9 trace entries displayed; FACT target highlighted; clean shutdown |
 | 2026-08-12 | 08-13 | `git diff --check` | PASS | No whitespace errors; line-ending conversion warnings only |
+| 2026-08-12 | Pre-UI checkpoint | `python -m unittest discover -s tests` | PASS | 77/77 tests before any GUI refactor; exact Phase 08-13 state preserved in `03584c3` |
+| 2026-08-12 | Pre-UI checkpoint | external-solver and forbidden-import scan | PASS | Boundary remained clean immediately before checkpoint `03584c3` |
+| 2026-08-12 | UI Phase 1 | `python -m unittest discover -s tests` | PASS | 80/80 tests: original 77 plus 3 visual-foundation contract tests |
+| 2026-08-12 | UI Phase 1 | `python -m compileall -q .` | PASS | Full repository compiles; no non-GUI runtime dependency added |
+| 2026-08-12 | UI Phase 1 | external-solver and forbidden-import scan | PASS | No AI/game boundary change introduced by presentation refactor |
+| 2026-08-12 | UI Phase 1 | Tkinter 3x3/4x4 interaction and layout smoke script | PASS | Both requested 935x742 within 1180x800; 3x3 Hint/Solve Next and 4x4 Hint/Auto Solve passed; trace retained |
+| 2026-08-12 | UI Phase 1 | `git diff --check` | PASS | No whitespace errors; line-ending conversion warnings only |

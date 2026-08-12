@@ -83,7 +83,7 @@
 - Human verification performed: PENDING team review of this audit and code diff.
 - Tests performed: `python -m pytest -q` failed because pytest is not installed; existing DPLL functions then passed when invoked directly; 3,500 diagnostic DPLL cases passed against brute force; final discoverable regression and GUI smoke results are recorded in `TEST_LOG.md`.
 - Related Prompt ID: PROMPT-002
-- Related Git commit hash: PENDING
+- Related Git commit hash: `03584c3`
 
 ## AI-006
 
@@ -100,4 +100,23 @@
 - Human verification performed: PENDING team review and visual acceptance.
 - Tests performed: 77/77 unittests passed; all JSON parsed; full compile passed; GUI smoke and boundary scans recorded in `TEST_LOG.md`.
 - Related Prompt ID: PROMPT-003
+- Related Git commit hash: `03584c3`
+
+## AI-007
+
+- Date: 2026-08-12
+- AI tool: OpenAI Codex
+- Model: GPT-5
+- Developer/member: Trần Hữu Phước - 24127511
+- Phase: Griductive GUI fidelity refactor, UI Phase 0-1
+- Purpose: Audit the current presentation architecture, preserve Phase 08-13, create a real Git checkpoint, and establish a responsive visual foundation without changing gameplay or AI behavior.
+- Files affected: `gui/app.py`, `gui/board_view.py`, `gui/clue_panel.py`, `gui/controls.py`, `gui/trace_panel.py`, new `gui/theme.py`, new `gui/components.py`, `tests/test_gui_foundation.py`, and audit logs.
+- Summary of AI suggestion: Centralize project-owned color/spacing/type tokens, introduce reusable header/feedback/control-group primitives, establish a board-first responsive container, and organize existing controls into GAME, PLAYER VERDICT, ASSISTANCE, and SOLVER groups.
+- Accepted: Standard-library ttk theme, reusable presentation primitives, semantic control grouping, responsive 3x3/4x4 sizing, and preservation of all callbacks and trace data.
+- Rejected/deferred: Character-card redesign, clue-card redesign, collapsible trace, new Hint reasoning, completion metrics, and any LogicAgent/GameEngine/CNF/DPLL change; these are outside UI Phase 1.
+- Hint fidelity: No clue is described as a unique cause. The current API exposes only `active_clue_ids`; no latest-clue causal claim was added.
+- Human verification performed: UI Phase 0 plan approved by the user; Phase 1 visual acceptance is PENDING.
+- Tests performed: pre-checkpoint 77/77 regression and boundary scan PASS; final 80/80 regression, compile, diff check, boundary scan, and Tkinter 3x3/4x4 smoke tests PASS.
+- Phase 08-13 checkpoint: `03584c3859a12e7a57385a7d860e48f084d0c210` (`feat(project): checkpoint phases 08-13`).
+- Related Prompt ID: PROMPT-004
 - Related Git commit hash: PENDING

@@ -26,7 +26,7 @@
 - Short summary of response: Audited all 1,503 prompt lines and all 9 PDF pages; found test-discovery, region/count validation, DPLL input validation, mock inconsistency, and documentation drift; implemented root-cause fixes and expanded independent verification.
 - Decision: ACCEPTED
 - Related AI Usage ID: AI-005
-- Related commits: PENDING
+- Related commits: `03584c3`
 
 ## PROMPT-003
 
@@ -40,4 +40,18 @@
 - Short summary of response: Added public-only SAT entailment and progressive engine integration, trace and uniqueness, canonical GUI highlighting, `IMPLIES`/`ODD`, and four automatically validated puzzles.
 - Decision: ACCEPTED
 - Related AI Usage ID: AI-006
-- Related commits: PENDING
+- Related commits: `03584c3`
+
+## PROMPT-004
+
+- Date: 2026-08-12
+- Tool: OpenAI Codex
+- Model: GPT-5
+- Member: Trần Hữu Phước - 24127511
+- Phase: Griductive GUI refactor audit and UI Phase 1
+- Goal: Improve GUI/gameplay fidelity while preserving the Project 2 architecture, then execute only the approved visual-foundation phase after safely checkpointing Phase 08-13.
+- Full prompt: User supplied `GRIDUCTIVE GUI & GAMEPLAY FIDELITY REFACTOR`, approved UI Phase 0 with corrections, required a real Git checkpoint, clarified that `active_clue_ids` do not prove a unique causal clue, and authorized only layout hierarchy, theme, spacing, typography, semantic control grouping, reusable primitives, and responsive containers.
+- Short summary of response: Audited GUI/GameEngine/LogicAgent, diagnosed repeated B1 trace entries as separate requests rather than repeated solved selection, created checkpoint `03584c3`, and implemented a presentation-only ttk visual foundation with no AI/gameplay changes.
+- Decision: ACCEPTED FOR UI PHASE 1 ONLY
+- Related AI Usage ID: AI-007
+- Related commits: Phase 08-13 checkpoint `03584c3`; UI Phase 1 PENDING

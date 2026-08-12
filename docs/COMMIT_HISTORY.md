@@ -1,7 +1,9 @@
 # Commit History
 
-Generated from real Git history through `main` commit `33ed1d3` on 2026-08-12.
-The current audit changes remain uncommitted and are not assigned a hash.
+Generated from real Git history through the Phase 08-13 checkpoint `03584c3` on 2026-08-12.
+UI Phase 1 changes after that checkpoint remain uncommitted and are not assigned a hash.
+
+Verified checkpoint: `03584c3859a12e7a57385a7d860e48f084d0c210` | 2026-08-12 22:14:30 +0700 | Trần Phước | `feat(project): checkpoint phases 08-13`
 
 ```text
 4f59755 | 2026-06-30 15:07:17 +0700 | Trần Phước | Initial commit

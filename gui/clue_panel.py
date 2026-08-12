@@ -7,14 +7,27 @@ from collections.abc import Callable
 from tkinter import ttk
 
 from core.public_state import PublicKnowledgeState
+from gui.theme import COLORS, FONTS, SPACING
 
 
 class CluePanel(ttk.LabelFrame):
     def __init__(self, parent: tk.Misc, on_select: Callable[[str], None]) -> None:
-        super().__init__(parent, text="Revealed clues", padding=8)
+        super().__init__(parent, text="REVEALED CLUES", style="Panel.TLabelframe", padding=SPACING["md"])
         self._on_select = on_select
         self._owner_ids: list[str] = []
-        self._listbox = tk.Listbox(self, height=12, exportselection=False)
+        self._listbox = tk.Listbox(
+            self,
+            height=12,
+            exportselection=False,
+            background=COLORS["surface"],
+            foreground=COLORS["ink"],
+            selectbackground=COLORS["accent_soft"],
+            selectforeground=COLORS["ink"],
+            borderwidth=0,
+            highlightthickness=0,
+            font=FONTS["body"],
+            activestyle="none",
+        )
         scrollbar = ttk.Scrollbar(self, orient="vertical", command=self._listbox.yview)
         self._listbox.configure(yscrollcommand=scrollbar.set)
         self._listbox.grid(row=0, column=0, sticky="nsew")

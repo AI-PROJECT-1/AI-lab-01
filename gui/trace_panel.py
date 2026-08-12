@@ -6,12 +6,23 @@ import tkinter as tk
 from tkinter import ttk
 
 from agent.deduction_trace import DeductionTraceStep
+from gui.theme import COLORS, FONTS, SPACING
 
 
 class TracePanel(ttk.LabelFrame):
     def __init__(self, parent: tk.Misc) -> None:
-        super().__init__(parent, text="Solver trace", padding=8)
-        self._listbox = tk.Listbox(self, height=8, exportselection=False)
+        super().__init__(parent, text="SOLVER TRACE", style="Panel.TLabelframe", padding=SPACING["md"])
+        self._listbox = tk.Listbox(
+            self,
+            height=8,
+            exportselection=False,
+            background=COLORS["surface_alt"],
+            foreground=COLORS["muted"],
+            borderwidth=0,
+            highlightthickness=0,
+            font=FONTS["small"],
+            activestyle="none",
+        )
         scrollbar = ttk.Scrollbar(self, orient="vertical", command=self._listbox.yview)
         self._listbox.configure(yscrollcommand=scrollbar.set)
         self._listbox.grid(row=0, column=0, sticky="nsew")

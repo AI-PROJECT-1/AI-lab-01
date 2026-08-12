@@ -5,6 +5,7 @@
 - Read all 1,503 lines of `prompt.txt`.
 - Extracted and visually reviewed all 9 pages of the official Project 2 PDF.
 - Audited all Python, JSON, tests, project logs, and Git history on `main` at `33ed1d3`.
+- Preserved the verified audit and Phase 08-13 implementation in real checkpoint `03584c3` before beginning the GUI fidelity refactor.
 - Initial debug scope covered Phases 00-07; the subsequent implementation pass completed and verified Phases 08-13. Phases 14-17 were assessed for presence only.
 
 ## Phase status

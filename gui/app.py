@@ -15,6 +15,8 @@ from gui.clue_panel import CluePanel
 from gui.controller import GameController, SelectionRequiredError
 from gui.controls import Controls
 from gui.trace_panel import TracePanel
+from gui.components import AppHeader, FeedbackBar
+from gui.theme import SPACING, configure_theme
 
 
 DEFAULT_PUZZLE = Path(__file__).parents[1] / "puzzles" / "sample_3x3.json"
@@ -22,32 +24,48 @@ DEFAULT_PUZZLE = Path(__file__).parents[1] / "puzzles" / "sample_3x3.json"
 
 class GriductiveApp(ttk.Frame):
     def __init__(self, root: tk.Tk, puzzle_path: str | Path = DEFAULT_PUZZLE) -> None:
-        super().__init__(root, padding=12)
+        configure_theme(root)
+        super().__init__(root, style="App.TFrame")
         root.title("Griductive Solver")
-        root.minsize(900, 640)
+        root.geometry("1180x800")
+        root.minsize(920, 680)
         self.grid(sticky="nsew")
         root.columnconfigure(0, weight=1)
         root.rowconfigure(0, weight=1)
-        self.columnconfigure(0, weight=3)
-        self.columnconfigure(1, weight=2)
-        self.rowconfigure(1, weight=1)
+        self.columnconfigure(0, weight=1)
+        self.rowconfigure(2, weight=1)
 
         puzzle = PuzzleLoader.load(puzzle_path)
         self._controller = GameController(GameEngine(puzzle, LogicAgent()))
         self._highlighted_ids: tuple[str, ...] = ()
         self._auto_running = False
         self._status = tk.StringVar(value="Ready. Select a character and submit a provable verdict.")
-        self._title = ttk.Label(self, style="Title.TLabel")
-        self._title.grid(row=0, column=0, columnspan=2, sticky="w", pady=(0, 8))
-        self._board = BoardView(self, self._select_character)
-        self._board.grid(row=1, column=0, sticky="nsew", padx=(0, 8))
-        sidebar = ttk.Frame(self)
-        sidebar.grid(row=1, column=1, sticky="nsew")
+        AppHeader(self).grid(row=0, column=0, sticky="ew")
+
+        title_area = ttk.Frame(self, style="App.TFrame", padding=(SPACING["xl"], SPACING["sm"], SPACING["xl"], 0))
+        title_area.grid(row=1, column=0, sticky="ew")
+        title_area.columnconfigure(0, weight=1)
+        self._title = ttk.Label(title_area, style="PuzzleTitle.TLabel")
+        self._title.grid(row=0, column=0, sticky="w")
+        ttk.Label(title_area, text="Select a card, then submit only a logically forced verdict.", style="Muted.TLabel").grid(
+            row=1, column=0, sticky="w", pady=(2, 0)
+        )
+
+        content = ttk.Frame(self, style="App.TFrame", padding=(SPACING["xl"], SPACING["sm"]))
+        content.grid(row=2, column=0, sticky="nsew")
+        content.columnconfigure(0, weight=3, minsize=520)
+        content.columnconfigure(1, weight=2, minsize=320)
+        content.rowconfigure(0, weight=1)
+
+        self._board = BoardView(content, self._select_character)
+        self._board.grid(row=0, column=0, sticky="nsew", padx=(0, SPACING["md"]))
+        sidebar = ttk.Frame(content, style="App.TFrame")
+        sidebar.grid(row=0, column=1, sticky="nsew")
         sidebar.columnconfigure(0, weight=1)
         sidebar.rowconfigure(0, weight=3)
         sidebar.rowconfigure(1, weight=2)
         self._clues = CluePanel(sidebar, self._select_clue)
-        self._clues.grid(row=0, column=0, sticky="nsew", pady=(0, 6))
+        self._clues.grid(row=0, column=0, sticky="nsew", pady=(0, SPACING["sm"]))
         self._trace = TracePanel(sidebar)
         self._trace.grid(row=1, column=0, sticky="nsew")
         self._controls = Controls(
@@ -60,13 +78,15 @@ class GriductiveApp(ttk.Frame):
             on_solve_next=self._solve_next,
             on_auto_solve=self._auto_solve,
         )
-        self._controls.grid(row=2, column=0, columnspan=2, sticky="w")
-        ttk.Label(self, textvariable=self._status, anchor="w", relief="sunken", padding=6).grid(
-            row=3, column=0, columnspan=2, sticky="ew"
+        self._controls.grid(row=3, column=0, sticky="ew", padx=SPACING["xl"])
+        FeedbackBar(self, self._status).grid(
+            row=4, column=0, sticky="ew", padx=SPACING["xl"], pady=(0, SPACING["sm"])
         )
-        ttk.Label(self, text="SAT entailment agent: public clues and proved verdicts only.", foreground="#6c757d").grid(
-            row=4, column=0, columnspan=2, sticky="w", pady=(6, 0)
-        )
+        ttk.Label(
+            self,
+            text="SAT entailment agent · public clues and proved verdicts only",
+            style="Muted.TLabel",
+        ).grid(row=5, column=0, sticky="w", padx=SPACING["xl"], pady=(0, SPACING["sm"]))
         self._render()
 
     def _render(self) -> None:
@@ -174,8 +194,6 @@ class GriductiveApp(ttk.Frame):
 
 def main() -> None:
     root = tk.Tk()
-    style = ttk.Style(root)
-    style.configure("Title.TLabel", font=("TkDefaultFont", 15, "bold"))
     try:
         GriductiveApp(root)
     except PuzzleFormatError as exc:
