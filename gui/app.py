@@ -14,9 +14,16 @@ from gui.board_view import BoardView
 from gui.clue_panel import CluePanel
 from gui.controller import GameController, SelectionRequiredError
 from gui.controls import Controls
+from gui.feedback import (
+    FeedbackTone,
+    feedback_for_verdict,
+    newly_revealed_character,
+    notice_feedback,
+)
 from gui.trace_panel import TracePanel
 from gui.components import AppHeader, FeedbackBar
 from gui.theme import SPACING, configure_theme
+from gui.view_model import CardViewModel, build_card_views
 
 
 DEFAULT_PUZZLE = Path(__file__).parents[1] / "puzzles" / "sample_3x3.json"
@@ -42,8 +49,8 @@ class GriductiveApp(ttk.Frame):
         puzzle = PuzzleLoader.load(puzzle_path)
         self._controller = GameController(GameEngine(puzzle, LogicAgent()))
         self._highlighted_ids: tuple[str, ...] = ()
+        self._newly_revealed_id: str | None = None
         self._auto_running = False
-        self._status = tk.StringVar(value="Ready. Select a character and submit a provable verdict.")
         AppHeader(self).grid(row=0, column=0, sticky="ew")
 
         title_area = ttk.Frame(self, style="App.TFrame", padding=(SPACING["xl"], SPACING["sm"], SPACING["xl"], 0))
@@ -83,7 +90,15 @@ class GriductiveApp(ttk.Frame):
             on_auto_solve=self._auto_solve,
         )
         self._controls.grid(row=3, column=0, sticky="ew", padx=SPACING["xl"])
-        FeedbackBar(self, self._status).grid(
+        self._feedback = FeedbackBar(
+            self,
+            notice_feedback(
+                "Ready",
+                "Select an unresolved character and submit only a verdict forced by public clues.",
+                FeedbackTone.NEUTRAL,
+            ),
+        )
+        self._feedback.grid(
             row=4, column=0, sticky="ew", padx=SPACING["xl"], pady=(0, SPACING["sm"])
         )
         ttk.Label(
@@ -97,37 +112,72 @@ class GriductiveApp(ttk.Frame):
         state = self._controller.state()
         completion = " - COMPLETE" if state.is_complete else ""
         self._title.configure(text=f"{state.title} ({state.size}x{state.size}){completion}")
-        self._board.render(state, self._controller.selected_character_id, self._highlighted_ids)
+        selected_card = self._card_for(state, self._controller.selected_character_id)
+        self._board.render(
+            state,
+            self._controller.selected_character_id,
+            self._highlighted_ids,
+            self._newly_revealed_id,
+        )
         self._clues.render(state)
         self._trace.render(self._controller.trace())
+        self._controls.set_verdict_context(selected_card)
+
+    @staticmethod
+    def _card_for(state, character_id: str | None) -> CardViewModel | None:
+        if character_id is None:
+            return None
+        return next((card for card in build_card_views(state) if card.character_id == character_id), None)
 
     def _select_character(self, character_id: str) -> None:
+        self._newly_revealed_id = None
         self._controller.select_character(character_id)
-        self._status.set(f"Selected {character_id}.")
+        card = self._card_for(self._controller.state(), character_id)
+        self._feedback.show(
+            notice_feedback(
+                "Character selected",
+                f"{card.name} ({card.coordinate}), {card.profession}." if card else character_id,
+                FeedbackTone.NEUTRAL,
+            )
+        )
+        self._render()
 
     def _select_clue(self, owner_id: str) -> None:
+        self._newly_revealed_id = None
         clue = self._controller.state().clue_for(owner_id)
         self._highlighted_ids = self._controller.select_clue(owner_id)
-        self._status.set(f"Selected {clue.id}: {clue.display_text()}")
+        self._feedback.show(notice_feedback("Public clue selected", clue.display_text()))
         self._render()
 
     def _submit(self, status: Status) -> None:
+        before = self._controller.state()
         try:
             result = self._controller.submit_selected(status)
         except SelectionRequiredError as exc:
-            self._status.set(str(exc))
+            self._newly_revealed_id = None
+            self._feedback.show(notice_feedback("Selection required", str(exc), FeedbackTone.WARNING))
             return
-        except AgentIntegrityError as exc:
-            messagebox.showerror("Agent integrity error", str(exc), parent=self)
-            self._status.set("No state change: agent integrity check failed.")
+        except AgentIntegrityError:
+            self._newly_revealed_id = None
+            safe_message = "The solver failed an internal integrity check. No public state was changed."
+            messagebox.showerror("Agent integrity error", safe_message, parent=self)
+            self._feedback.show(notice_feedback("Solver integrity error", safe_message, FeedbackTone.ERROR))
             return
-        self._status.set(f"{result.outcome.value}: {result.message}")
+        after = self._controller.state()
+        self._newly_revealed_id = newly_revealed_character(result, before, after)
+        card = self._card_for(after, result.character_id)
+        if card is None:
+            raise RuntimeError("verdict result references a character outside public state")
+        self._feedback.show(feedback_for_verdict(result, card))
         self._render()
 
     def _restart(self) -> None:
         self._controller.restart()
         self._highlighted_ids = ()
-        self._status.set("Puzzle restarted.")
+        self._newly_revealed_id = None
+        self._feedback.show(
+            notice_feedback("Puzzle restarted", "Selection and transient feedback were cleared.", FeedbackTone.NEUTRAL)
+        )
         self._render()
 
     def _load(self) -> None:
@@ -143,57 +193,67 @@ class GriductiveApp(ttk.Frame):
             self._controller.load(puzzle)
         except PuzzleFormatError as exc:
             messagebox.showerror("Invalid puzzle", str(exc), parent=self)
-            self._status.set("Load failed; current puzzle was not changed.")
+            self._feedback.show(
+                notice_feedback("Load failed", "The current puzzle was not changed.", FeedbackTone.ERROR)
+            )
             return
         self._highlighted_ids = ()
-        self._status.set(f"Loaded {puzzle.title}.")
+        self._newly_revealed_id = None
+        self._feedback.show(
+            notice_feedback("Puzzle loaded", f"Loaded {puzzle.title}. Selection was cleared.", FeedbackTone.NEUTRAL)
+        )
         self._render()
 
     def _hint(self) -> None:
+        self._newly_revealed_id = None
         hint = self._controller.hint()
-        self._status.set(f"HINT: {hint.message}")
+        self._feedback.show(notice_feedback("Hint", hint.message))
         if hint.deduction:
             self._controller.select_character(hint.deduction.character_id)
         self._render()
 
     def _solve_next(self) -> None:
+        self._newly_revealed_id = None
         try:
             result = self._controller.solve_next()
-        except AgentIntegrityError as exc:
-            messagebox.showerror("Agent integrity error", str(exc), parent=self)
+        except AgentIntegrityError:
+            safe_message = "The solver failed an internal integrity check. No public state was changed."
+            messagebox.showerror("Agent integrity error", safe_message, parent=self)
+            self._feedback.show(notice_feedback("Solver integrity error", safe_message, FeedbackTone.ERROR))
             return
         if result is None:
-            self._status.set("No unresolved verdict is currently forced.")
+            self._feedback.show(notice_feedback("No forced verdict", "No unresolved verdict is currently forced."))
         else:
-            self._status.set(f"SOLVE NEXT: {result.message}")
+            self._feedback.show(notice_feedback("Solve Next", result.message, FeedbackTone.SUCCESS))
         self._render()
 
     def _auto_solve(self) -> None:
         if self._auto_running:
             return
+        self._newly_revealed_id = None
         self._auto_running = True
         self._controls.set_auto_running(True)
-        self._status.set("Auto Solve started.")
+        self._feedback.show(notice_feedback("Auto Solve", "Progressive solving started."))
         self.after(1, self._auto_step)
 
     def _auto_step(self) -> None:
         try:
             result = self._controller.solve_next()
-        except AgentIntegrityError as exc:
-            self._finish_auto(f"Auto Solve stopped: {exc}")
+        except AgentIntegrityError:
+            self._finish_auto("Auto Solve stopped after an internal integrity check failed.")
             return
         self._render()
         if result is None:
             message = "Auto Solve complete." if self._controller.state().is_complete else "Auto Solve stopped: no forced verdict."
             self._finish_auto(message)
             return
-        self._status.set(f"AUTO: {result.message}")
+        self._feedback.show(notice_feedback("Auto Solve", result.message, FeedbackTone.SUCCESS))
         self.after(120, self._auto_step)
 
     def _finish_auto(self, message: str) -> None:
         self._auto_running = False
         self._controls.set_auto_running(False)
-        self._status.set(message)
+        self._feedback.show(notice_feedback("Auto Solve", message))
 
 
 def main() -> None:

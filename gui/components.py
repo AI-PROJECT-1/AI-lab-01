@@ -5,6 +5,7 @@ from __future__ import annotations
 import tkinter as tk
 from tkinter import ttk
 
+from gui.feedback import FeedbackTone, GameplayFeedback
 from gui.theme import SPACING
 
 
@@ -21,19 +22,38 @@ class AppHeader(ttk.Frame):
 
 
 class FeedbackBar(ttk.Frame):
-    """A visual shell for the existing status text; semantics stay in GriductiveApp."""
+    """Reusable, semantic gameplay feedback surface."""
 
-    def __init__(self, parent: tk.Misc, textvariable: tk.StringVar) -> None:
-        super().__init__(parent, style="Feedback.TFrame", padding=(SPACING["md"], 6))
-        self.columnconfigure(1, weight=1)
-        ttk.Label(self, text="●", style="Feedback.TLabel").grid(row=0, column=0, padx=(0, SPACING["sm"]))
-        ttk.Label(
-            self,
-            textvariable=textvariable,
-            style="Feedback.TLabel",
-            anchor="w",
-            wraplength=960,
-        ).grid(row=0, column=1, sticky="ew")
+    _SYMBOLS = {
+        FeedbackTone.NEUTRAL: "•",
+        FeedbackTone.SUCCESS: "✓",
+        FeedbackTone.INFO: "i",
+        FeedbackTone.WARNING: "!",
+        FeedbackTone.ERROR: "×",
+    }
+
+    def __init__(self, parent: tk.Misc, feedback: GameplayFeedback) -> None:
+        super().__init__(parent, padding=(SPACING["md"], 6))
+        self.columnconfigure(2, weight=1)
+        self._symbol = ttk.Label(self)
+        self._symbol.grid(row=0, column=0, padx=(0, SPACING["sm"]))
+        self._title = ttk.Label(self, anchor="w")
+        self._title.grid(row=0, column=1, sticky="w", padx=(0, SPACING["md"]))
+        self._message = ttk.Label(self, anchor="w", wraplength=960)
+        self._message.grid(row=0, column=2, sticky="ew")
+        self.show(feedback)
+
+    @property
+    def feedback(self) -> GameplayFeedback:
+        return self._feedback
+
+    def show(self, feedback: GameplayFeedback) -> None:
+        self._feedback = feedback
+        prefix = f"Feedback{feedback.tone.value.title()}"
+        self.configure(style=f"{prefix}.TFrame")
+        self._symbol.configure(text=self._SYMBOLS[feedback.tone], style=f"{prefix}.Symbol.TLabel")
+        self._title.configure(text=feedback.title, style=f"{prefix}.Title.TLabel")
+        self._message.configure(text=feedback.message, style=f"{prefix}.TLabel")
 
 
 class ControlGroup(ttk.LabelFrame):

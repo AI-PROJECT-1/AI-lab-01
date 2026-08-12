@@ -68,4 +68,18 @@
 - Short summary of response: Committed UI Phase 1 as `f6b5713`, introduced a reusable public-only CharacterCard, removed unresolved debug text, preserved canonical selection/highlighting, adapted card/window sizing to actual screen DPI, and verified all required visual states.
 - Decision: ACCEPTED FOR UI PHASE 2 ONLY
 - Related AI Usage ID: AI-008
-- Related commits: UI Phase 1 `f6b5713`; UI Phase 2 PENDING
+- Related commits: UI Phase 1 `f6b5713`; UI Phase 2 `48bea9d`
+
+## PROMPT-006
+
+- Date: 2026-08-12
+- Tool: OpenAI Codex
+- Model: GPT-5
+- Member: Trần Hữu Phước - 24127511
+- Phase: Griductive GUI refactor, UI Phase 3 only
+- Goal: Commit approved UI Phase 2, then implement contextual verdict controls, distinct public-only outcome feedback, reset-safe interaction state, and presentation-only newly-revealed emphasis without changing solver/game semantics.
+- Full prompt: User approved UI Phase 2, required atomic commit `feat(gui): redesign public character cards` with its real hash recorded, and authorized only contextual verdict interaction plus feedback for `ACCEPTED`, `NOT_PROVABLE`, `CONTRADICTED`, and `INCONSISTENT`, including Load/Restart resets and 3x3/4x4 verification.
+- Short summary of response: Created real Phase 2 commit `48bea9d038c7425a691b09d2bd8a2049b3825d0e`; added a public `VerdictContext`, reusable semantic `GameplayFeedback`, disabled submission without an unresolved selection, safe per-outcome wording, transient accepted-reveal emphasis, and reset-safe UI state.
+- Decision: ACCEPTED FOR UI PHASE 3 ONLY; final Phase 3 approval PENDING
+- Related AI Usage ID: AI-009
+- Related commits: UI Phase 2 `48bea9d`; UI Phase 3 PENDING

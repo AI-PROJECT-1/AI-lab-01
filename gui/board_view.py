@@ -26,6 +26,7 @@ class BoardView(ttk.LabelFrame):
         state: PublicKnowledgeState,
         selected_id: str | None = None,
         highlighted_ids: tuple[str, ...] = (),
+        newly_revealed_id: str | None = None,
     ) -> None:
         for child in self.winfo_children():
             child.destroy()
@@ -51,6 +52,7 @@ class BoardView(ttk.LabelFrame):
                 card,
                 selected=card.character_id == selected_id,
                 clue_highlighted=card.character_id in highlighted_ids,
+                newly_revealed=card.character_id == newly_revealed_id,
             )
             widget = CharacterCard(
                 self,

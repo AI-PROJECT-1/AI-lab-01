@@ -23,6 +23,8 @@ COLORS = {
     "focus_soft": "#F7E9C7",
     "success": "#356247",
     "info": "#365C78",
+    "warning": "#875B18",
+    "error": "#843C37",
     "card_unresolved": "#F2EEE6",
     "card_unresolved_border": "#B8AFA1",
     "card_criminal": "#F8E6E3",
@@ -65,7 +67,6 @@ def configure_theme(root: tk.Misc) -> ttk.Style:
     style.configure("App.TFrame", background=COLORS["canvas"])
     style.configure("Header.TFrame", background=COLORS["accent"])
     style.configure("Surface.TFrame", background=COLORS["surface"])
-    style.configure("Feedback.TFrame", background=COLORS["accent_soft"])
 
     style.configure(
         "AppTitle.TLabel",
@@ -91,11 +92,46 @@ def configure_theme(root: tk.Misc) -> ttk.Style:
         foreground=COLORS["muted"],
         font=FONTS["small"],
     )
+    feedback_colors = {
+        "Neutral": (COLORS["surface_alt"], COLORS["muted"]),
+        "Success": (COLORS["accent_soft"], COLORS["success"]),
+        "Info": ("#DFEAF1", COLORS["info"]),
+        "Warning": (COLORS["focus_soft"], COLORS["warning"]),
+        "Error": (COLORS["danger_soft"], COLORS["error"]),
+    }
+    for tone, (background, foreground) in feedback_colors.items():
+        prefix = f"Feedback{tone}"
+        style.configure(f"{prefix}.TFrame", background=background)
+        style.configure(
+            f"{prefix}.TLabel",
+            background=background,
+            foreground=COLORS["ink"],
+            font=FONTS["small"],
+        )
+        style.configure(
+            f"{prefix}.Title.TLabel",
+            background=background,
+            foreground=foreground,
+            font=FONTS["section"],
+        )
+        style.configure(
+            f"{prefix}.Symbol.TLabel",
+            background=background,
+            foreground=foreground,
+            font=FONTS["title"],
+        )
+
     style.configure(
-        "Feedback.TLabel",
-        background=COLORS["accent_soft"],
+        "VerdictIdentity.TLabel",
+        background=COLORS["surface"],
         foreground=COLORS["ink"],
-        font=FONTS["body"],
+        font=FONTS["section"],
+    )
+    style.configure(
+        "VerdictDetail.TLabel",
+        background=COLORS["surface"],
+        foreground=COLORS["muted"],
+        font=("Segoe UI", 8),
     )
 
     for style_name in ("Panel.TLabelframe", "ControlGroup.TLabelframe"):
@@ -118,6 +154,22 @@ def configure_theme(root: tk.Misc) -> ttk.Style:
     _configure_button(style, "Game.TButton", COLORS["surface_alt"], COLORS["ink"], "#DDD6C9")
     _configure_button(style, "Primary.TButton", COLORS["accent"], "#FFFFFF", COLORS["accent_hover"])
     _configure_button(style, "Danger.TButton", COLORS["danger"], "#FFFFFF", COLORS["danger_hover"])
+    _configure_button(
+        style,
+        "VerdictPrimary.TButton",
+        COLORS["accent"],
+        "#FFFFFF",
+        COLORS["accent_hover"],
+        padding=(8, 4),
+    )
+    _configure_button(
+        style,
+        "VerdictDanger.TButton",
+        COLORS["danger"],
+        "#FFFFFF",
+        COLORS["danger_hover"],
+        padding=(8, 4),
+    )
     _configure_button(style, "Assist.TButton", COLORS["focus_soft"], COLORS["ink"], "#EBD69D")
     _configure_button(style, "Solver.TButton", COLORS["accent_soft"], COLORS["ink"], "#CADDD6")
     return style
@@ -129,6 +181,7 @@ def _configure_button(
     background: str,
     foreground: str,
     active_background: str,
+    padding: tuple[int, int] = (12, 8),
 ) -> None:
     style.configure(
         name,
@@ -138,7 +191,7 @@ def _configure_button(
         focusthickness=2,
         focuscolor=COLORS["focus"],
         font=FONTS["button"],
-        padding=(12, 8),
+        padding=padding,
     )
     style.map(
         name,

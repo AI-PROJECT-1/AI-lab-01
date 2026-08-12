@@ -8,6 +8,8 @@ from tkinter import ttk
 
 from gui.components import ControlGroup
 from gui.theme import SPACING
+from gui.verdict_panel import VerdictPanel
+from gui.view_model import CardViewModel
 
 
 CONTROL_GROUP_ORDER = ("GAME", "PLAYER VERDICT", "ASSISTANCE", "SOLVER")
@@ -35,16 +37,8 @@ class Controls(ttk.Frame):
         ttk.Button(game, text="Load", command=on_load, style="Game.TButton").grid(row=0, column=0, padx=2)
         ttk.Button(game, text="Restart", command=on_restart, style="Game.TButton").grid(row=0, column=1, padx=2)
 
-        player = ControlGroup(self, CONTROL_GROUP_ORDER[1])
-        player.grid(row=0, column=1, sticky="nsew", padx=(0, SPACING["sm"]))
-        ttk.Button(player, text="INNOCENT", command=on_innocent, style="Primary.TButton").grid(
-            row=0, column=0, sticky="ew", padx=2
-        )
-        ttk.Button(player, text="CRIMINAL", command=on_criminal, style="Danger.TButton").grid(
-            row=0, column=1, sticky="ew", padx=2
-        )
-        player.columnconfigure(0, weight=1)
-        player.columnconfigure(1, weight=1)
+        self._verdict_panel = VerdictPanel(self, on_innocent, on_criminal)
+        self._verdict_panel.grid(row=0, column=1, sticky="nsew", padx=(0, SPACING["sm"]))
 
         assistance = ControlGroup(self, CONTROL_GROUP_ORDER[2])
         assistance.grid(row=0, column=2, sticky="nsew", padx=(0, SPACING["sm"]))
@@ -65,3 +59,10 @@ class Controls(ttk.Frame):
 
     def set_auto_running(self, running: bool) -> None:
         self._auto_button.configure(state="disabled" if running else "normal")
+
+    @property
+    def verdict_panel(self) -> VerdictPanel:
+        return self._verdict_panel
+
+    def set_verdict_context(self, card: CardViewModel | None) -> None:
+        self._verdict_panel.set_context(card)

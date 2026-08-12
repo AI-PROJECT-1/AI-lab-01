@@ -92,9 +92,10 @@ class CharacterCard(tk.Frame):
         self._content = tk.Frame(self._reveal_outline, borderwidth=0, highlightthickness=0)
         self._content.pack(fill="both", expand=True)
         self._content.columnconfigure(0, weight=1)
+        self._content.columnconfigure(1, weight=1)
 
         self._header = tk.Frame(self._content, borderwidth=0, highlightthickness=0)
-        self._header.grid(row=0, column=0, sticky="ew", padx=SPACING["xs"])
+        self._header.grid(row=0, column=0, columnspan=2, sticky="ew", padx=SPACING["xs"])
         self._header.columnconfigure(1, weight=1)
 
         self._coordinate = tk.Label(
@@ -109,14 +110,20 @@ class CharacterCard(tk.Frame):
         self._avatar = tk.Label(
             self._header,
             text=card.initials,
-            font=("Segoe UI Semibold", 10 if compact else 15),
+            font=("Segoe UI Semibold", 8 if compact else 13),
             foreground="#FFFFFF",
             background=avatar_color_for(card.character_id),
             width=avatar_size,
             height=1,
             relief="flat",
         )
-        self._avatar.grid(row=0, column=0, rowspan=2, sticky="w", padx=(0, SPACING["xs"]))
+        self._avatar.grid(
+            row=0,
+            column=0,
+            rowspan=1 if compact else 2,
+            sticky="w",
+            padx=(0, SPACING["xs"]),
+        )
 
         self._identity = tk.Frame(self._header, borderwidth=0, highlightthickness=0)
         self._identity.grid(row=0, column=1, rowspan=2, sticky="ew")
@@ -125,42 +132,45 @@ class CharacterCard(tk.Frame):
         self._name = tk.Label(
             self._identity,
             text=card.name,
-            font=("Segoe UI Semibold", 8 if compact else 11),
+            font=("Segoe UI Semibold", 8 if compact else 10),
             anchor="w",
         )
-        self._name.grid(row=0, column=0, sticky="ew")
+        self._name.grid(row=0, column=0, sticky="w" if compact else "ew")
 
         self._profession = tk.Label(
             self._identity,
             text=card.profession,
-            font=("Segoe UI", 7 if compact else 9),
+            font=("Segoe UI", 7 if compact else 8),
             anchor="w",
         )
-        self._profession.grid(row=1, column=0, sticky="ew")
+        if compact:
+            self._profession.grid(row=0, column=1, sticky="w", padx=(SPACING["xs"], 0))
+        else:
+            self._profession.grid(row=1, column=0, sticky="ew")
 
         self._badge: tk.Label | None = None
         if card.status is not None:
             badge_symbol = "!" if card.status.value == "CRIMINAL" else "✓"
+            badge_gap = " " if compact else "  "
             self._badge = tk.Label(
                 self._content,
-                text=f"{badge_symbol}  {card.status.value}",
-                font=("Segoe UI Semibold", 7 if compact else 9),
-                padx=SPACING["sm"],
+                text=f"{badge_symbol}{badge_gap}{card.status.value}",
+                font=("Segoe UI Semibold", 7 if compact else 8),
+                padx=0 if compact else SPACING["sm"],
                 pady=1,
             )
-            self._badge.grid(row=1, column=0)
+            self._badge.grid(row=1, column=0, sticky="e", padx=(SPACING["xs"], 2))
 
         self._clue: tk.Label | None = None
-        preview = card.clue_preview(28 if compact else 52)
+        preview = card.clue_preview(16 if compact else 20)
         if preview is not None:
             self._clue = tk.Label(
                 self._content,
-                text=f"“{preview}”",
-                font=("Segoe UI", 7 if compact else 8, "italic"),
-                justify="center",
-                wraplength=120 if compact else 175,
+                text=preview if compact else f"“{preview}”",
+                font=("Segoe UI", 6 if compact else 8, "italic"),
+                justify="left",
             )
-            self._clue.grid(row=2, column=0, sticky="ew", padx=SPACING["xs"])
+            self._clue.grid(row=1, column=1, sticky="w", padx=(2, SPACING["xs"]))
 
         self._apply_appearance()
         self._bind_click_tree(self)
@@ -186,18 +196,18 @@ class CharacterCard(tk.Frame):
         appearance = self.appearance
         self.configure(
             background=appearance.selection_outline or COLORS["surface"],
-            padx=3 if appearance.selection_outline else 0,
-            pady=3 if appearance.selection_outline else 0,
+            padx=2 if appearance.selection_outline else 0,
+            pady=2 if appearance.selection_outline else 0,
         )
         self._outline.configure(
             background=appearance.highlight_outline or appearance.base_border,
-            padx=3 if appearance.highlight_outline else 1,
-            pady=3 if appearance.highlight_outline else 1,
+            padx=2 if appearance.highlight_outline else 1,
+            pady=2 if appearance.highlight_outline else 1,
         )
         self._reveal_outline.configure(
             background=appearance.reveal_outline or appearance.surface,
-            padx=2 if appearance.reveal_outline else 0,
-            pady=2 if appearance.reveal_outline else 0,
+            padx=1 if appearance.reveal_outline else 0,
+            pady=1 if appearance.reveal_outline else 0,
         )
         self._content.configure(background=appearance.surface)
         self._header.configure(background=appearance.surface)

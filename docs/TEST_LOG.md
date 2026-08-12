@@ -47,3 +47,12 @@ Only commands actually executed are recorded here.
 | 2026-08-12 | UI Phase 2 | Tkinter completed 4x4 smoke | PASS | 16 revealed cards; longest current name/profession rendered; every textual badge and compact public clue preview stayed within card/board bounds |
 | 2026-08-12 | UI Phase 2 | DPI-aware visual inspection | PASS | Inspected unresolved, mixed, selected, Criminal, Innocent, clue-highlighted, and completed 4x4 states; coordinate omission found and corrected; clipped 4x4 preview found and corrected |
 | 2026-08-12 | UI Phase 2 | `git diff --check` | PASS | No whitespace errors; line-ending conversion warnings only |
+| 2026-08-12 | UI Phase 3 | `python -m pytest -q` | UNAVAILABLE | Environment still reports `No module named pytest`; no dependency was added |
+| 2026-08-12 | UI Phase 3 | `python -m unittest discover -s tests` | PASS | 96/96 tests; 9 Phase 3 tests cover contextual enablement, selection immutability, accepted reveal, all rejected outcomes, safe feedback, resets/stale submission, and presentation-only emphasis |
+| 2026-08-12 | UI Phase 3 | `python -m compileall -q .` | PASS | Full repository compiles after contextual verdict refactor |
+| 2026-08-12 | UI Phase 3 | boundary and external SAT solver scans | PASS | Feedback/context code consumes only existing result contracts and public presentation data; no forbidden production imports or external solver dependency found |
+| 2026-08-12 | UI Phase 3 | protected-module diff from `48bea9d` | PASS | No changes in `agent/`, `game/`, `core/`, `logic/`, `sat/`, or `puzzles/` |
+| 2026-08-12 | UI Phase 3 | Tkinter 3x3 verdict/reset smoke | PASS | Disabled without selection; selected identity enabled actions; NOT_PROVABLE and CONTRADICTED preserved state; ACCEPTED revealed B1/CL-02; Restart and Load cleared transient state |
+| 2026-08-12 | UI Phase 3 | Tkinter 4x4 responsive smoke | PASS | 16 cards; accepted B1 emphasis and feedback rendered; verdict controls disabled after reveal; every board descendant remained within bounds |
+| 2026-08-12 | UI Phase 3 | DPI-aware visual inspection | PASS | Inspected no-selection, selected, contradicted, accepted 3x3, and accepted 4x4 views; corrected clipped context and compact status/clue presentation |
+| 2026-08-12 | UI Phase 3 | `git diff --check` | PASS | No whitespace errors; line-ending conversion warnings only |

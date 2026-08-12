@@ -48,6 +48,18 @@
 - Reason: It prevents silent test omission and matches the existing repository policy.
 - Consequences: All implemented phases are covered by `python -m unittest discover -s tests -v`.
 - Related requirement: Master prompt sections 16, 24, and 25.
+- Related commit: `48bea9d038c7425a691b09d2bd8a2049b3825d0e`.
+
+## DEC-010 - Public contextual verdicts and semantic feedback
+
+- Context: Manual verdict buttons were always active and verdict results appeared as raw status strings, while UI Phase 3 requires contextual actions and distinct feedback without changing engine semantics or inspecting hidden puzzle data.
+- Options considered: let the GUI query hidden status; parse the engine message; change `SubmissionResult`; derive presentation from the outcome plus public snapshots and public card view models.
+- Chosen option: Build `VerdictContext` exclusively from `CardViewModel`, map each existing `VerdictOutcome` to a typed `GameplayFeedback`, and detect a fresh reveal by comparing immutable public snapshots around the unchanged submission call.
+- Reason: Button availability, wording, and transient emphasis remain testable presentation decisions while `GameEngine.submit_verdict()` stays the sole authority that can mutate public progress.
+- Consequences: Buttons disable for no selection or a resolved selection; rejected/inconsistent results retain the public snapshot; accepted results refresh the board and add a temporary outline. Load/Restart clear all transient state.
+- Privacy rule: Feedback never copies the engine's free-form verdict message, forced opposite status, hidden solution, or unrevealed clue. Accepted feedback refers to a clue only after it exists in the refreshed public state.
+- Responsive rule: Context identity and feedback use compact single-row surfaces; 4x4 cards use a one-row identity header and horizontal public status/preview row.
+- Related requirement: Griductive GUI fidelity refactor UI Phase 3 contextual verdict interaction and public feedback requirements.
 - Related commit: PENDING.
 
 ## DEC-006 - Extension selection: IMPLIES and ODD

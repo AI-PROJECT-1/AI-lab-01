@@ -136,7 +136,29 @@
 - Responsive decisions: horizontal avatar/identity/coordinate header; compact fonts and 28-character public clue preview for 4x4; 52-character preview for 3x3; complete clue remains in the unchanged Revealed Clues panel; window geometry respects screen bounds.
 - Accepted: deterministic initials avatars, textual status badges, independent modifier outlines, safe clue preview, size-aware composition, and visual QA at actual DPI.
 - Rejected/deferred: external portraits, copyrighted assets, full clue text in every 4x4 card, contextual verdict actions, CluePanel redesign, Hint changes, Solver Details drawer, completion metrics, and any protected-module change.
-- Human verification performed: DPI-aware screenshots inspected for unresolved, mixed revealed/unresolved, selected unresolved, Criminal, Innocent, highlighted revealed, and completed 4x4 states; final UI Phase 2 acceptance is PENDING.
+- Human verification performed: DPI-aware screenshots inspected for unresolved, mixed revealed/unresolved, selected unresolved, Criminal, Innocent, highlighted revealed, and completed 4x4 states; UI Phase 2 was approved by the user.
 - Tests performed: `python -m pytest -q` unavailable because pytest is not installed; supported full runner passed 87/87; compile, diff, boundary/external-solver/protected-module scans, 3x3 smoke, and 4x4 smoke passed.
 - Related Prompt ID: PROMPT-005
+- Related Git commit hash: `48bea9d038c7425a691b09d2bd8a2049b3825d0e`
+
+## AI-009
+
+- Date: 2026-08-12
+- AI tool: OpenAI Codex
+- Model: GPT-5
+- Developer/member: Trần Hữu Phước - 24127511
+- Phase: Griductive GUI fidelity refactor, UI Phase 3
+- Purpose: Make manual verdict controls contextual, disable inappropriate submissions, present the four existing verdict outcomes distinctly, and emphasize a freshly accepted public reveal without changing game or solver semantics.
+- Files affected: `gui/app.py`, `gui/board_view.py`, `gui/character_card.py`, `gui/components.py`, `gui/controls.py`, `gui/theme.py`, new `gui/feedback.py`, new `gui/verdict_panel.py`, new `tests/test_verdict_interaction.py`, and audit logs.
+- Context architecture: `VerdictContext` derives button availability and selected identity only from `CardViewModel`; `VerdictPanel` owns the two player-verdict buttons and exposes their real enabled state. Resolved and absent selections disable both actions.
+- Feedback architecture: `GameplayFeedback` separates neutral, success, information, warning, and error tones. `feedback_for_verdict()` maps `ACCEPTED`, `NOT_PROVABLE`, `CONTRADICTED`, and `INCONSISTENT` without copying the engine's free-form message, hidden solution, unrevealed clue payload, or opposite forced-status detail.
+- Newly-revealed rule: The app compares immutable public snapshots before and after the existing submission API. A transient card outline is set only when an accepted result changes that character from unrevealed to a public verdict plus public clue. No game/public DTO is mutated by the effect.
+- Reset rule: successful Load and Restart clear selected character, clue highlight, verdict feedback, newly-revealed emphasis, and stale interaction state. A cancelled or failed Load preserves the current puzzle.
+- Responsive decision: PLAYER VERDICT and gameplay feedback use compact single-row layouts; 4x4 identity headers and badge/clue previews share horizontal space so all public content remains visible within the existing screen-aware window.
+- Accepted: public-only context model, disabled buttons, semantic feedback tones, safe outcome wording, presentation-only reveal emphasis, compact responsive status rows, and generic integrity-error feedback.
+- Rejected/deferred: engine/controller API changes, hidden-answer comparison in the GUI, contextual completion actions, clue-card redesign, two-stage Hint, Solver Details, trace redesign, completion screen, and any CNF/DPLL/LogicAgent change.
+- Human verification performed: Tkinter screenshots inspected for no selection, selected unresolved, contradicted warning, accepted 3x3 reveal emphasis, and accepted 4x4 reveal emphasis. Iteration corrected clipped context text and vertically clipped 4x4 status/clue rows.
+- Tests performed: supported full runner passed 96/96; compile, diff, boundary/external-solver/protected-module scans, 3x3 interaction/reset smoke, and 4x4 responsive smoke passed. `pytest` remains unavailable in this environment.
+- Approved Phase 2 commit: `48bea9d038c7425a691b09d2bd8a2049b3825d0e` (`feat(gui): redesign public character cards`).
+- Related Prompt ID: PROMPT-006
 - Related Git commit hash: PENDING
