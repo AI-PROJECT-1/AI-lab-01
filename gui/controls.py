@@ -27,6 +27,7 @@ class Controls(ttk.Frame):
         on_hint: Callable[[], None],
         on_solve_next: Callable[[], None],
         on_auto_solve: Callable[[], None],
+        on_solver_details: Callable[[], None],
     ) -> None:
         super().__init__(parent, style="App.TFrame", padding=(0, SPACING["xs"]))
         for column, weight in enumerate((1, 2, 1, 2)):
@@ -53,6 +54,13 @@ class Controls(ttk.Frame):
         )
         self._auto_button = ttk.Button(solver, text="Auto Solve", command=on_auto_solve, style="Solver.TButton")
         self._auto_button.grid(row=0, column=1, sticky="ew", padx=2)
+        self._details_button = ttk.Button(
+            solver,
+            text="Solver Details",
+            command=on_solver_details,
+            style="Solver.TButton",
+        )
+        self._details_button.grid(row=1, column=0, columnspan=2, sticky="ew", padx=2, pady=(4, 0))
         solver.columnconfigure(0, weight=1)
         solver.columnconfigure(1, weight=1)
 

@@ -134,4 +134,20 @@
 - Invalidation rule: Manual accepted mutation, Solve Next, Auto Solve, Restart, Load, or any fingerprint mismatch clear/prevent cached target use; selection alone does not.
 - Composition rule: Active clue and target hint outlines remain independent from selected clue/character, canonical clue highlight, newly revealed outline, and Criminal/Innocent base identity.
 - Related requirement: Griductive GUI fidelity refactor UI Phase 5 progressive Hint UX and public-boundary requirements.
+- Related commit: `d2682b3ebccdf087c417a90b50488def293c79ce`.
+
+## DEC-013 - Secondary structured Solver Details with GUI-owned source metadata
+
+- Context: The raw Solver Trace Listbox permanently consumed a large share of the gameplay sidebar, while Project 2 still requires complete deduction-step, active-clue, SAT-query, verdict, and reveal trace inspection.
+- Options considered: retain the Listbox; collapse it inside the sidebar; add a tab that replaces gameplay; open a lazy secondary Toplevel containing structured scrollable step cards.
+- Chosen option: Keep normal play board-first and dedicate the sidebar to Revealed Clues; expose Solver Details through an explicit SOLVER control that opens a lazy, independently scrollable Toplevel.
+- Reason: A secondary window preserves the responsive 3x3/4x4 board and keeps technical detail accessible without making it the default game experience.
+- Trace rule: Presentation copies only fields directly present in `DeductionTraceStep` and `SATQueryTrace`: step number, target ID, verdict, ordered active clue IDs, query purpose/assumption/result, per-query decisions/propagations/backtracks/runtime, and newly revealed clue ID. Missing fields are omitted or marked unavailable.
+- Statistics rule: Solver statistics are labeled per SAT query. No cumulative totals or SAT-call meaning beyond the number of recorded query rows is inferred.
+- Source rule: The GUI records the trace length immediately before an action and labels only the appended slice as HINT, MANUAL VERDICT, SOLVE NEXT, or AUTO SOLVE. Historical or otherwise unobserved steps have no source label; UNKNOWN is not fabricated.
+- Privacy rule: The detail presenter receives solver trace records only. It does not inspect `Puzzle`, hidden status/solution, private `GameEngine` fields, or unrevealed clues, and does not generate stronger natural-language or clause-level proofs.
+- Hint rule: Phase 5 Stage 1 can append the existing reasoning trace; Stage 2 only advances cached presentation and therefore cannot add a Solver Details step.
+- Lifecycle rule: Auto Solve remains `after()`-driven. Restart and successful Load cancel the pending callback, clear source metadata with the engine trace reset, and keep an already open details window safely usable.
+- Responsive rule: Main content and Board/Revealed Clues containers suppress oversized child requests so the bottom controls and feedback remain visible at the current 1180x660 low-screen geometry.
+- Related requirement: Griductive GUI fidelity refactor UI Phase 6; Project 2 deduction-trace requirement.
 - Related commit: PENDING.

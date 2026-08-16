@@ -108,6 +108,20 @@
 - Goal: Commit approved UI Phase 4, then implement a public-only two-stage Hint UX with one reasoning request per unchanged-state cycle, safe active-clue wording, cached target presentation, and complete invalidation.
 - Full prompt: User approved UI Phase 4, required atomic commit `feat(gui): redesign revealed clue inspection` and its real hash, then authorized only progressive Hint UX while explicitly prohibiting unique proof-anchor claims, Stage 2 solver calls, hidden verdict/clue exposure, solver/trace redesign, and protected-module changes.
 - Short summary of response: Created real Phase 4 commit `dff07f05a003fa966c200fc925e5da600846ec54`; added a public fingerprinted HintSession, Stage 1 active-revealed-clue presentation, Stage 2 cached target-only emphasis, composable clue/card modifiers, progressive button text, and mutation/reset invalidation.
-- Decision: ACCEPTED FOR UI PHASE 5 ONLY; final Phase 5 approval PENDING
+- Decision: ACCEPTED FOR UI PHASE 5 ONLY; approved by the user
 - Related AI Usage ID: AI-011
-- Related commits: UI Phase 4 `dff07f0`; UI Phase 5 PENDING
+- Related commits: UI Phase 4 `dff07f0`; UI Phase 5 `d2682b3`
+
+## PROMPT-009
+
+- Date: 2026-08-13
+- Tool: OpenAI Codex
+- Model: GPT-5
+- Member: Tran Huu Phuoc - 24127511
+- Phase: Griductive GUI refactor, UI Phase 6 only
+- Goal: Commit approved UI Phase 5, then move raw Solver Trace out of normal gameplay into a secondary, structured Solver Details interface without changing trace generation or solver/game semantics.
+- Full prompt: User approved UI Phase 5, required atomic commit `feat(gui): add progressive two-stage hints` and its real hash, then authorized only Solver Tools plus Solver Details presentation with exact trace fields, readable SAT queries/statistics, reliable GUI-only action sources, progressive Auto Solve updates, reset safety, public/private checks, full tests, and a stop before UI Phase 7.
+- Short summary of response: Created real Phase 5 commit `d2682b3ebccdf087c417a90b50488def293c79ce`; replaced the always-visible raw Listbox with a lazy scrollable Toplevel of structured trace cards, preserved all existing trace records, labeled only reliably observed action slices, and kept Hint Stage 2 presentation-only.
+- Decision: EXECUTED FOR UI PHASE 6 ONLY; human approval PENDING
+- Related AI Usage ID: AI-012
+- Related commits: UI Phase 5 `d2682b3`; UI Phase 6 PENDING

@@ -25,7 +25,7 @@ from gui.hint_session import (
     HintVisualState,
     progress_hint_session,
 )
-from gui.trace_panel import TracePanel
+from gui.trace_panel import ActionSource, SolverDetailsModel, SolverDetailsWindow
 from gui.components import AppHeader, FeedbackBar
 from gui.theme import SPACING, configure_theme
 from gui.view_model import CardViewModel, build_card_views
@@ -57,6 +57,9 @@ class GriductiveApp(ttk.Frame):
         self._newly_revealed_id: str | None = None
         self._hint_state = HintVisualState()
         self._auto_running = False
+        self._auto_after_id: str | None = None
+        self._solver_details_model = SolverDetailsModel()
+        self._solver_details_window: SolverDetailsWindow | None = None
         AppHeader(self).grid(row=0, column=0, sticky="ew")
 
         title_area = ttk.Frame(self, style="App.TFrame", padding=(SPACING["xl"], SPACING["sm"], SPACING["xl"], 0))
@@ -70,21 +73,21 @@ class GriductiveApp(ttk.Frame):
 
         content = ttk.Frame(self, style="App.TFrame", padding=(SPACING["xl"], SPACING["sm"]))
         content.grid(row=2, column=0, sticky="nsew")
+        content.grid_propagate(False)
         content.columnconfigure(0, weight=3, minsize=520)
         content.columnconfigure(1, weight=2, minsize=320)
         content.rowconfigure(0, weight=1)
 
         self._board = BoardView(content, self._select_character)
         self._board.grid(row=0, column=0, sticky="nsew", padx=(0, SPACING["md"]))
+        self._board.grid_propagate(False)
         sidebar = ttk.Frame(content, style="App.TFrame")
         sidebar.grid(row=0, column=1, sticky="nsew")
         sidebar.columnconfigure(0, weight=1)
-        sidebar.rowconfigure(0, weight=3)
-        sidebar.rowconfigure(1, weight=2)
+        sidebar.rowconfigure(0, weight=1)
         self._clues = CluePanel(sidebar, self._select_clue)
-        self._clues.grid(row=0, column=0, sticky="nsew", pady=(0, SPACING["sm"]))
-        self._trace = TracePanel(sidebar)
-        self._trace.grid(row=1, column=0, sticky="nsew")
+        self._clues.grid(row=0, column=0, sticky="nsew")
+        self._clues.grid_propagate(False)
         self._controls = Controls(
             self,
             on_load=self._load,
@@ -94,6 +97,7 @@ class GriductiveApp(ttk.Frame):
             on_hint=self._hint,
             on_solve_next=self._solve_next,
             on_auto_solve=self._auto_solve,
+            on_solver_details=self._toggle_solver_details,
         )
         self._controls.grid(row=3, column=0, sticky="ew", padx=SPACING["xl"])
         self._feedback = FeedbackBar(
@@ -132,7 +136,10 @@ class GriductiveApp(ttk.Frame):
             self._newly_revealed_id,
             self._hint_state.active_clue_ids,
         )
-        self._trace.render(self._controller.trace())
+        if self._solver_details_window is not None and self._solver_details_window.exists:
+            self._solver_details_window.render(
+                self._solver_details_model.presentations(self._controller.trace())
+            )
         self._controls.set_verdict_context(selected_card)
 
     @staticmethod
@@ -163,6 +170,7 @@ class GriductiveApp(ttk.Frame):
 
     def _submit(self, status: Status) -> None:
         before = self._controller.state()
+        before_trace_count = len(self._controller.trace())
         try:
             result = self._controller.submit_selected(status)
         except SelectionRequiredError as exc:
@@ -170,11 +178,14 @@ class GriductiveApp(ttk.Frame):
             self._feedback.show(notice_feedback("Selection required", str(exc), FeedbackTone.WARNING))
             return
         except AgentIntegrityError:
+            self._record_new_trace(before_trace_count, ActionSource.MANUAL_VERDICT)
             self._newly_revealed_id = None
             safe_message = "The solver failed an internal integrity check. No public state was changed."
             messagebox.showerror("Agent integrity error", safe_message, parent=self)
             self._feedback.show(notice_feedback("Solver integrity error", safe_message, FeedbackTone.ERROR))
+            self._render()
             return
+        self._record_new_trace(before_trace_count, ActionSource.MANUAL_VERDICT)
         after = self._controller.state()
         self._newly_revealed_id = newly_revealed_character(result, before, after)
         if after != before:
@@ -186,7 +197,9 @@ class GriductiveApp(ttk.Frame):
         self._render()
 
     def _restart(self) -> None:
+        self._cancel_auto()
         self._controller.restart()
+        self._solver_details_model.clear_trace_metadata()
         self._invalidate_hint_session()
         self._highlighted_ids = ()
         self._newly_revealed_id = None
@@ -212,6 +225,8 @@ class GriductiveApp(ttk.Frame):
                 notice_feedback("Load failed", "The current puzzle was not changed.", FeedbackTone.ERROR)
             )
             return
+        self._cancel_auto()
+        self._solver_details_model.clear_trace_metadata()
         self._highlighted_ids = ()
         self._newly_revealed_id = None
         self._invalidate_hint_session()
@@ -221,12 +236,15 @@ class GriductiveApp(ttk.Frame):
         self._render()
 
     def _hint(self) -> None:
-        session, presentation, _reasoning_requested = progress_hint_session(
+        before_trace_count = len(self._controller.trace())
+        session, presentation, reasoning_requested = progress_hint_session(
             self._hint_state.session,
             self._controller.state,
             self._controller.hint,
             self._controller.trace,
         )
+        if reasoning_requested:
+            self._record_new_trace(before_trace_count, ActionSource.HINT)
         self._hint_state.apply(session, presentation)
         self._apply_hint_presentation(presentation)
         self._render()
@@ -244,13 +262,17 @@ class GriductiveApp(ttk.Frame):
         self._newly_revealed_id = None
         self._invalidate_hint_session()
         before = self._controller.state()
+        before_trace_count = len(self._controller.trace())
         try:
             result = self._controller.solve_next()
         except AgentIntegrityError:
+            self._record_new_trace(before_trace_count, ActionSource.SOLVE_NEXT)
             safe_message = "The solver failed an internal integrity check. No public state was changed."
             messagebox.showerror("Agent integrity error", safe_message, parent=self)
             self._feedback.show(notice_feedback("Solver integrity error", safe_message, FeedbackTone.ERROR))
+            self._render()
             return
+        self._record_new_trace(before_trace_count, ActionSource.SOLVE_NEXT)
         if result is None:
             self._feedback.show(notice_feedback("No forced verdict", "No unresolved verdict is currently forced."))
         else:
@@ -267,15 +289,19 @@ class GriductiveApp(ttk.Frame):
         self._auto_running = True
         self._controls.set_auto_running(True)
         self._feedback.show(notice_feedback("Auto Solve", "Progressive solving started."))
-        self.after(1, self._auto_step)
+        self._auto_after_id = self.after(1, self._auto_step)
 
     def _auto_step(self) -> None:
+        self._auto_after_id = None
         before = self._controller.state()
+        before_trace_count = len(self._controller.trace())
         try:
             result = self._controller.solve_next()
         except AgentIntegrityError:
+            self._record_new_trace(before_trace_count, ActionSource.AUTO_SOLVE)
             self._finish_auto("Auto Solve stopped after an internal integrity check failed.")
             return
+        self._record_new_trace(before_trace_count, ActionSource.AUTO_SOLVE)
         if result is None:
             self._render()
             message = "Auto Solve complete." if self._controller.state().is_complete else "Auto Solve stopped: no forced verdict."
@@ -285,12 +311,45 @@ class GriductiveApp(ttk.Frame):
         self._invalidate_hint_session()
         self._render()
         self._feedback.show(notice_feedback("Auto Solve", result.message, FeedbackTone.SUCCESS))
-        self.after(120, self._auto_step)
+        self._auto_after_id = self.after(120, self._auto_step)
 
     def _finish_auto(self, message: str) -> None:
+        self._auto_after_id = None
         self._auto_running = False
         self._controls.set_auto_running(False)
         self._feedback.show(notice_feedback("Auto Solve", message))
+
+    def _cancel_auto(self) -> None:
+        if self._auto_after_id is not None:
+            try:
+                self.after_cancel(self._auto_after_id)
+            except tk.TclError:
+                pass
+        self._auto_after_id = None
+        self._auto_running = False
+        if hasattr(self, "_controls"):
+            self._controls.set_auto_running(False)
+
+    def _record_new_trace(self, before_count: int, source: ActionSource) -> None:
+        self._solver_details_model.record_new_steps(
+            before_count,
+            self._controller.trace(),
+            source,
+        )
+
+    def _toggle_solver_details(self) -> None:
+        if self._solver_details_model.is_open and self._solver_details_window is not None:
+            self._solver_details_window.close()
+            return
+        if self._solver_details_window is None or not self._solver_details_window.exists:
+            self._solver_details_window = SolverDetailsWindow(
+                self.winfo_toplevel(),
+                self._solver_details_model,
+            )
+        self._solver_details_window.render(
+            self._solver_details_model.presentations(self._controller.trace())
+        )
+        self._solver_details_window.open()
 
 
 def main() -> None:

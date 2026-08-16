@@ -95,6 +95,72 @@ def configure_theme(root: tk.Misc) -> ttk.Style:
         foreground=COLORS["muted"],
         font=FONTS["small"],
     )
+    style.configure(
+        "SolverDetailsTitle.TLabel",
+        background=COLORS["accent"],
+        foreground="#FFFFFF",
+        font=FONTS["title"],
+    )
+    style.configure(
+        "TraceCard.TFrame",
+        background=COLORS["surface"],
+        bordercolor=COLORS["line"],
+        relief="solid",
+        borderwidth=1,
+    )
+    style.configure(
+        "TraceQuery.TFrame",
+        background=COLORS["surface_alt"],
+    )
+    style.configure(
+        "TraceStep.TLabel",
+        background=COLORS["surface"],
+        foreground=COLORS["ink"],
+        font=FONTS["title"],
+    )
+    style.configure(
+        "TraceSource.TLabel",
+        background=COLORS["accent_soft"],
+        foreground=COLORS["accent"],
+        font=FONTS["section"],
+        padding=(8, 3),
+    )
+    style.configure(
+        "TraceSection.TLabel",
+        background=COLORS["surface"],
+        foreground=COLORS["ink"],
+        font=FONTS["section"],
+    )
+    style.configure(
+        "TraceField.TLabel",
+        background=COLORS["surface"],
+        foreground=COLORS["muted"],
+        font=FONTS["section"],
+    )
+    style.configure(
+        "TraceValue.TLabel",
+        background=COLORS["surface"],
+        foreground=COLORS["ink"],
+        font=FONTS["body"],
+    )
+    style.configure(
+        "TraceQueryTitle.TLabel",
+        background=COLORS["surface_alt"],
+        foreground=COLORS["ink"],
+        font=FONTS["section"],
+    )
+    style.configure(
+        "TraceQueryLabel.TLabel",
+        background=COLORS["surface_alt"],
+        foreground=COLORS["muted"],
+        font=FONTS["small"],
+    )
+    style.configure(
+        "TraceQueryValue.TLabel",
+        background=COLORS["surface_alt"],
+        foreground=COLORS["ink"],
+        font=FONTS["small"],
+    )
     feedback_colors = {
         "Neutral": (COLORS["surface_alt"], COLORS["muted"]),
         "Success": (COLORS["accent_soft"], COLORS["success"]),

@@ -207,4 +207,28 @@
 - Tests performed: supported full runner passed 117/117; compile, diff, boundary/external-solver/protected-module scans, 3x3 Hint lifecycle smoke, and 4x4 Auto Solve smoke passed. `pytest` remains unavailable.
 - Approved Phase 4 commit: `dff07f05a003fa966c200fc925e5da600846ec54` (`feat(gui): redesign revealed clue inspection`).
 - Related Prompt ID: PROMPT-008
+- Related Git commit hash: `d2682b3ebccdf087c417a90b50488def293c79ce`
+
+## AI-012
+
+- Date: 2026-08-13
+- AI tool: OpenAI Codex
+- Model: GPT-5
+- Developer/member: Tran Huu Phuoc - 24127511
+- Phase: Griductive GUI fidelity refactor, UI Phase 6
+- Purpose: Move technical solver trace out of the default game-first layout while preserving every existing trace field in a structured secondary interface.
+- Files affected: redesigned `gui/trace_panel.py`, presentation integration and reset-safe Auto Solve scheduling in `gui/app.py`, `gui/controls.py`, `gui/theme.py`, new `tests/test_solver_details.py`, and audit logs.
+- Presentation decision: Use a lazy secondary `Toplevel` with scrollable structured step cards. The main sidebar now belongs entirely to Revealed Clues; Solver Details is opened explicitly from the SOLVER control group.
+- Direct trace fields: Step number, character target ID, verdict, exact active clue IDs, every SAT query purpose/assumption/result, per-query decisions/propagations/backtracks/runtime, and newly revealed clue ID are copied from `DeductionTraceStep`/`SATQueryTrace` without another reasoning call.
+- Non-inference rule: Missing target/query/reveal fields remain absent or unavailable. The UI does not infer clause-level proofs, cumulative statistics, hidden assignments, clue causality, or action sources for historical steps.
+- Action-source decision: A GUI-only ledger labels exactly the new trace slice observed around HINT, MANUAL VERDICT, SOLVE NEXT, or AUTO SOLVE callbacks. Unlabeled history remains source-less rather than being guessed.
+- Hint behavior: Stage 1 may add its one real reasoning slice; Stage 2 consumes the cached Phase 5 session and creates no extra trace or detail step.
+- Lifecycle behavior: Restart and successful Load cancel a pending `after()` Auto Solve callback, reset trace-source metadata, and re-render an open details window with the engine's cleared trace.
+- Hidden/public verification: Solver Details consumes only public report records already returned by `controller.trace()`; it has no Puzzle, hidden solution, private GameEngine, or unrevealed-clue lookup.
+- Accepted: game-first default layout, lazy secondary details window, structured cards, exact trace data, per-query metrics, reliable source metadata, progressive Auto Solve refresh, and reset-safe open-window behavior.
+- Rejected/deferred: natural-language proof generation, clause-level proof invention, final assignment display, completion screen/statistics, player marks, animation, protected-module changes, and all UI Phase 7 work.
+- Human verification performed: DPI-aware visual review covered closed 3x3/4x4 gameplay, empty/open details, Hint, Solve Next, multiple Auto Solve steps, long active-clue/query data, Restart, and Load while details remained open.
+- Tests performed: supported full runner passed 135/135; compile, diff, public-boundary/external-solver/protected-module scans, and Tkinter 3x3/4x4 smoke passed. `pytest` remains unavailable and was not installed.
+- Approved Phase 5 commit: `d2682b3ebccdf087c417a90b50488def293c79ce` (`feat(gui): add progressive two-stage hints`).
+- Related Prompt ID: PROMPT-009
 - Related Git commit hash: PENDING

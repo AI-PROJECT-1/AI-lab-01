@@ -74,3 +74,12 @@ Only commands actually executed are recorded here.
 | 2026-08-13 | UI Phase 5 | Tkinter 4x4 Auto Solve smoke | PASS | Hint session cleared on Auto Solve/reveal lifecycle; completed 16-card board had no stale clue/target Hint modifier |
 | 2026-08-13 | UI Phase 5 | DPI-aware visual inspection | PASS | Inspected pre-Hint, one/multiple/no-anchor Stage 1, Stage 2, manual accepted, Solve Next, Auto Solve, Restart, and Load states |
 | 2026-08-13 | UI Phase 5 | `git diff --check` | PASS | No whitespace errors; line-ending conversion warnings only |
+| 2026-08-13 | UI Phase 6 | `python -m pytest -q` | UNAVAILABLE | Environment reports `No module named pytest`; no package was installed |
+| 2026-08-13 | UI Phase 6 | `python -m unittest discover -s tests` | PASS | 135/135 tests; 18 new tests cover default visibility, state immutability, exact trace fields, query metrics, Hint call counts, manual/solver source labels, progressive steps, reset/load behavior, and private-data exclusion |
+| 2026-08-13 | UI Phase 6 | `python -m compileall -q .` | PASS | Full repository compiles after structured Solver Details refactor |
+| 2026-08-13 | UI Phase 6 | boundary and external SAT solver scans | PASS | No production external solver; agent/logic/sat boundary clean; Solver Details contains no Puzzle, hidden solution/status, private engine, or unrevealed lookup |
+| 2026-08-13 | UI Phase 6 | protected-module diff from `d2682b3` | PASS | No changes in `agent/`, `game/`, `core/`, `logic/`, `sat/`, or `puzzles/` |
+| 2026-08-13 | UI Phase 6 | Tkinter 3x3 Solver Details smoke and DPI-aware visual review | PASS | Details closed by default; empty, Hint, Solve Next, multi-step Auto Solve, long active-clue/query, open Restart, and source-label states rendered; Hint Stage 2 kept one trace step |
+| 2026-08-13 | UI Phase 6 | Tkinter 4x4 responsive smoke and DPI-aware visual review | PASS | 1180x800 board-first layout retained full controls; opening details preserved board/game state; Load while open reset stale trace/source presentation and left Auto Solve cancelled |
+| 2026-08-13 | UI Phase 6 | low-height 1180x660 Tkinter boundary measurement | PASS | Board, Revealed Clues, controls, and feedback remained inside the window; maximum checked bottom edge was 625/660 px |
+| 2026-08-13 | UI Phase 6 | `git diff --check` | PASS | No whitespace errors; line-ending conversion warnings only |
