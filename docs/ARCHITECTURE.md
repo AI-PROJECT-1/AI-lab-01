@@ -91,3 +91,16 @@ from an earlier lifecycle from acting on the replacement puzzle.
 The schema uses stable cell IDs such as `A1`, explicit `row`/`column` integers,
 structured clue objects, and separate initial visibility. Hidden `status` is
 loader/engine-only and is removed when public DTOs are created.
+
+## Final evidence pipeline
+
+`experiments.run_experiments` is an external observer of the existing public
+game/agent contracts. It loads each distributable puzzle, records initial and
+complete-clue CNF reports, executes the unchanged progressive solve, aggregates
+existing trace metrics, runs the separate uniqueness check, and benchmarks
+fresh-engine Hint support. It writes raw JSON and turns any exception or failed
+completion/uniqueness result into a retained FAIL row and non-zero exit status.
+
+This Phase 8 layer adds no edge to the production path: `main.py -> GUI ->
+GameEngine -> LogicAgent -> CNFEncoder -> DPLL` remains unchanged. Documentation
+and audit tests consume the evidence output; the game never consumes it.

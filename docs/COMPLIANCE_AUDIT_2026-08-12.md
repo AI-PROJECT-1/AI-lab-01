@@ -1,5 +1,9 @@
 # Compliance Audit - 2026-08-12
 
+> Historical checkpoint at `03584c3`. Final Phase 8 status supersedes its
+> forward-looking gaps; see `REQUIREMENTS_AUDIT.md`, `EXPERIMENT_LOG.md`, and
+> `TEST_LOG.md`. This file is preserved rather than rewritten as fake history.
+
 ## Sources and scope
 
 - Read all 1,503 lines of `prompt.txt`.
@@ -74,8 +78,12 @@
 
 ## Remaining compliance risks
 
-- The final project is not yet submission-complete: Phases 14-17 still require experiments, final verification, report support, and demo preparation.
-- Real experiment outputs are absent and must not be fabricated.
+- At this checkpoint, the final project was not submission-complete: Phases
+  14-17 still required experiments, final verification, report support, and
+  demo preparation. Phase 8 later completed source-side work; final report,
+  video, archive, and team attribution remain outstanding.
+- Real experiment outputs were absent at this checkpoint. They were later
+  generated reproducibly in `experiments/results/final_regression.json`.
 - AI/prompt entries for the original Phase 05-07 contributors are absent. This audit does not invent them; contributors must disclose their actual tool use.
 - `prompt.txt` contains mojibake from its source encoding. The official PDF remains readable and is the higher-priority source of truth.
 - The PDF stored in the repository has a `(1)` suffix rather than the exact filename named by the master prompt; content and 9-page metadata match the supplied specification.

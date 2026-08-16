@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-08-16T11:23:30.646745+00:00",
+  "baseline_commit": "4150d867b6f2ce03cf273ced9895c4dd06105445",
+  "command": "python -m experiments.run_experiments",
+  "python": "3.14.0",
+  "platform": "Windows-10-10.0.19044-SP0",
+  "hint_support_runs_per_puzzle": 25,
+  "puzzle_set": [
+    "extension_chain_3x3.json",
+    "extension_chain_4x4.json",
+    "fact_chain_4x4.json",
+    "sample_3x3.json"
+  ],
+  "results": [
+    {
+      "puzzle_file": "extension_chain_3x3.json",
+      "puzzle_id": "extension-chain-3x3",
+      "title": "The Parity Gallery",
+      "size": 3,
+      "status": "PASS",
+      "error": null,
+      "initial_kb": {
+        "primary_variables": 9,
+        "auxiliary_variables": 0,
+        "clauses": 2
+      },
+      "complete_clue_set_cnf": {
+        "primary_variables": 9,
+        "auxiliary_variables": 0,
+        "clauses": 14
+      },
+      "progressive_solve": {
+        "completed": true,
+        "initially_revealed": 1,
+        "reveals": 8,
+        "reveal_waves": 8,
+        "trace_steps": 8,
+        "sat_calls": 19,
+        "decisions": 0,
+        "propagations": 100,
+        "backtracks": 0,
+        "sat_query_runtime_seconds": 0.00045999986468814313,
+        "whole_puzzle_wall_runtime_seconds": 0.0013393000117503107
+      },
+      "uniqueness": {
+        "consistent": true,
+        "unique": true,
+        "sat_calls": 2,
+        "wall_runtime_seconds": 0.00014139999984763563
+      },
+      "hint_support": {
+        "runs": 25,
+        "available_every_run": true,
+        "method": "deletion_irreducible",
+        "target_character_id": "B1",
+        "support_extraction_sat_calls": 7,
+        "median_hint_wall_runtime_seconds": 0.00018240002100355923,
+        "median_support_runtime_seconds": 0.00011219998123124242,
+        "minimum_support_runtime_seconds": 0.00010989999282173812,
+        "maximum_support_runtime_seconds": 0.00014059999375604093
+      }
+    },
+    {
+      "puzzle_file": "extension_chain_4x4.json",
+      "puzzle_id": "extension-chain-4x4",
+      "title": "The Implication Archive",
+      "size": 4,
+      "status": "PASS",
+      "error": null,
+      "initial_kb": {
+        "primary_variables": 16,
+        "auxiliary_variables": 0,
+        "clauses": 2
+      },
+      "complete_clue_set_cnf": {
+        "primary_variables": 16,
+        "auxiliary_variables": 0,
+        "clauses": 19
+      },
+      "progressive_solve": {
+        "completed": true,
+        "initially_revealed": 1,
+        "reveals": 15,
+        "reveal_waves": 15,
+        "trace_steps": 15,
+        "sat_calls": 36,
+        "decisions": 0,
+        "propagations": 314,
+        "backtracks": 0,
+        "sat_query_runtime_seconds": 0.001834299910115078,
+        "whole_puzzle_wall_runtime_seconds": 0.0035111000179313123
+      },
+      "uniqueness": {
+        "consistent": true,
+        "unique": true,
+        "sat_calls": 2,
+        "wall_runtime_seconds": 0.00025189999723806977
+      },
+      "hint_support": {
+        "runs": 25,
+        "available_every_run": true,
+        "method": "deletion_irreducible",
+        "target_character_id": "B1",
+        "support_extraction_sat_calls": 7,
+        "median_hint_wall_runtime_seconds": 0.00020959999528713524,
+        "median_support_runtime_seconds": 0.0001320999872405082,
+        "minimum_support_runtime_seconds": 0.00012860001879744232,
+        "maximum_support_runtime_seconds": 0.00013890000991523266
+      }
+    },
+    {
+      "puzzle_file": "fact_chain_4x4.json",
+      "puzzle_id": "fact-chain-4x4",
+      "title": "The Museum Circuit",
+      "size": 4,
+      "status": "PASS",
+      "error": null,
+      "initial_kb": {
+        "primary_variables": 16,
+        "auxiliary_variables": 0,
+        "clauses": 2
+      },
+      "complete_clue_set_cnf": {
+        "primary_variables": 16,
+        "auxiliary_variables": 0,
+        "clauses": 16
+      },
+      "progressive_solve": {
+        "completed": true,
+        "initially_revealed": 1,
+        "reveals": 15,
+        "reveal_waves": 15,
+        "trace_steps": 15,
+        "sat_calls": 38,
+        "decisions": 0,
+        "propagations": 327,
+        "backtracks": 0,
+        "sat_query_runtime_seconds": 0.0013916999741923064,
+        "whole_puzzle_wall_runtime_seconds": 0.002967500011436641
+      },
+      "uniqueness": {
+        "consistent": true,
+        "unique": true,
+        "sat_calls": 2,
+        "wall_runtime_seconds": 0.00018569998792372644
+      },
+      "hint_support": {
+        "runs": 25,
+        "available_every_run": true,
+        "method": "deletion_irreducible",
+        "target_character_id": "B1",
+        "support_extraction_sat_calls": 9,
+        "median_hint_wall_runtime_seconds": 0.00023609999334439635,
+        "median_support_runtime_seconds": 0.0001483999949414283,
+        "minimum_support_runtime_seconds": 0.0001453000004403293,
+        "maximum_support_runtime_seconds": 0.00015559999155811965
+      }
+    },
+    {
+      "puzzle_file": "sample_3x3.json",
+      "puzzle_id": "sample-3x3-fact-chain",
+      "title": "The Gallery Shift",
+      "size": 3,
+      "status": "PASS",
+      "error": null,
+      "initial_kb": {
+        "primary_variables": 9,
+        "auxiliary_variables": 0,
+        "clauses": 2
+      },
+      "complete_clue_set_cnf": {
+        "primary_variables": 9,
+        "auxiliary_variables": 0,
+        "clauses": 9
+      },
+      "progressive_solve": {
+        "completed": true,
+        "initially_revealed": 1,
+        "reveals": 8,
+        "reveal_waves": 8,
+        "trace_steps": 8,
+        "sat_calls": 20,
+        "decisions": 0,
+        "propagations": 100,
+        "backtracks": 0,
+        "sat_query_runtime_seconds": 0.00029269998776726425,
+        "whole_puzzle_wall_runtime_seconds": 0.0009628999978303909
+      },
+      "uniqueness": {
+        "consistent": true,
+        "unique": true,
+        "sat_calls": 2,
+        "wall_runtime_seconds": 8.880000677891076e-05
+      },
+      "hint_support": {
+        "runs": 25,
+        "available_every_run": true,
+        "method": "deletion_irreducible",
+        "target_character_id": "B1",
+        "support_extraction_sat_calls": 9,
+        "median_hint_wall_runtime_seconds": 0.00020229999790899456,
+        "median_support_runtime_seconds": 0.00012670000432990491,
+        "minimum_support_runtime_seconds": 0.00012549999519251287,
+        "maximum_support_runtime_seconds": 0.00013039997429586947
+      }
+    }
+  ]
+}

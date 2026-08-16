@@ -38,7 +38,7 @@
 - Reason: It is dependency-free, explainable in an oral interview, and easy to verify exhaustively for 3x3 cases.
 - Consequences: Auxiliary-variable count is zero; clause growth is combinatorial and may be slower for large regions.
 - Related requirement: PDF sections 3.3 and 4.2.
-- Related commit: `2409aa7`; validation corrections are PENDING.
+- Related commit: `2409aa7`; validation corrections consolidated in `03584c3859a12e7a57385a7d860e48f084d0c210`.
 
 ## DEC-005 - One standard-library test runner
 
@@ -183,4 +183,15 @@
 - Copy/branding rule: Completion says every character was logically resolved from public clues, never that guesses matched a hidden answer. The production title is `Griductive`; test-harness titles remain test-only.
 - Rejected/deferred: private Puzzle access, unrevealed clue mapping, natural-language parsing, new reasoning calls on card inspection, solver or Hint rewrites, board-replacing overlay, counters, animations, and player marks.
 - Related requirement: UI Phase 7 gameplay completion/final polish and Project 2 public/private isolation.
+- Related commit: `4150d867b6f2ce03cf273ced9895c4dd06105445`.
+
+## DEC-016 - Reproducible final evidence without submission fabrication
+
+- Context: The Project 2 audit required actual experiments and submission-readiness evidence, but the repository contained only an empty results directory and a log stating that no experiment had run. Phase 8 explicitly prohibited report/video/archive/upload work and fabricated team data.
+- Options considered: mark experiments as planned; hand-copy selected timings; install an external benchmark framework; add a standard-library discovery runner with raw failure-preserving output; generate all final submission artifacts automatically.
+- Chosen option: Add one deterministic standard-library runner over every distributable puzzle and retain its raw JSON snapshot for the proposed Phase 8 commit. Keep failures/exceptions as rows and make them fail the process. Prepare report-support notes and a timed demo script, but classify absent artifacts honestly as PARTIAL/BLOCKED.
+- Metric boundary: Progressive DPLL query statistics come only from existing trace DTOs. Whole-solve, uniqueness, and fresh-engine Hint support wall times are measured separately. Machine-specific runtimes are never represented as guarantees.
+- Scope rule: No GameEngine, LogicAgent, CNF, DPLL, verdict, Hint, trace, completion, or puzzle semantics change is authorized. Tests may validate terminal behavior and experiment schema only.
+- Attribution rule: Git hashes come from real history; Phase 8 remains PENDING until committed. Team names/IDs/percentages, references approval, video URL, report, and archive cannot be inferred or fabricated.
+- Related requirement: Project 2 Sections 4.5-4.7 and Section 5; UI Phase 8 final audit/demo readiness.
 - Related commit: PENDING.

@@ -2,11 +2,11 @@
 
 Course project for CSC14003 - Introduction to Artificial Intelligence.
 
-This repository is developed in specification-gated phases. Phases 01-13 now
-provide the domain and game foundation, canonical clue semantics, automatic CNF,
-a team-implemented DPLL solver, a public-only entailment agent, progressive
-deduction with trace/uniqueness checks, an integrated desktop GUI, two clue
-extensions, and a validated 3x3/4x4 puzzle suite.
+This repository contains a complete desktop implementation of Griductive for
+CSC14003 Project 2: canonical clue semantics, automatic CNF, a team-implemented
+DPLL solver, a public-only entailment agent, progressive deduction with trace
+and uniqueness checks, two clue extensions, a responsive Tkinter GUI, and a
+validated 3x3/4x4 puzzle suite.
 
 ## Requirements
 
@@ -14,6 +14,10 @@ extensions, and a validated 3x3/4x4 puzzle suite.
 - Tkinter (normally included with CPython)
 
 No third-party runtime or test package is required.
+
+```powershell
+python -m pip install -r requirements.txt
+```
 
 ## Run
 
@@ -30,7 +34,20 @@ to choose another JSON puzzle.
 python -m unittest discover -s tests -v
 ```
 
-## Current scope
+`unittest` is the supported runner. `pytest` is not required or declared as a
+dependency.
+
+## Reproduce experiments
+
+```powershell
+python -m experiments.run_experiments
+```
+
+The command runs every distributable 3x3/4x4 puzzle and overwrites
+`experiments/results/final_regression.json` with machine-readable raw results.
+Failures are retained and cause a non-zero exit code.
+
+## Implemented scope
 
 - Phase 01: repository foundation
 - Phase 02: immutable domain contracts and JSON puzzle schema
@@ -46,8 +63,12 @@ python -m unittest discover -s tests -v
 - Phase 12: `IMPLIES` and `ODD` clue extensions
 - Phase 13: two validated 3x3 and two validated 4x4 puzzles
 
-Experiments, final verification packaging, report support, and demo preparation
-remain in Phases 14-17.
+The final experiment runner, report-support notes, demo script, requirement
+matrix, and known-limitations record are also included. The team must still
+provide real member attribution/contribution percentages and produce the final
+PDF report, hosted demo video, and submission archive; these artifacts are not
+fabricated by the source audit.
 
-See `docs/REQUIREMENTS_AUDIT.md` and `docs/ARCHITECTURE.md` for the specification
-mapping and security boundary.
+See `docs/REQUIREMENTS_AUDIT.md`, `docs/DEMO_SCRIPT.md`,
+`docs/KNOWN_LIMITATIONS.md`, and `docs/ARCHITECTURE.md` for final readiness and
+the security boundary.

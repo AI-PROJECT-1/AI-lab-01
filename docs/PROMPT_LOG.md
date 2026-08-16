@@ -150,6 +150,20 @@
 - Goal: Commit approved Phase 6.5, then complete the player-facing loop with public solved-card clue inspection, public completion presentation, coherent completed controls, robust lifecycle cleanup, and final restrained polish.
 - Full prompt: User approved Phase 6.5, required atomic commit `feat(agent): add grounded hint support extraction` and its real hash, then authorized only gameplay completion/final polish while protecting all solver, entailment, support-extraction, game-engine, public-state, and puzzle semantics. Required tests, scans, 3x3/4x4 visual review, audit updates, and a stop before Phase 8.
 - Short summary of response: Created real Phase 6.5 commit `ba7912b1ea64487cde55ae198cae1a648e363036`; added a public card-interaction DTO, canonical solved-card clue spotlight/scroll, public `is_complete` banner, completion-aware controls and handler guards, generation-safe Auto Solve, comprehensive lifecycle cleanup, and production title consistency.
-- Decision: EXECUTED FOR UI PHASE 7 ONLY; human approval PENDING
+- Decision: EXECUTED FOR UI PHASE 7 ONLY; approved by the user
 - Related AI Usage ID: AI-014
-- Related commits: Phase 6.5 `ba7912b`; UI Phase 7 PENDING
+- Related commits: Phase 6.5 `ba7912b`; UI Phase 7 `4150d86`
+
+## PROMPT-012
+
+- Date: 2026-08-16
+- Tool: OpenAI Codex
+- Model: GPT-5
+- Member: Tran Huu Phuoc - 24127511
+- Phase: UI Phase 8 final regression, requirement audit, and demo readiness
+- Goal: Commit approved Phase 7, audit all Project 2 requirements against actual implementation/evidence, correct only verified blocker/major defects, run final regression/experiments/E2E, and prepare honest demo/report support without producing submission artifacts.
+- Full prompt: User approved UI Phase 7, required atomic commit `feat(gui): finalize gameplay completion experience` and its real hash, then authorized only final regression, requirement audit, experiment/demo readiness, audit-document updates, repository/entrypoint validation, and a 46-item completion gate. Report generation, video recording, archive/upload/submission, feature creep, fabricated metrics/history, and new gameplay/AI semantics were prohibited.
+- Short summary of response: Created real Phase 7 commit `4150d867b6f2ce03cf273ced9895c4dd06105445`; found and corrected the missing reproducible experiment runner/documentation, added five release-audit tests, generated a four-puzzle raw result, rehearsed the deterministic 3x3/4x4 UI path, and converted the planned audit into an evidence/status matrix. Final submission artifacts and team attribution remain explicitly blocked rather than fabricated.
+- Decision: EXECUTED FOR UI PHASE 8 ONLY; approval of Phase 8 pending
+- Related AI Usage ID: AI-015
+- Related commits: UI Phase 7 `4150d86`; UI Phase 8 uncommitted

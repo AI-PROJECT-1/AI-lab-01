@@ -282,4 +282,25 @@
 - Tests performed: supported full runner passed 174/174 (155 existing plus 19 Phase 7 tests); compile, diff, protected-file, external-solver, GUI-hidden-data, and production-title scans passed. Tkinter smoke covered 3x3/4x4 at 1180x800 and 1180x660; the final low-height check reported 9/9 visible textual verdict badges and bottom edge 625/660. `pytest` remains unavailable with `No module named pytest` and was not installed.
 - Approved Phase 6.5 commit: `ba7912b1ea64487cde55ae198cae1a648e363036` (`feat(agent): add grounded hint support extraction`).
 - Related Prompt ID: PROMPT-011
-- Related Git commit hash: PENDING
+- Related Git commit hash: `4150d867b6f2ce03cf273ced9895c4dd06105445`
+
+## AI-015
+
+- Date: 2026-08-16
+- AI tool: OpenAI Codex
+- Model: GPT-5
+- Developer/member: Tran Huu Phuoc - 24127511
+- Phase: UI Phase 8 final regression, requirement audit, and demo readiness
+- Purpose: Perform an evidence-first final source audit against the 9-page Project 2 PDF, repair verified release-readiness defects, and prepare reproducible experiment/demo/report evidence without creating or uploading final submission artifacts.
+- Files affected: `README.md`; new `experiments/run_experiments.py`, `experiments/results/final_regression.json`, and `tests/test_final_audit.py`; final audit/demo/limitations/report-support documents; and project logs.
+- Audit decision: Preserve solver/gameplay behavior. Classify requirements from source/tests/runtime evidence as PASS, PARTIAL, or BLOCKED. Do not convert missing report/video/archive/team data into fabricated completion claims.
+- Verified defect: The repository had four validated puzzles but no runnable experiment harness and `EXPERIMENT_LOG.md` said no experiments had run. Added a standard-library runner that discovers all puzzle JSON files, records required counts/work/runtime/reveal/uniqueness/Hint metrics, retains exceptions as FAIL rows, writes raw JSON, and returns non-zero on failure.
+- Experiment result: 4/4 puzzles PASS (two 3x3, two 4x4); all complete without guessing and all complete clue sets are consistent/unique. The raw snapshot records 19-38 progressive SAT calls and 100-327 propagations; these unit-propagation chains produced 0 decisions/backtracks, while dedicated DPLL tests exercise both.
+- UI verification: One continuous 3x3/4x4 rehearsal covered NOT_PROVABLE, CONTRADICTED, ACCEPTED, solved-card clue inspection/highlight, grounded Hint stages, Solve Next, Auto Solve, completion, Solver Details, Restart, Load, scrolling, and 1180x660 layout. Eighteen captures were visually inspected and temporary evidence was removed after review.
+- Git verification: Approved Phase 7 was committed exactly as `4150d86`. After fetch, local `main` was 9 commits ahead of and 0 behind `origin/main`; no push/upload is claimed.
+- Accepted: reproducible raw experiments, five narrow release-audit tests, final requirement matrix, report technical support, timed demo script, honest limitations, clean entrypoint/visual/boundary validation, and explicit submission blockers.
+- Rejected/deferred: new solver/gameplay semantics, optional 5x5, external test/SAT packages, globally minimum Hint proof, final PDF generation, video recording/hosting, archive creation, pushing, submission, invented team percentages, and fake links/hashes.
+- Tests performed: 179/179 supported unittests PASS; compile and diff checks PASS; external-solver/public-boundary scans PASS; four-puzzle experiment run PASS; clean `python main.py` window launch PASS; 3x3/4x4 E2E/visual and low-height checks PASS. `pytest` remains unavailable with `No module named pytest` and was not installed.
+- Approved Phase 7 commit: `4150d867b6f2ce03cf273ced9895c4dd06105445` (`feat(gui): finalize gameplay completion experience`).
+- Related Prompt ID: PROMPT-012
+- Related Git commit hash: PENDING (Phase 8 is intentionally uncommitted for approval)

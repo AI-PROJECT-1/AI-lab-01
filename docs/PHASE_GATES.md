@@ -192,3 +192,40 @@ complete until its required checks actually pass.
 - Prompt Log entry: PROMPT-003
 - Recommended Git commit: `test(puzzles): add validated puzzle suite`
 - Next phase: Phase 14 reproducible experiments
+
+## Phase 14 - Reproducible Experiments
+
+- Status: COMPLETED in UI Phase 8
+- Requirements satisfied: all distributable 3x3/4x4 puzzles; CNF counts; SAT
+  calls/decisions/propagations/backtracks/runtime; reveal waves; trace length;
+  uniqueness; Hint support diagnostics; failures retained
+- Evidence: `experiments/run_experiments.py`,
+  `experiments/results/final_regression.json`, `docs/EXPERIMENT_LOG.md`
+- Test results: 4/4 puzzles PASS, 0 failures/timeouts
+- Known issues: no optional 5x5 run; timings are machine-specific
+- Related log: AI-015, PROMPT-012
+
+## Phase 15 - Full Verification
+
+- Status: COMPLETED in UI Phase 8 for source/demo readiness
+- Tests: 179/179 unittests; compile/diff/JSON/boundary/external-solver scans;
+  clean entrypoint; continuous 3x3/4x4 E2E and visual audit
+- Result: no implementation blocker; protected solver/gameplay modules unchanged
+- Related log: `docs/TEST_LOG.md`
+
+## Phase 16 - Report Support
+
+- Status: SUPPORT COMPLETE; FINAL ARTIFACT PARTIAL
+- Evidence: final requirement matrix, actual experiment log, technical
+  formulation/algorithm/CNF notes, known limitations, AI/decision/test logs
+- Blocker: team must author/review/export `Report.pdf`, references, identities,
+  contributions, and final video link
+- Related file: `docs/REPORT_SUPPORT.md`
+
+## Phase 17 - Demo Preparation
+
+- Status: SCRIPT/REHEARSAL COMPLETE; VIDEO ARTIFACT PARTIAL
+- Evidence: deterministic 7-8 minute script and verified 3x3/4x4 rehearsal
+- Blocker: team must record narration/subtitles, upload to Drive, verify signed-out
+  access, add the real link to the report, and create the final student-ID archive
+- Related file: `docs/DEMO_SCRIPT.md`
