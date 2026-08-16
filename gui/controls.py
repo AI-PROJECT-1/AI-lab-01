@@ -49,7 +49,10 @@ class Controls(ttk.Frame):
 
         solver = ControlGroup(self, CONTROL_GROUP_ORDER[3])
         solver.grid(row=0, column=3, sticky="nsew")
-        ttk.Button(solver, text="Solve Next", command=on_solve_next, style="Solver.TButton").grid(
+        self._solve_next_button = ttk.Button(
+            solver, text="Solve Next", command=on_solve_next, style="Solver.TButton"
+        )
+        self._solve_next_button.grid(
             row=0, column=0, sticky="ew", padx=2
         )
         self._auto_button = ttk.Button(solver, text="Auto Solve", command=on_auto_solve, style="Solver.TButton")
@@ -63,16 +66,47 @@ class Controls(ttk.Frame):
         self._details_button.grid(row=1, column=0, columnspan=2, sticky="ew", padx=2, pady=(4, 0))
         solver.columnconfigure(0, weight=1)
         solver.columnconfigure(1, weight=1)
+        self._current_card: CardViewModel | None = None
+        self._is_complete = False
+        self._auto_running = False
 
     def set_auto_running(self, running: bool) -> None:
-        self._auto_button.configure(state="disabled" if running else "normal")
+        self._auto_running = running
+        self._sync_solver_controls()
 
     @property
     def verdict_panel(self) -> VerdictPanel:
         return self._verdict_panel
 
     def set_verdict_context(self, card: CardViewModel | None) -> None:
-        self._verdict_panel.set_context(card)
+        self._current_card = card
+        self._verdict_panel.set_context(card, is_complete=self._is_complete)
+
+    def set_completion_state(self, is_complete: bool) -> None:
+        self._is_complete = is_complete
+        self._verdict_panel.set_context(self._current_card, is_complete=is_complete)
+        if is_complete:
+            self.set_hint_button_text("Hint")
+        self._hint_button.configure(state="disabled" if is_complete else "normal")
+        self._sync_solver_controls()
+
+    def _sync_solver_controls(self) -> None:
+        self._solve_next_button.configure(state="disabled" if self._is_complete else "normal")
+        self._auto_button.configure(
+            state="disabled" if self._is_complete or self._auto_running else "normal"
+        )
+
+    @property
+    def hint_available(self) -> bool:
+        return str(self._hint_button.cget("state")) == "normal"
+
+    @property
+    def solve_next_available(self) -> bool:
+        return str(self._solve_next_button.cget("state")) == "normal"
+
+    @property
+    def auto_solve_available(self) -> bool:
+        return str(self._auto_button.cget("state")) == "normal"
 
     @property
     def hint_button_text(self) -> str:

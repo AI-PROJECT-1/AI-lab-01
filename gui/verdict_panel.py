@@ -18,7 +18,13 @@ class VerdictContext:
     can_submit: bool
 
 
-def verdict_context_for(card: CardViewModel | None) -> VerdictContext:
+def verdict_context_for(card: CardViewModel | None, *, is_complete: bool = False) -> VerdictContext:
+    if is_complete:
+        return VerdictContext(
+            "Puzzle solved · all verdicts are public",
+            "Verdict actions are no longer needed.",
+            False,
+        )
     if card is None:
         return VerdictContext(
             "Select an unresolved character",
@@ -76,8 +82,8 @@ class VerdictPanel(ControlGroup):
     def context_text(self) -> str:
         return str(self._identity.cget("text"))
 
-    def set_context(self, card: CardViewModel | None) -> None:
-        context = verdict_context_for(card)
+    def set_context(self, card: CardViewModel | None, *, is_complete: bool = False) -> None:
+        context = verdict_context_for(card, is_complete=is_complete)
         identity = context.identity
         if card is not None and card.status is not None:
             identity = f"{identity} · {card.status.value}"

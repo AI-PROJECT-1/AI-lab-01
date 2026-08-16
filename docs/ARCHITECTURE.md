@@ -71,6 +71,21 @@ find a deletion-irreducible supporting set. These checks reuse the same SAT
 entailment helper but do not produce gameplay deduction steps. The result is not
 claimed to be a globally minimum or unique proof, and it is not part of DPLL.
 
+## Public interaction and completion presentation
+
+Board-card activation is routed entirely from the current public snapshot. A
+card without a public clue remains a verdict-selection target. A card whose clue
+is already present in `revealed_clues` selects that exact public clue and reuses
+the canonical region resolver to spotlight referenced cells; it performs no new
+reasoning or gameplay command.
+
+The completion banner and completed control state are derived only from
+`PublicKnowledgeState.is_complete`. Completion leaves the board, public clues,
+and Solver Details inspectable while disabling verdict, Hint, Solve Next, and
+Auto Solve actions. Restart and Load replace the public snapshot and clear all
+GUI-owned transient state; an Auto Solve generation token prevents a callback
+from an earlier lifecycle from acting on the replacement puzzle.
+
 ## JSON design
 
 The schema uses stable cell IDs such as `A1`, explicit `row`/`column` integers,

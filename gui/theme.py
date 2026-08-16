@@ -70,6 +70,25 @@ def configure_theme(root: tk.Misc) -> ttk.Style:
     style.configure("App.TFrame", background=COLORS["canvas"])
     style.configure("Header.TFrame", background=COLORS["accent"])
     style.configure("Surface.TFrame", background=COLORS["surface"])
+    style.configure("Completion.TFrame", background=COLORS["accent_soft"])
+    style.configure(
+        "CompletionSymbol.TLabel",
+        background=COLORS["accent_soft"],
+        foreground=COLORS["success"],
+        font=FONTS["title"],
+    )
+    style.configure(
+        "CompletionTitle.TLabel",
+        background=COLORS["accent_soft"],
+        foreground=COLORS["success"],
+        font=FONTS["section"],
+    )
+    style.configure(
+        "Completion.TLabel",
+        background=COLORS["accent_soft"],
+        foreground=COLORS["ink"],
+        font=FONTS["small"],
+    )
 
     style.configure(
         "AppTitle.TLabel",

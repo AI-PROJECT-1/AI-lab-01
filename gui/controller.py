@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+from enum import StrEnum
+
 from core.enums import Status
 from core.public_state import PublicKnowledgeState
 from core.puzzle import Puzzle
@@ -11,6 +14,19 @@ from game.game_engine import GameEngine
 
 class SelectionRequiredError(ValueError):
     pass
+
+
+class CharacterInteractionKind(StrEnum):
+    SELECT_FOR_VERDICT = "SELECT_FOR_VERDICT"
+    INSPECT_PUBLIC_CLUE = "INSPECT_PUBLIC_CLUE"
+
+
+@dataclass(frozen=True, slots=True)
+class CharacterInteraction:
+    kind: CharacterInteractionKind
+    character_id: str
+    clue_id: str | None = None
+    referenced_character_ids: tuple[str, ...] = ()
 
 
 class GameController:
@@ -34,6 +50,30 @@ class GameController:
         if character_id not in {item.id for item in self.state().characters}:
             raise ValueError(f"unknown character id: {character_id}")
         self._selected_character_id = character_id
+
+    def activate_character(self, character_id: str) -> CharacterInteraction:
+        """Interpret a board-card click using public presentation data only."""
+
+        state = self.state()
+        if character_id not in {item.id for item in state.characters}:
+            raise ValueError(f"unknown character id: {character_id}")
+        clue = state.clue_for(character_id)
+        if clue is None:
+            self._selected_clue_owner_id = None
+            self._selected_character_id = character_id
+            return CharacterInteraction(
+                CharacterInteractionKind.SELECT_FOR_VERDICT,
+                character_id,
+            )
+
+        self._selected_character_id = None
+        referenced = self.select_clue(character_id)
+        return CharacterInteraction(
+            CharacterInteractionKind.INSPECT_PUBLIC_CLUE,
+            character_id,
+            clue.id,
+            referenced,
+        )
 
     def select_clue(self, owner_id: str) -> tuple[str, ...]:
         state = self.state()

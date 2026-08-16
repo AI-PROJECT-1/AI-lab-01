@@ -136,6 +136,20 @@
 - Goal: Commit approved UI Phase 6, then extract a deterministic, logically valid public supporting set for the already-forced Hint target while preserving two-stage UX, trace semantics, privacy, and solver boundaries.
 - Full prompt: User required real Phase 6 checkpoint `feat(gui): add structured solver details`, grouped revealed-clue and proved-verdict support components, same-verdict deletion reduction, irreducibility tests, separate diagnostic SAT cost, safe Phase 5 fallback, Stage 1 support emphasis, unchanged cached Stage 2, performance/visual verification, audit updates, and a stop before Phase 7.
 - Short summary of response: Created real Phase 6 commit `5673fe09c0cd1a47f10e3f75d7ac2344dec7820f`; introduced a shared trace-free entailment helper and deletion-irreducible public support extractor, enriched `HintResult` compatibly, highlighted supporting clues/verdicts in Stage 1, and retained target-only Stage 2 plus active-clue fallback.
-- Decision: EXECUTED FOR PHASE 6.5 ONLY; human approval PENDING
+- Decision: EXECUTED FOR PHASE 6.5 ONLY; approved by the user
 - Related AI Usage ID: AI-013
-- Related commits: UI Phase 6 `5673fe0`; Phase 6.5 PENDING
+- Related commits: UI Phase 6 `5673fe0`; Phase 6.5 `ba7912b`
+
+## PROMPT-011
+
+- Date: 2026-08-16
+- Tool: OpenAI Codex
+- Model: GPT-5
+- Member: Tran Huu Phuoc - 24127511
+- Phase: Griductive GUI refactor, UI Phase 7 only
+- Goal: Commit approved Phase 6.5, then complete the player-facing loop with public solved-card clue inspection, public completion presentation, coherent completed controls, robust lifecycle cleanup, and final restrained polish.
+- Full prompt: User approved Phase 6.5, required atomic commit `feat(agent): add grounded hint support extraction` and its real hash, then authorized only gameplay completion/final polish while protecting all solver, entailment, support-extraction, game-engine, public-state, and puzzle semantics. Required tests, scans, 3x3/4x4 visual review, audit updates, and a stop before Phase 8.
+- Short summary of response: Created real Phase 6.5 commit `ba7912b1ea64487cde55ae198cae1a648e363036`; added a public card-interaction DTO, canonical solved-card clue spotlight/scroll, public `is_complete` banner, completion-aware controls and handler guards, generation-safe Auto Solve, comprehensive lifecycle cleanup, and production title consistency.
+- Decision: EXECUTED FOR UI PHASE 7 ONLY; human approval PENDING
+- Related AI Usage ID: AI-014
+- Related commits: Phase 6.5 `ba7912b`; UI Phase 7 PENDING

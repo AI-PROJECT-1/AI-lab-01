@@ -257,4 +257,29 @@
 - Tests performed: supported full runner passed 155/155; compile, diff, boundary/external-solver/hidden-import/still-protected-file scans and Tkinter visual smoke passed. `pytest` remains unavailable and was not installed.
 - Approved Phase 6 commit: `5673fe09c0cd1a47f10e3f75d7ac2344dec7820f` (`feat(gui): add structured solver details`).
 - Related Prompt ID: PROMPT-010
+- Related Git commit hash: `ba7912b1ea64487cde55ae198cae1a648e363036`
+
+## AI-014
+
+- Date: 2026-08-16
+- AI tool: OpenAI Codex
+- Model: GPT-5
+- Developer/member: Tran Huu Phuoc - 24127511
+- Phase: Griductive GUI fidelity refactor, UI Phase 7
+- Purpose: Finalize the public gameplay loop with solved-card clue inspection, a public-state-driven completion presentation, coherent completed controls, and reset-safe transient state.
+- Files affected: `gui/app.py`, `gui/clue_panel.py`, `gui/controller.py`, `gui/controls.py`, `gui/theme.py`, `gui/verdict_panel.py`, new `gui/completion_panel.py`, new `tests/test_gameplay_completion.py`, architecture/report-support notes, and audit logs.
+- Solved-card decision: `GameController.activate_character()` checks only `PublicKnowledgeState.clue_for()`. An unresolved card remains verdict selection; a card with a revealed public clue clears verdict selection, selects that exact owner clue, and reuses `select_clue()` plus the canonical region resolver for board highlights.
+- Interaction isolation: Solved-card inspection invokes no Hint, Solve Next, verdict submission, CNF build, or DPLL call. Tests use a fail-fast engine stub to verify those methods are never reached.
+- Completion decision: `completion_presentation_for()` consumes only `PublicKnowledgeState.is_complete`. The compact banner preserves the board, clue list, solved-card inspection, Load, Restart, and Solver Details.
+- Completed-control rule: Player verdict, Hint, Solve Next, and Auto Solve are disabled. Programmatic handler guards also prevent stale or meaningless reasoning calls after completion; Solver Details remains enabled.
+- Auto Solve rule: Each scheduled callback carries a GUI lifecycle generation. Completion stops immediately after the final accepted reveal, schedules no next step, and Restart/Load invalidate any stale generation after cancelling the known callback.
+- Lifecycle rule: Restart and successful Load clear character/clue selection through the controller, and clear clue highlights, newly revealed emphasis, Hint session/support/target, trace-source metadata, completion presentation, and pending Auto Solve state in the app.
+- Public/private verification: completion and clue inspection use public snapshots and stable public IDs only. No private Puzzle field, hidden status/solution, unrevealed clue lookup, clue-text parser, or new resolver was introduced.
+- Branding decision: The production window title is consistently `Griductive`; no capture/smoke/debug/test-harness title exists in production GUI code.
+- Accepted suggestions: public interaction DTO, canonical resolver reuse, selected-clue auto-scroll, persistent completed board, compact textual completion banner, completion-aware controls, handler guards, and generation-token callback invalidation.
+- Rejected/deferred: hidden-solution comparison, unrevealed clue lookup, clue text inference, new solver semantics, completion overlay replacing the board, timed animation, player marks, optional counters, and all Phase 8 work.
+- Human verification performed: Foreground screenshots were inspected for initial/partial states, unresolved selection, solved-card clue spotlight, grounded Hint Stage 1, target-only Stage 2, manual completion, Auto Solve completion, Solver Details after completion, Restart, Load, long 4x4 clue scrolling, and low-height completion. The first capture attempt was rejected because another window covered Tkinter; the corrected foreground run produced 16 valid captures. A clipped low-height status presentation was found and corrected by compacting the completion banner and hiding the now-obsolete verdict instruction while complete.
+- Tests performed: supported full runner passed 174/174 (155 existing plus 19 Phase 7 tests); compile, diff, protected-file, external-solver, GUI-hidden-data, and production-title scans passed. Tkinter smoke covered 3x3/4x4 at 1180x800 and 1180x660; the final low-height check reported 9/9 visible textual verdict badges and bottom edge 625/660. `pytest` remains unavailable with `No module named pytest` and was not installed.
+- Approved Phase 6.5 commit: `ba7912b1ea64487cde55ae198cae1a648e363036` (`feat(agent): add grounded hint support extraction`).
+- Related Prompt ID: PROMPT-011
 - Related Git commit hash: PENDING

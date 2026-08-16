@@ -1,7 +1,7 @@
 # Commit History
 
-Generated from real Git history through UI Phase 6 commit `5673fe0` on 2026-08-16.
-Phase 6.5 changes after that commit remain uncommitted and are not assigned a hash.
+Generated from real Git history through Phase 6.5 commit `ba7912b` on 2026-08-16.
+UI Phase 7 changes after that commit remain uncommitted and are not assigned a hash.
 
 Verified checkpoint: `03584c3859a12e7a57385a7d860e48f084d0c210` | 2026-08-12 22:14:30 +0700 | Trần Phước | `feat(project): checkpoint phases 08-13`
 
@@ -16,6 +16,8 @@ Verified UI Phase 4 commit: `dff07f05a003fa966c200fc925e5da600846ec54` | 2026-08
 Verified UI Phase 5 commit: `d2682b3ebccdf087c417a90b50488def293c79ce` | 2026-08-13 01:03:35 +0700 | Tran Phuoc | `feat(gui): add progressive two-stage hints`
 
 Verified UI Phase 6 commit: `5673fe09c0cd1a47f10e3f75d7ac2344dec7820f` | 2026-08-16 15:53:20 +0700 | Tran Phuoc | `feat(gui): add structured solver details`
+
+Verified Phase 6.5 commit: `ba7912b1ea64487cde55ae198cae1a648e363036` | 2026-08-16 16:53:50 +0700 | Tráº§n PhÆ°á»›c | `feat(agent): add grounded hint support extraction`
 
 ```text
 4f59755 | 2026-06-30 15:07:17 +0700 | Trần Phước | Initial commit

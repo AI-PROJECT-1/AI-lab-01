@@ -74,8 +74,9 @@ class CluePanel(ttk.LabelFrame):
         self._content.update_idletasks()
         self._update_scrollregion()
         self._update_card_wraplength(self._canvas.winfo_width())
-        if newly_revealed_owner_id in self._cards:
-            self.after_idle(lambda: self._scroll_to(newly_revealed_owner_id))
+        scroll_target = newly_revealed_owner_id or selected_owner_id
+        if scroll_target in self._cards:
+            self._scroll_to(scroll_target)
 
     def _update_scrollregion(self, _event: tk.Event | None = None) -> None:
         self._canvas.configure(scrollregion=self._canvas.bbox("all"))

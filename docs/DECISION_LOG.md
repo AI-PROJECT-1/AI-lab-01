@@ -168,4 +168,19 @@
 - UI/fallback rule: Stage 1 caches only fingerprint-bound public support IDs and highlights corresponding clue cards/known verdict cards. Unsupported, failed, empty, duplicate-ID, or nonpublic explanation data reuses Phase 5 active-clue wording. Stage 2 clears support visuals and shows only the cached target.
 - Protected-scope rule: DPLL, CNF encoder/semantics, GameEngine, PublicKnowledgeState, puzzles, uniqueness, experiments, and Solver Details presentation remain unchanged.
 - Related requirement: Phase 6.5 Hint explanation fidelity and Project 2 public-only entailment requirements.
+- Related commit: `ba7912b1ea64487cde55ae198cae1a648e363036`.
+
+## DEC-015 - Public card activation and derived completion state
+
+- Context: UI Phase 7 requires revealed character cards to inspect their public clue and requires a clear end state without weakening the hidden/public boundary or changing gameplay deductions.
+- Options considered: keep every card click as verdict selection; inspect the engine's private card; infer clue ownership from text; route clicks by public clue presence and derive completion from the public completion signal.
+- Chosen option: Add `GameController.activate_character()`. If `PublicKnowledgeState.clue_for(character_id)` is absent, retain normal unresolved verdict selection. If present, clear verdict selection, select the exact public owner clue, and reuse the existing canonical `select_clue()` result.
+- Highlight/scroll rule: The app stores only the returned canonical referenced IDs; `CluePanel` scrolls a selected owner card into view after layout. Existing base verdict, selection, Hint, support, newly revealed, and clue-highlight modifiers remain independent.
+- Completion source: `CompletionPresentation` is derived exclusively from `PublicKnowledgeState.is_complete`. No GUI comparison with a solution or private engine status exists.
+- Completion-control rule: Disable verdict, Hint, Solve Next, and Auto Solve while complete. Keep Load, Restart, Solver Details, the completed board, direct clue selection, and solved-card clue inspection available.
+- Auto Solve rule: After a final reveal, render completion and stop without scheduling another callback. A monotonically increasing presentation generation invalidates callbacks captured before Restart or Load.
+- Reset rule: Restart and successful Load clear controller selections, clue highlights, newly revealed emphasis, Hint session/support/target, trace-source metadata, completion display, and pending Auto Solve state. Completion itself is recomputed from the new public snapshot.
+- Copy/branding rule: Completion says every character was logically resolved from public clues, never that guesses matched a hidden answer. The production title is `Griductive`; test-harness titles remain test-only.
+- Rejected/deferred: private Puzzle access, unrevealed clue mapping, natural-language parsing, new reasoning calls on card inspection, solver or Hint rewrites, board-replacing overlay, counters, animations, and player marks.
+- Related requirement: UI Phase 7 gameplay completion/final polish and Project 2 public/private isolation.
 - Related commit: PENDING.

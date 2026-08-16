@@ -12,7 +12,8 @@ from game.game_engine import AgentIntegrityError, GameEngine
 from game.puzzle_loader import PuzzleFormatError, PuzzleLoader
 from gui.board_view import BoardView
 from gui.clue_panel import CluePanel
-from gui.controller import GameController, SelectionRequiredError
+from gui.completion_panel import CompletionPanel, completion_presentation_for
+from gui.controller import CharacterInteractionKind, GameController, SelectionRequiredError
 from gui.controls import Controls
 from gui.feedback import (
     FeedbackTone,
@@ -38,7 +39,7 @@ class GriductiveApp(ttk.Frame):
     def __init__(self, root: tk.Tk, puzzle_path: str | Path = DEFAULT_PUZZLE) -> None:
         configure_theme(root)
         super().__init__(root, style="App.TFrame")
-        root.title("Griductive Solver")
+        root.title("Griductive")
         screen_width = root.winfo_screenwidth()
         screen_height = root.winfo_screenheight()
         window_width = min(1180, max(920, screen_width - 80))
@@ -58,6 +59,7 @@ class GriductiveApp(ttk.Frame):
         self._hint_state = HintVisualState()
         self._auto_running = False
         self._auto_after_id: str | None = None
+        self._auto_generation = 0
         self._solver_details_model = SolverDetailsModel()
         self._solver_details_window: SolverDetailsWindow | None = None
         AppHeader(self).grid(row=0, column=0, sticky="ew")
@@ -67,9 +69,16 @@ class GriductiveApp(ttk.Frame):
         title_area.columnconfigure(0, weight=1)
         self._title = ttk.Label(title_area, style="PuzzleTitle.TLabel")
         self._title.grid(row=0, column=0, sticky="w")
-        ttk.Label(title_area, text="Select a card, then submit only a logically forced verdict.", style="Muted.TLabel").grid(
+        self._instruction = ttk.Label(
+            title_area,
+            text="Select a card, then submit only a logically forced verdict.",
+            style="Muted.TLabel",
+        )
+        self._instruction.grid(
             row=1, column=0, sticky="w", pady=(2, 0)
         )
+        self._completion = CompletionPanel(title_area)
+        self._completion.grid(row=2, column=0, sticky="ew", pady=(2, 0))
 
         content = ttk.Frame(self, style="App.TFrame", padding=(SPACING["xl"], SPACING["sm"]))
         content.grid(row=2, column=0, sticky="nsew")
@@ -120,8 +129,19 @@ class GriductiveApp(ttk.Frame):
 
     def _render(self) -> None:
         state = self._controller.state()
-        completion = " - COMPLETE" if state.is_complete else ""
-        self._title.configure(text=f"{state.title} ({state.size}x{state.size}){completion}")
+        if state.is_complete and (
+            self._hint_state.session is not None
+            or self._hint_state.active_clue_ids
+            or self._hint_state.target_character_id is not None
+            or self._hint_state.supporting_verdict_ids
+        ):
+            self._invalidate_hint_session()
+        self._title.configure(text=f"{state.title} ({state.size}x{state.size})")
+        if state.is_complete:
+            self._instruction.grid_remove()
+        else:
+            self._instruction.grid()
+        self._completion.show_presentation(completion_presentation_for(state))
         selected_card = self._card_for(state, self._controller.selected_character_id)
         self._board.render(
             state,
@@ -142,6 +162,7 @@ class GriductiveApp(ttk.Frame):
                 self._solver_details_model.presentations(self._controller.trace())
             )
         self._controls.set_verdict_context(selected_card)
+        self._controls.set_completion_state(state.is_complete)
 
     @staticmethod
     def _card_for(state, character_id: str | None) -> CardViewModel | None:
@@ -151,8 +172,22 @@ class GriductiveApp(ttk.Frame):
 
     def _select_character(self, character_id: str) -> None:
         self._newly_revealed_id = None
-        self._controller.select_character(character_id)
-        card = self._card_for(self._controller.state(), character_id)
+        interaction = self._controller.activate_character(character_id)
+        state = self._controller.state()
+        card = self._card_for(state, character_id)
+        if interaction.kind is CharacterInteractionKind.INSPECT_PUBLIC_CLUE:
+            self._highlighted_ids = interaction.referenced_character_ids
+            self._feedback.show(
+                notice_feedback(
+                    "Public clue selected",
+                    f"{card.name} ({card.coordinate}) owns {interaction.clue_id}; its referenced cells are highlighted.",
+                    FeedbackTone.INFO,
+                )
+            )
+            self._render()
+            return
+
+        self._highlighted_ids = ()
         self._feedback.show(
             notice_feedback(
                 "Character selected",
@@ -170,6 +205,12 @@ class GriductiveApp(ttk.Frame):
         self._render()
 
     def _submit(self, status: Status) -> None:
+        if self._controller.state().is_complete:
+            self._feedback.show(
+                notice_feedback("Puzzle already solved", "All character verdicts are already public.")
+            )
+            self._render()
+            return
         before = self._controller.state()
         before_trace_count = len(self._controller.trace())
         try:
@@ -201,15 +242,14 @@ class GriductiveApp(ttk.Frame):
         self._cancel_auto()
         self._controller.restart()
         self._solver_details_model.clear_trace_metadata()
-        self._invalidate_hint_session()
-        self._highlighted_ids = ()
-        self._newly_revealed_id = None
+        self._clear_transient_presentation()
         self._feedback.show(
             notice_feedback("Puzzle restarted", "Selection and transient feedback were cleared.", FeedbackTone.NEUTRAL)
         )
         self._render()
 
     def _load(self) -> None:
+        self._cancel_auto()
         path = filedialog.askopenfilename(
             parent=self,
             title="Load Griductive puzzle",
@@ -226,17 +266,21 @@ class GriductiveApp(ttk.Frame):
                 notice_feedback("Load failed", "The current puzzle was not changed.", FeedbackTone.ERROR)
             )
             return
-        self._cancel_auto()
         self._solver_details_model.clear_trace_metadata()
-        self._highlighted_ids = ()
-        self._newly_revealed_id = None
-        self._invalidate_hint_session()
+        self._clear_transient_presentation()
         self._feedback.show(
             notice_feedback("Puzzle loaded", f"Loaded {puzzle.title}. Selection was cleared.", FeedbackTone.NEUTRAL)
         )
         self._render()
 
     def _hint(self) -> None:
+        if self._controller.state().is_complete:
+            self._invalidate_hint_session()
+            self._feedback.show(
+                notice_feedback("Puzzle already solved", "No further Hint is needed.")
+            )
+            self._render()
+            return
         before_trace_count = len(self._controller.trace())
         session, presentation, reasoning_requested = progress_hint_session(
             self._hint_state.session,
@@ -259,7 +303,18 @@ class GriductiveApp(ttk.Frame):
         if hasattr(self, "_controls"):
             self._controls.set_hint_button_text("Hint")
 
+    def _clear_transient_presentation(self) -> None:
+        self._highlighted_ids = ()
+        self._newly_revealed_id = None
+        self._invalidate_hint_session()
+
     def _solve_next(self) -> None:
+        if self._controller.state().is_complete:
+            self._feedback.show(
+                notice_feedback("Puzzle already solved", "No further forced verdict is needed.")
+            )
+            self._render()
+            return
         self._newly_revealed_id = None
         self._invalidate_hint_session()
         before = self._controller.state()
@@ -283,16 +338,27 @@ class GriductiveApp(ttk.Frame):
         self._render()
 
     def _auto_solve(self) -> None:
-        if self._auto_running:
+        if self._auto_running or self._controller.state().is_complete:
+            if self._controller.state().is_complete:
+                self._feedback.show(
+                    notice_feedback("Puzzle already solved", "Auto Solve has no remaining steps.")
+                )
+                self._render()
             return
         self._newly_revealed_id = None
         self._invalidate_hint_session()
         self._auto_running = True
+        self._auto_generation += 1
+        generation = self._auto_generation
         self._controls.set_auto_running(True)
         self._feedback.show(notice_feedback("Auto Solve", "Progressive solving started."))
-        self._auto_after_id = self.after(1, self._auto_step)
+        self._auto_after_id = self.after(1, lambda: self._auto_step(generation))
 
-    def _auto_step(self) -> None:
+    def _auto_step(self, generation: int | None = None) -> None:
+        if generation is None:
+            generation = self._auto_generation
+        if not self._auto_running or generation != self._auto_generation:
+            return
         self._auto_after_id = None
         before = self._controller.state()
         before_trace_count = len(self._controller.trace())
@@ -312,7 +378,10 @@ class GriductiveApp(ttk.Frame):
         self._invalidate_hint_session()
         self._render()
         self._feedback.show(notice_feedback("Auto Solve", result.message, FeedbackTone.SUCCESS))
-        self._auto_after_id = self.after(120, self._auto_step)
+        if self._controller.state().is_complete:
+            self._finish_auto("Puzzle solved. Every character verdict is now public.")
+            return
+        self._auto_after_id = self.after(120, lambda: self._auto_step(generation))
 
     def _finish_auto(self, message: str) -> None:
         self._auto_after_id = None
@@ -328,6 +397,7 @@ class GriductiveApp(ttk.Frame):
                 pass
         self._auto_after_id = None
         self._auto_running = False
+        self._auto_generation += 1
         if hasattr(self, "_controls"):
             self._controls.set_auto_running(False)
 
@@ -358,7 +428,7 @@ def main() -> None:
     try:
         GriductiveApp(root)
     except PuzzleFormatError as exc:
-        messagebox.showerror("Cannot start Griductive Solver", str(exc), parent=root)
+        messagebox.showerror("Cannot start Griductive", str(exc), parent=root)
         root.destroy()
         return
     root.mainloop()
