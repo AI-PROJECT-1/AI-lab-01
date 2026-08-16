@@ -58,6 +58,19 @@ card and calls the agent again with a fresh public snapshot. Puzzle uniqueness i
 a separate clue-only operation that requires every clue and rejects verdict unit
 clauses.
 
+## Deduction versus Hint explanation
+
+Deduction asks whether a character's verdict is logically entailed by the full
+current `PublicKnowledgeState`. It produces the normal `DeductionTraceStep` used
+by Solver Details.
+
+Hint explanation runs only after the existing deduction workflow has selected a
+forced target. It treats each revealed structured clue and each proved-verdict
+unit as one public support component, then uses deterministic deletion checks to
+find a deletion-irreducible supporting set. These checks reuse the same SAT
+entailment helper but do not produce gameplay deduction steps. The result is not
+claimed to be a globally minimum or unique proof, and it is not part of DPLL.
+
 ## JSON design
 
 The schema uses stable cell IDs such as `A1`, explicit `row`/`column` integers,

@@ -231,4 +231,30 @@
 - Tests performed: supported full runner passed 135/135; compile, diff, public-boundary/external-solver/protected-module scans, and Tkinter 3x3/4x4 smoke passed. `pytest` remains unavailable and was not installed.
 - Approved Phase 5 commit: `d2682b3ebccdf087c417a90b50488def293c79ce` (`feat(gui): add progressive two-stage hints`).
 - Related Prompt ID: PROMPT-009
+- Related Git commit hash: `5673fe09c0cd1a47f10e3f75d7ac2344dec7820f`
+
+## AI-013
+
+- Date: 2026-08-16
+- AI tool: OpenAI Codex
+- Model: GPT-5
+- Developer/member: Tran Huu Phuoc - 24127511
+- Phase: Phase 6.5 Hint explanation fidelity / support extraction
+- Purpose: Replace Stage 1's broad active-clue guidance with a logically grounded public support set for the target already selected by the existing Hint deduction.
+- Files affected: new `agent/entailment.py`, new `agent/hint_explanation.py`, `agent/deduction_trace.py`, `agent/logic_agent.py`, `gui/hint_session.py`, `gui/app.py`, `gui/board_view.py`, `gui/character_card.py`, `gui/view_model.py`, new `tests/test_hint_support.py`, architecture/report-support notes, and audit logs.
+- Integration strategy: Extract the existing SAT classification path into a pure public-state helper. Normal deduction wraps its returned queries in the existing trace step; Hint support diagnostics call the same helper without incrementing the trace step counter or modifying `last_trace`.
+- Target rule: `LogicAgent.get_hint()` continues to call the existing `solve_next()` first. Support extraction runs only after that method returns a forced target/status and does not search for a target independently.
+- Component model: Each revealed clue is one indivisible component even when it encodes many CNF clauses. Every previously proved public verdict is a separate unit-constraint component.
+- Reduction decision: Verify consistent baseline entailment of the same target verdict, then greedily test removal in clue-ID order followed by row-major verdict order. Keep a component only when deleting it stops forcing the same verdict.
+- Terminology: The result is a deterministic deletion-irreducible supporting set. It is not claimed to be a unique proof or globally minimum-cardinality proof.
+- Privacy rule: The DTO contains public target/clue/verdict IDs plus separate diagnostic cost only. No Puzzle, GameEngine, hidden status, unrevealed clue, natural-language parsing, or private state is used.
+- Hint UI: Stage 1 prefers verified supporting clue IDs and may emphasize supporting solved characters; Stage 2 remains cached target-only and creates no second solver request. Invalid, empty, or failed explanations fall back to Phase 5 active-clue guidance.
+- Trace/metrics rule: Support ablation SAT work is measured separately (`support_extraction_sat_calls`, `support_extraction_runtime`) and never becomes normal deduction steps or changes historical experiment numbers.
+- Performance measured: 25 fresh-engine runs produced 3x3 median Hint 0.000223900s / extraction 0.000138700s and 4x4 median Hint 0.000276600s / extraction 0.000173200s; both initial states used 9 extraction SAT calls.
+- Accepted suggestions: pure shared entailment helper, public structured explanation DTO, grouped clue ablation, proved-verdict components, deterministic ordering, safe fallback, fingerprint-bound caching, and explicit diagnostic cost.
+- Rejected/deferred: global minimum search, proof-anchor wording, clause-level ablation, clue-text parsing, DPLL/CNF/game changes, Solver Details redesign, experiment rewrites, solved-card click behavior, and all Phase 7 work.
+- Human verification performed: DPI-aware review covered all required 3x3/4x4 single/multiple/clue-plus-verdict, Stage 2, fallback, scrolling, Auto Solve, Restart, and stale-state cases; public synthetic states were used only for multi-clue layouts absent from the distributable chain puzzles.
+- Tests performed: supported full runner passed 155/155; compile, diff, boundary/external-solver/hidden-import/still-protected-file scans and Tkinter visual smoke passed. `pytest` remains unavailable and was not installed.
+- Approved Phase 6 commit: `5673fe09c0cd1a47f10e3f75d7ac2344dec7820f` (`feat(gui): add structured solver details`).
+- Related Prompt ID: PROMPT-010
 - Related Git commit hash: PENDING

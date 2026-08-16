@@ -28,6 +28,7 @@ class BoardView(ttk.LabelFrame):
         highlighted_ids: tuple[str, ...] = (),
         newly_revealed_id: str | None = None,
         hint_target_id: str | None = None,
+        hint_supporting_verdict_ids: tuple[str, ...] = (),
     ) -> None:
         for child in self.winfo_children():
             child.destroy()
@@ -55,6 +56,7 @@ class BoardView(ttk.LabelFrame):
                 clue_highlighted=card.character_id in highlighted_ids,
                 newly_revealed=card.character_id == newly_revealed_id,
                 hint_target=card.character_id == hint_target_id,
+                hint_support=card.character_id in hint_supporting_verdict_ids,
             )
             widget = CharacterCard(
                 self,
@@ -81,5 +83,6 @@ class BoardView(ttk.LabelFrame):
                 clue_highlighted=card.visual_state.modifiers.clue_highlighted,
                 newly_revealed=card.visual_state.modifiers.newly_revealed,
                 hint_target=card.visual_state.modifiers.hint_target,
+                hint_support=card.visual_state.modifiers.hint_support,
             )
         self._on_select(character_id)

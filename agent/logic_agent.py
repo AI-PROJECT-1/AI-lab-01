@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from core.enums import Classification, Status, VerdictOutcome
 from core.public_state import PublicKnowledgeState
-from logic.cnf_encoder import CNFEncoder
-from sat.dpll import DPLLSolver
+from agent.entailment import classify_public_target
+from agent.hint_explanation import extract_irreducible_support
 
 from agent.deduction_trace import (
     Deduction,
@@ -64,10 +64,19 @@ class LogicAgent:
     def get_hint(self, public_state: PublicKnowledgeState) -> HintResult:
         deduction = self.solve_next(public_state)
         if deduction is not None:
+            try:
+                explanation = extract_irreducible_support(
+                    public_state,
+                    deduction.character_id,
+                    deduction.status,
+                )
+            except Exception:
+                explanation = None
             return HintResult(
                 deduction,
                 Classification.from_status(deduction.status),
                 f"{deduction.character_id} is provably {deduction.status.value}.",
+                explanation,
             )
         if self.last_trace and self.last_trace[-1].verdict is Classification.INCONSISTENT:
             return HintResult(None, Classification.INCONSISTENT, "The public knowledge base is inconsistent.")
@@ -115,27 +124,14 @@ class LogicAgent:
         public_state: PublicKnowledgeState,
         character_id: str,
     ) -> tuple[Classification, DeductionTraceStep]:
-        encoder = CNFEncoder(public_state)
-        variable = encoder.mapper.variable_for(character_id)
-        encoding = encoder.build_kb()
-        variable_count = encoding.primary_variable_count + encoding.auxiliary_variable_count
         active_clues = tuple(item.clue.id for item in public_state.revealed_clues)
-        queries: list[SATQueryTrace] = []
-
-        base = DPLLSolver().solve(encoding.clauses, variable_count)
-        queries.append(self._query("KB", None, base))
-        if not base.is_sat:
-            return Classification.INCONSISTENT, self._trace(active_clues, character_id, queries, Classification.INCONSISTENT)
-
-        assume_innocent = DPLLSolver().solve(encoding.clauses, variable_count, (-variable,))
-        queries.append(self._query("assume INNOCENT", Status.INNOCENT, assume_innocent))
-        if not assume_innocent.is_sat:
-            return Classification.CRIMINAL, self._trace(active_clues, character_id, queries, Classification.CRIMINAL)
-
-        assume_criminal = DPLLSolver().solve(encoding.clauses, variable_count, (variable,))
-        queries.append(self._query("assume CRIMINAL", Status.CRIMINAL, assume_criminal))
-        classification = Classification.INNOCENT if not assume_criminal.is_sat else Classification.UNKNOWN
-        return classification, self._trace(active_clues, character_id, queries, classification)
+        check = classify_public_target(public_state, character_id)
+        return check.classification, self._trace(
+            active_clues,
+            character_id,
+            list(check.sat_queries),
+            check.classification,
+        )
 
     def _trace(
         self,
@@ -151,19 +147,6 @@ class LogicAgent:
             character_id,
             tuple(queries),
             verdict,
-        )
-
-    @staticmethod
-    def _query(purpose: str, assumption: Status | None, result) -> SATQueryTrace:
-        stats = result.statistics
-        return SATQueryTrace(
-            purpose,
-            assumption,
-            result.status.value,
-            stats.decisions,
-            stats.propagations,
-            stats.backtracks,
-            stats.runtime,
         )
 
     @staticmethod

@@ -150,4 +150,22 @@
 - Lifecycle rule: Auto Solve remains `after()`-driven. Restart and successful Load cancel the pending callback, clear source metadata with the engine trace reset, and keep an already open details window safely usable.
 - Responsive rule: Main content and Board/Revealed Clues containers suppress oversized child requests so the bottom controls and feedback remain visible at the current 1180x660 low-screen geometry.
 - Related requirement: Griductive GUI fidelity refactor UI Phase 6; Project 2 deduction-trace requirement.
+- Related commit: `5673fe09c0cd1a47f10e3f75d7ac2344dec7820f`.
+
+## DEC-014 - Trace-free deletion-irreducible Hint support
+
+- Context: `active_clue_ids` describes every revealed clue in the current KB, so it is valid trace context but not a logically grounded explanation of which constraints are needed for a forced Hint target.
+- Options considered: keep generic active clues; guess one recent clue; remove arbitrary CNF clauses; enumerate globally minimum component subsets; greedily delete structured public support components using the existing entailment path.
+- Chosen option: Keep `solve_next()` as the sole target selector, then run deterministic deletion reduction over whole revealed clues and proved-verdict unit constraints using a shared pure SAT-classification helper.
+- Shared-entailment rule: `agent.entailment.classify_public_target()` owns the existing KB consistency and two-assumption classification sequence. `LogicAgent` converts its query records into normal trace steps; support diagnostics consume the same result without generating steps.
+- Baseline rule: The current public KB must be consistent, the target unresolved, and the exact existing Hint status still entailed. Otherwise no explanation is returned and presentation falls back safely.
+- Component order: Revealed clues sort by `(clue.id, owner_id)` and are tested first; proved verdicts then sort by their character's `(row, column, id)`. Set iteration never controls result order.
+- Grouping rule: Removing a clue removes its entire structured clue object and therefore every clause produced by its canonical encoder as one component. No displayed text or individual generated clause is interpreted independently.
+- Same-verdict rule: A deletion is accepted only when the reduced public KB still classifies the target as the exact original `Classification`; UNKNOWN, opposite verdict, or INCONSISTENT never qualify.
+- Irreducibility rule: After the deterministic pass, no remaining component can be individually deleted while retaining the same forced verdict. Monotonic removal from a consistent propositional KB makes a second pass unnecessary.
+- Minimum distinction: Greedy deletion depends on stable removal order and establishes deletion irreducibility, not global minimum cardinality, uniqueness, or a proof anchor.
+- Trace/metrics rule: Support diagnostics do not mutate `last_trace` or the step counter. Their SAT-call count and wall runtime are carried separately on `HintExplanation`; Solver Details remains a view of gameplay deduction trace only.
+- UI/fallback rule: Stage 1 caches only fingerprint-bound public support IDs and highlights corresponding clue cards/known verdict cards. Unsupported, failed, empty, duplicate-ID, or nonpublic explanation data reuses Phase 5 active-clue wording. Stage 2 clears support visuals and shows only the cached target.
+- Protected-scope rule: DPLL, CNF encoder/semantics, GameEngine, PublicKnowledgeState, puzzles, uniqueness, experiments, and Solver Details presentation remain unchanged.
+- Related requirement: Phase 6.5 Hint explanation fidelity and Project 2 public-only entailment requirements.
 - Related commit: PENDING.

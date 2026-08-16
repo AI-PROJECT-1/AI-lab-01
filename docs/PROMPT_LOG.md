@@ -122,6 +122,20 @@
 - Goal: Commit approved UI Phase 5, then move raw Solver Trace out of normal gameplay into a secondary, structured Solver Details interface without changing trace generation or solver/game semantics.
 - Full prompt: User approved UI Phase 5, required atomic commit `feat(gui): add progressive two-stage hints` and its real hash, then authorized only Solver Tools plus Solver Details presentation with exact trace fields, readable SAT queries/statistics, reliable GUI-only action sources, progressive Auto Solve updates, reset safety, public/private checks, full tests, and a stop before UI Phase 7.
 - Short summary of response: Created real Phase 5 commit `d2682b3ebccdf087c417a90b50488def293c79ce`; replaced the always-visible raw Listbox with a lazy scrollable Toplevel of structured trace cards, preserved all existing trace records, labeled only reliably observed action slices, and kept Hint Stage 2 presentation-only.
-- Decision: EXECUTED FOR UI PHASE 6 ONLY; human approval PENDING
+- Decision: ACCEPTED FOR UI PHASE 6 ONLY; approved by the user
 - Related AI Usage ID: AI-012
-- Related commits: UI Phase 5 `d2682b3`; UI Phase 6 PENDING
+- Related commits: UI Phase 5 `d2682b3`; UI Phase 6 `5673fe0`
+
+## PROMPT-010
+
+- Date: 2026-08-16
+- Tool: OpenAI Codex
+- Model: GPT-5
+- Member: Tran Huu Phuoc - 24127511
+- Phase: Phase 6.5 Hint explanation fidelity only
+- Goal: Commit approved UI Phase 6, then extract a deterministic, logically valid public supporting set for the already-forced Hint target while preserving two-stage UX, trace semantics, privacy, and solver boundaries.
+- Full prompt: User required real Phase 6 checkpoint `feat(gui): add structured solver details`, grouped revealed-clue and proved-verdict support components, same-verdict deletion reduction, irreducibility tests, separate diagnostic SAT cost, safe Phase 5 fallback, Stage 1 support emphasis, unchanged cached Stage 2, performance/visual verification, audit updates, and a stop before Phase 7.
+- Short summary of response: Created real Phase 6 commit `5673fe09c0cd1a47f10e3f75d7ac2344dec7820f`; introduced a shared trace-free entailment helper and deletion-irreducible public support extractor, enriched `HintResult` compatibly, highlighted supporting clues/verdicts in Stage 1, and retained target-only Stage 2 plus active-clue fallback.
+- Decision: EXECUTED FOR PHASE 6.5 ONLY; human approval PENDING
+- Related AI Usage ID: AI-013
+- Related commits: UI Phase 6 `5673fe0`; Phase 6.5 PENDING

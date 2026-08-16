@@ -30,6 +30,8 @@ class HintSession:
     stage: HintStage
     target_character_id: str | None
     active_clue_ids: tuple[str, ...]
+    supporting_verdict_ids: tuple[str, ...] = ()
+    has_grounded_support: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -39,6 +41,7 @@ class HintPresentation:
     active_clue_ids: tuple[str, ...] = ()
     target_character_id: str | None = None
     next_button_text: str = "Hint"
+    supporting_verdict_ids: tuple[str, ...] = ()
 
 
 @dataclass(slots=True)
@@ -48,16 +51,19 @@ class HintVisualState:
     session: HintSession | None = None
     active_clue_ids: tuple[str, ...] = ()
     target_character_id: str | None = None
+    supporting_verdict_ids: tuple[str, ...] = ()
 
     def apply(self, session: HintSession, presentation: HintPresentation) -> None:
         self.session = session
         self.active_clue_ids = presentation.active_clue_ids
         self.target_character_id = presentation.target_character_id
+        self.supporting_verdict_ids = presentation.supporting_verdict_ids
 
     def invalidate(self) -> None:
         self.session = None
         self.active_clue_ids = ()
         self.target_character_id = None
+        self.supporting_verdict_ids = ()
 
 
 def fingerprint_public_state(state: PublicKnowledgeState) -> PublicStateFingerprint:
@@ -87,17 +93,49 @@ def begin_hint_session(
     active_clue_ids = tuple(clue_id for clue_id in public_clue_ids if clue_id in active_candidates)
 
     public_character_ids = {character.id for character in state.characters}
+    public_verdict_ids = {item.character_id for item in state.known_verdicts}
     target = result.deduction.character_id if result.deduction is not None else None
     if target not in public_character_ids or (target is not None and state.status_of(target) is not None):
         target = None
+
+    explanation = result.explanation
+    has_grounded_support = False
+    supporting_verdict_ids: tuple[str, ...] = ()
+    if (
+        explanation is not None
+        and explanation.target_character_id == target
+        and explanation.method == "deletion_irreducible"
+    ):
+        proposed_clues = explanation.supporting_clue_ids
+        proposed_verdicts = explanation.supporting_verdict_ids
+        if (
+            len(proposed_clues) == len(set(proposed_clues))
+            and len(proposed_verdicts) == len(set(proposed_verdicts))
+            and set(proposed_clues).issubset(public_clue_ids)
+            and set(proposed_verdicts).issubset(public_verdict_ids)
+            and (proposed_clues or proposed_verdicts)
+        ):
+            active_clue_ids = proposed_clues
+            supporting_verdict_ids = proposed_verdicts
+            has_grounded_support = True
 
     session = HintSession(
         fingerprint_public_state(state),
         HintStage.ACTIVE_CLUES,
         target,
         active_clue_ids,
+        supporting_verdict_ids,
+        has_grounded_support,
     )
-    if active_clue_ids:
+    if has_grounded_support:
+        clue_phrase = _clue_support_phrase(active_clue_ids)
+        verdict_phrase = _verdict_support_phrase(state, supporting_verdict_ids)
+        support_parts = tuple(part for part in (clue_phrase, verdict_phrase) if part)
+        if len(active_clue_ids) == 1 and not supporting_verdict_ids:
+            message = f"Take another look at this supporting public statement: {active_clue_ids[0]}."
+        else:
+            message = f"Review these supporting public constraints: {'; '.join(support_parts)}."
+    elif active_clue_ids:
         message = "Review these currently active revealed clues. No single clue is claimed as the proof anchor."
     else:
         message = "Review the currently revealed public information. No specific proof anchor is available."
@@ -106,7 +144,29 @@ def begin_hint_session(
         message,
         active_clue_ids=active_clue_ids,
         next_button_text="Show target",
+        supporting_verdict_ids=supporting_verdict_ids,
     )
+
+
+def _clue_support_phrase(clue_ids: tuple[str, ...]) -> str:
+    if not clue_ids:
+        return ""
+    label = "clue" if len(clue_ids) == 1 else "clues"
+    return f"{label} {', '.join(clue_ids)}"
+
+
+def _verdict_support_phrase(
+    state: PublicKnowledgeState,
+    character_ids: tuple[str, ...],
+) -> str:
+    if not character_ids:
+        return ""
+    verdicts = tuple(
+        f"{character_id} = {state.status_of(character_id).value}"
+        for character_id in character_ids
+    )
+    label = "known verdict" if len(verdicts) == 1 else "known verdicts"
+    return f"{label} {', '.join(verdicts)}"
 
 
 def can_advance_hint(session: HintSession | None, state: PublicKnowledgeState) -> bool:

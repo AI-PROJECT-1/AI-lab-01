@@ -47,10 +47,21 @@ class Deduction:
 
 
 @dataclass(frozen=True, slots=True)
+class HintExplanation:
+    target_character_id: str
+    supporting_clue_ids: tuple[str, ...]
+    supporting_verdict_ids: tuple[str, ...]
+    method: str
+    support_extraction_sat_calls: int
+    support_extraction_runtime: float
+
+
+@dataclass(frozen=True, slots=True)
 class HintResult:
     deduction: Deduction | None
     classification: Classification
     message: str
+    explanation: HintExplanation | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -59,4 +70,3 @@ class UniquenessResult:
     is_unique: bool
     first_model: dict[str, bool] | None
     sat_calls: int
-

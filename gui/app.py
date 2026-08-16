@@ -129,6 +129,7 @@ class GriductiveApp(ttk.Frame):
             self._highlighted_ids,
             self._newly_revealed_id,
             self._hint_state.target_character_id,
+            self._hint_state.supporting_verdict_ids,
         )
         self._clues.render(
             state,

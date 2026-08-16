@@ -54,7 +54,7 @@ def appearance_for(state: CardVisualState) -> CardAppearance:
         selection_outline=COLORS["accent"] if modifiers.selected else None,
         highlight_outline=COLORS["focus"] if modifiers.clue_highlighted else None,
         reveal_outline=COLORS["info"] if modifiers.newly_revealed else None,
-        hint_outline=COLORS["hint"] if modifiers.hint_target else None,
+        hint_outline=COLORS["hint"] if modifiers.hint_target or modifiers.hint_support else None,
     )
 
 
@@ -190,10 +190,11 @@ class CharacterCard(tk.Frame):
         clue_highlighted: bool,
         newly_revealed: bool = False,
         hint_target: bool = False,
+        hint_support: bool = False,
     ) -> None:
         self.visual_state = CardVisualState(
             self.visual_state.base,
-            CardModifiers(selected, clue_highlighted, newly_revealed, hint_target),
+            CardModifiers(selected, clue_highlighted, newly_revealed, hint_target, hint_support),
         )
         self._apply_appearance()
 
