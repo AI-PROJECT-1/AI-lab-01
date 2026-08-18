@@ -201,15 +201,17 @@ complete until its required checks actually pass.
   uniqueness; Hint support diagnostics; failures retained
 - Evidence: `experiments/run_experiments.py`,
   `experiments/results/final_regression.json`, `docs/EXPERIMENT_LOG.md`
-- Test results: 4/4 puzzles PASS, 0 failures/timeouts
+- Test results: Phase 8 baseline 4/4; Phase 8.5 final set 6/6 puzzles PASS,
+  0 failures/timeouts, with public support profiles retained separately
 - Known issues: no optional 5x5 run; timings are machine-specific
 - Related log: AI-015, PROMPT-012
 
 ## Phase 15 - Full Verification
 
 - Status: COMPLETED in UI Phase 8 for source/demo readiness
-- Tests: 179/179 unittests; compile/diff/JSON/boundary/external-solver scans;
-  clean entrypoint; continuous 3x3/4x4 E2E and visual audit
+- Tests: Phase 8 179/179; Phase 8.5 implementation checkpoint 196/196;
+  compile/diff/JSON/boundary/external-solver scans; clean entrypoint; continuous
+  Tutorial/Standard/Advanced/Puzzle Select E2E and visual audit
 - Result: no implementation blocker; protected solver/gameplay modules unchanged
 - Related log: `docs/TEST_LOG.md`
 
@@ -225,7 +227,26 @@ complete until its required checks actually pass.
 ## Phase 17 - Demo Preparation
 
 - Status: SCRIPT/REHEARSAL COMPLETE; VIDEO ARTIFACT PARTIAL
-- Evidence: deterministic 7-8 minute script and verified 3x3/4x4 rehearsal
+- Evidence: deterministic 8-9 minute script and verified catalog,
+  Standard-manual, Advanced-reasoning, and completion rehearsal
 - Blocker: team must record narration/subtitles, upload to Drive, verify signed-out
   access, add the real link to the report, and create the final student-ID archive
 - Related file: `docs/DEMO_SCRIPT.md`
+
+## Phase 8.5 - Puzzle Quality and Screen Navigation
+
+- Status: IMPLEMENTATION COMPLETE; APPROVAL PENDING
+- Requirements satisfied: honest Tutorial; unique/progressive Standard 3x3 with
+  counting/relationships/regions; unique/progressive Advanced 4x4 with all
+  region kinds, both extensions, and real support >=2; same-root Puzzle Select;
+  Back-without-reset; lifecycle-safe Play; external Load preserved
+- Protected scope: no change to DPLL, CNF encoder, semantic evaluator,
+  LogicAgent, Hint support extractor, or uniqueness implementation
+- Quality evidence: Standard average/max support 2/2 with 0 direct FACT steps;
+  Advanced 2.308/4 with initial `A4-01 + A4-04 + A1`, 17 decisions and 1 backtrack
+- Experiment result: 6/6 PASS, 0 failures; quality and regression JSON regenerated
+- Visual result: 17 DPI-aware states at 1180x800/660; six-card catalog scroll,
+  real multi-support Hint, Solver Details, and 16/16 completed badges PASS
+- Related logs: AI-016, PROMPT-013, DEC-017
+- Recommended commit: `feat(game): improve puzzle progression and selection`
+- Next phase: STOP for approval before Phase 9

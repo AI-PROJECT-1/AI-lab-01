@@ -1,8 +1,8 @@
 # Commit History
 
-Generated from real Git history through UI Phase 7 commit `4150d86` on
-2026-08-16. UI Phase 8 experiment/audit changes remain uncommitted and are not
-assigned a hash.
+Generated from real Git history through UI/Project Phase 8 commit `2c8ed1b` on
+2026-08-16. Phase 8.5 puzzle-quality/navigation changes remain uncommitted and
+are not assigned a hash.
 
 Verified checkpoint: `03584c3859a12e7a57385a7d860e48f084d0c210` | 2026-08-12 22:14:30 +0700 | Trần Phước | `feat(project): checkpoint phases 08-13`
 
@@ -22,8 +22,10 @@ Verified Phase 6.5 commit: `ba7912b1ea64487cde55ae198cae1a648e363036` | 2026-08-
 
 Verified UI Phase 7 commit: `4150d867b6f2ce03cf273ced9895c4dd06105445` | 2026-08-16 18:20:01 +0700 | Trần Phước | `feat(gui): finalize gameplay completion experience`
 
-Remote audit on 2026-08-16 after `git fetch --all --prune`: local `main` is 9
-commits ahead of `origin/main` and 0 behind. No Phase 8 push or upload is claimed.
+Verified UI/Project Phase 8 commit: `2c8ed1bd2f6edcdddd6583355110ccdd00470a6d` | 2026-08-16 19:02:51 +0700 | Trần Phước | `chore(project): complete final requirement audit`
+
+Phase 8.5 began from a clean tree at `2c8ed1b`; `main` was 10 commits ahead of
+`origin/main` and 0 behind. No Phase 8/8.5 push or upload is claimed.
 
 ```text
 4f59755 | 2026-06-30 15:07:17 +0700 | Trần Phước | Initial commit

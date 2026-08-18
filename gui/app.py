@@ -26,6 +26,9 @@ from gui.hint_session import (
     HintVisualState,
     progress_hint_session,
 )
+from gui.puzzle_catalog import catalog_entry, puzzle_path
+from gui.puzzle_select import PuzzleSelectScreen
+from gui.screen_manager import ScreenManager, ScreenName
 from gui.trace_panel import ActionSource, SolverDetailsModel, SolverDetailsWindow
 from gui.components import AppHeader, FeedbackBar
 from gui.theme import SPACING, configure_theme
@@ -99,6 +102,7 @@ class GriductiveApp(ttk.Frame):
         self._clues.grid_propagate(False)
         self._controls = Controls(
             self,
+            on_puzzles=self._show_puzzles,
             on_load=self._load,
             on_restart=self._restart,
             on_criminal=lambda: self._submit(Status.CRIMINAL),
@@ -125,6 +129,14 @@ class GriductiveApp(ttk.Frame):
             text="SAT entailment agent · public clues and proved verdicts only",
             style="Muted.TLabel",
         ).grid(row=5, column=0, sticky="w", padx=SPACING["xl"], pady=(0, SPACING["sm"]))
+        self._puzzle_select = PuzzleSelectScreen(root, self._play_shipped_puzzle, self._show_game)
+        self._screen_manager = ScreenManager(
+            {
+                ScreenName.GAME: self,
+                ScreenName.PUZZLES: self._puzzle_select,
+            },
+            ScreenName.GAME,
+        )
         self._render()
 
     def _render(self) -> None:
@@ -136,7 +148,9 @@ class GriductiveApp(ttk.Frame):
             or self._hint_state.supporting_verdict_ids
         ):
             self._invalidate_hint_session()
-        self._title.configure(text=f"{state.title} ({state.size}x{state.size})")
+        catalog = catalog_entry(state.puzzle_id)
+        difficulty = f"  ·  {catalog.difficulty}" if catalog is not None else ""
+        self._title.configure(text=f"{state.title} ({state.size}x{state.size}){difficulty}")
         if state.is_complete:
             self._instruction.grid_remove()
         else:
@@ -247,6 +261,43 @@ class GriductiveApp(ttk.Frame):
             notice_feedback("Puzzle restarted", "Selection and transient feedback were cleared.", FeedbackTone.NEUTRAL)
         )
         self._render()
+
+    def _show_puzzles(self) -> None:
+        if self._auto_running:
+            self._feedback.show(
+                notice_feedback(
+                    "Auto Solve in progress",
+                    "Wait for Auto Solve to finish before changing screens.",
+                    FeedbackTone.WARNING,
+                )
+            )
+            return
+        self._puzzle_select.render(self._controller.state().puzzle_id)
+        self._screen_manager.show(ScreenName.PUZZLES)
+
+    def _show_game(self) -> None:
+        self._screen_manager.show(ScreenName.GAME)
+
+    def _play_shipped_puzzle(self, puzzle_id: str) -> None:
+        try:
+            puzzle = PuzzleLoader.load(puzzle_path(puzzle_id))
+        except (PuzzleFormatError, ValueError) as exc:
+            messagebox.showerror("Cannot load shipped puzzle", str(exc), parent=self.winfo_toplevel())
+            return
+        self._cancel_auto()
+        self._controller.load(puzzle)
+        self._solver_details_model.clear_trace_metadata()
+        self._clear_transient_presentation()
+        self._feedback.show(
+            notice_feedback(
+                "Puzzle selected",
+                f"Now playing {puzzle.title}. Gameplay state was reset.",
+                FeedbackTone.NEUTRAL,
+            )
+        )
+        self._render()
+        self._puzzle_select.render(puzzle.id)
+        self._screen_manager.show(ScreenName.GAME)
 
     def _load(self) -> None:
         self._cancel_auto()

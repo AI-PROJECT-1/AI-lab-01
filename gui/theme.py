@@ -109,6 +109,12 @@ def configure_theme(root: tk.Misc) -> ttk.Style:
         font=FONTS["title"],
     )
     style.configure(
+        "PuzzleSelectTitle.TLabel",
+        background=COLORS["canvas"],
+        foreground=COLORS["ink"],
+        font=FONTS["display"],
+    )
+    style.configure(
         "Muted.TLabel",
         background=COLORS["canvas"],
         foreground=COLORS["muted"],

@@ -14,6 +14,7 @@ from time import perf_counter
 
 from agent.logic_agent import LogicAgent
 from core.public_state import PublicKnowledgeState, RevealedClue
+from experiments.analyze_puzzles import analyze_puzzle
 from game.game_engine import GameEngine
 from game.puzzle_loader import PuzzleLoader
 from logic.cnf_encoder import CNFEncoder
@@ -132,6 +133,7 @@ def run_puzzle(path: Path, *, hint_runs: int = 25) -> dict[str, object]:
             "wall_runtime_seconds": uniqueness_runtime,
         },
         "hint_support": _hint_support_benchmark(path, hint_runs),
+        "quality_profile": analyze_puzzle(path),
     }
 
 

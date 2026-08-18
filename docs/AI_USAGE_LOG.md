@@ -303,4 +303,25 @@
 - Tests performed: 179/179 supported unittests PASS; compile and diff checks PASS; external-solver/public-boundary scans PASS; four-puzzle experiment run PASS; clean `python main.py` window launch PASS; 3x3/4x4 E2E/visual and low-height checks PASS. `pytest` remains unavailable with `No module named pytest` and was not installed.
 - Approved Phase 7 commit: `4150d867b6f2ce03cf273ced9895c4dd06105445` (`feat(gui): finalize gameplay completion experience`).
 - Related Prompt ID: PROMPT-012
-- Related Git commit hash: PENDING (Phase 8 is intentionally uncommitted for approval)
+- Related Git commit hash: `2c8ed1bd2f6edcdddd6583355110ccdd00470a6d`
+
+## AI-016
+
+- Date: 2026-08-16
+- AI tool: OpenAI Codex
+- Model: GPT-5
+- Developer/member: Tran Huu Phuoc - 24127511
+- Phase: Phase 8.5 puzzle quality, deduction difficulty, and screen navigation
+- Purpose: Replace the shipped-set demonstration gap with validated Standard/Advanced reasoning puzzles and add a same-root public-only puzzle catalog without altering protected solver semantics.
+- Initial audit: Gallery Shift and Museum Circuit were pure direct FACT chains (8/8 and 15/15 direct deductions). Implication Archive still had 11 direct FACT steps. Parity Gallery averaged support 1.75/max 2 but lacked counting and non-EXPLICIT regions.
+- Puzzle design decision: Retain Gallery Shift as an explicit Tutorial. Add The Atrium Ledger Standard 3x3 with row counts/relations and The Meridian Conspiracy Advanced 4x4 with counting, all four regions, IMPLIES/ODD, and real multi-component support. Candidate data was accepted only after semantic truth, uniqueness, progressive completion, and Hint analysis passed.
+- Standard evidence: 2 initial clues; 7/7 progressive deductions; average/max support 2/2; 1 late FACT anchor; 0 direct single-FACT deductions; complete CNF 24 clauses; final recorded whole solve 0.001696s.
+- Advanced evidence: 3 initial clues; 13/13 progressive deductions; average/max support 2.308/4; initial support `A4-01 + A4-04 + known A1`; all region kinds plus both extensions; 1 late FACT anchor; 0 direct single-FACT deductions; 54 clauses; 17 decisions/1 backtrack; final recorded whole solve 0.012332s.
+- Navigation design: `ScreenManager` switches Game/PuzzleSelect frames in one root. Catalog DTOs contain only ID/name/size/category/description. Open/Back is presentation-only; Play resolves a local file, then reuses `PuzzleLoader` and `GameController.load()` plus existing transient/Auto generation cleanup. External Load remains.
+- Accepted: Tutorial/Standard/Advanced catalog, public current-puzzle badge, scrollable 1180x660 layout, development-time public support profiler, updated six-puzzle experiments, and explicit design-category wording.
+- Rejected: puzzle-specific CNF/Hint/target order, hidden-data catalog fields, solver/DPLL/support algorithm changes, random unvalidated puzzle retention, arbitrary numeric difficulty score, accounts/unlocks/stars/cloud, and Phase 9/report generation.
+- Tests performed: 196/196 supported unittests PASS at implementation checkpoint; 17 new tests cover puzzle quality/support and 14 navigation/privacy/lifecycle requirements. Six-puzzle quality/experiment runs passed with 0 failures. DPI-aware 21-capture visual E2E passed Tutorial, Puzzle Select, Standard, Advanced, Solver Details, completion, scrolling, and 1180x660.
+- Revalidation: Repeated on 2026-08-18 after the Phase 8.5 prompt was supplied again. The unchanged worktree passed 196/196 tests in 8.012s, compile, protected-module diff, JSON parsing, public/private, hidden-data, external-solver, puzzle-specific logic, and whitespace scans. No production file or generated experiment result was rewritten.
+- Approved Phase 8 commit: `2c8ed1bd2f6edcdddd6583355110ccdd00470a6d` (`chore(project): complete final requirement audit`).
+- Related Prompt ID: PROMPT-013
+- Related Git commit hash: PENDING

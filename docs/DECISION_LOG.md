@@ -192,6 +192,18 @@
 - Chosen option: Add one deterministic standard-library runner over every distributable puzzle and retain its raw JSON snapshot for the proposed Phase 8 commit. Keep failures/exceptions as rows and make them fail the process. Prepare report-support notes and a timed demo script, but classify absent artifacts honestly as PARTIAL/BLOCKED.
 - Metric boundary: Progressive DPLL query statistics come only from existing trace DTOs. Whole-solve, uniqueness, and fresh-engine Hint support wall times are measured separately. Machine-specific runtimes are never represented as guarantees.
 - Scope rule: No GameEngine, LogicAgent, CNF, DPLL, verdict, Hint, trace, completion, or puzzle semantics change is authorized. Tests may validate terminal behavior and experiment schema only.
-- Attribution rule: Git hashes come from real history; Phase 8 remains PENDING until committed. Team names/IDs/percentages, references approval, video URL, report, and archive cannot be inferred or fabricated.
+- Attribution rule: Git hashes come from real history. Phase 8 was committed as `2c8ed1b`; later Phase 8.5 work remains pending. Team names/IDs/percentages, references approval, video URL, report, and archive cannot be inferred or fabricated.
 - Related requirement: Project 2 Sections 4.5-4.7 and Section 5; UI Phase 8 final audit/demo readiness.
+- Related commit: `2c8ed1bd2f6edcdddd6583355110ccdd00470a6d`.
+
+## DEC-017 - Design-category puzzles and same-root public catalog
+
+- Context: The original shipped suite proved correctness but overrepresented direct FACT chains, so it did not visibly demonstrate counting, non-EXPLICIT regions, multi-clue support, or DPLL branching. Players also needed a native shipped-puzzle selector while external Load remained useful.
+- Options considered: relabel old chains only; change solver target ordering; hard-code Hint support; replace Tutorial; add validated deduction-focused puzzles; open a second application/window; or switch two frames inside the existing root.
+- Puzzle choice: Preserve Gallery Shift as an honest Tutorial. Add Atrium Ledger Standard and Meridian Conspiracy Advanced. Late FACT anchors may establish full-set uniqueness but must not participate in progressive direct-answer steps. Difficulty names are design categories, not calculated scores.
+- Candidate gate: A puzzle is shipped only after loader/domain validation, all-clue semantic truth, complete-set consistency/uniqueness, progressive no-guess completion, deterministic support profile, and Hint compatibility. No hidden status is supplied to LogicAgent or support extraction.
+- Advanced evidence: Initial B1 deduction requires public clues `A4-01`, `A4-04`, and known verdict A1. The same generic DPLL records 17 decisions and 1 backtrack across progressive queries; no puzzle ID branch exists.
+- Navigation choice: Use one root and a small `ScreenManager`. Opening/Back only changes frame visibility and preserves public/game/UI state. Play loads through the existing loader/controller APIs, cancels stale Auto callbacks, clears transient presentation, and returns to Game.
+- Catalog boundary: Presentation metadata is exactly ID, name, size, category, and description. File resolution is private; no status distribution, clue payload, future target, or solution enters the catalog.
+- Related requirement: Phase 8.5 puzzle quality, real multi-component Hint, local screen navigation, and public/private isolation.
 - Related commit: PENDING.

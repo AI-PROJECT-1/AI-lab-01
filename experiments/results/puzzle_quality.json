@@ -1,0 +1,1117 @@
+{
+  "schema_version": 1,
+  "puzzles": [
+    {
+      "puzzle_file": "advanced_deduction_4x4.json",
+      "puzzle_id": "advanced-deduction-4x4",
+      "display_name": "The Meridian Conspiracy",
+      "size": 4,
+      "characters": 16,
+      "clues": 16,
+      "initial_revealed_clues": 3,
+      "clue_types": [
+        "AT_LEAST",
+        "AT_MOST",
+        "DIFFERENT",
+        "EXACTLY",
+        "FACT",
+        "IMPLIES",
+        "ODD",
+        "SAME"
+      ],
+      "regions": [
+        "COLUMN",
+        "EXPLICIT",
+        "NEIGHBORS",
+        "ROW"
+      ],
+      "extensions": [
+        "IMPLIES",
+        "ODD"
+      ],
+      "fact_clues": 1,
+      "deduction_steps": 13,
+      "average_support_size": 2.3076923076923075,
+      "maximum_support_size": 4,
+      "single_component_deductions": 0,
+      "direct_single_fact_deductions": 0,
+      "unique": true,
+      "consistent": true,
+      "progressively_solvable": true,
+      "steps": [
+        {
+          "step": 1,
+          "target": "B1",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 2,
+          "supporting_known_verdict_count": 1,
+          "support_size": 3,
+          "supporting_clue_ids": [
+            "A4-01",
+            "A4-04"
+          ],
+          "supporting_known_verdict_ids": [
+            "A1"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 2,
+          "target": "C1",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 2,
+          "support_size": 3,
+          "supporting_clue_ids": [
+            "A4-01"
+          ],
+          "supporting_known_verdict_ids": [
+            "B1",
+            "D1"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 3,
+          "target": "A2",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "A4-02"
+          ],
+          "supporting_known_verdict_ids": [
+            "C1"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 4,
+          "target": "B2",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "A4-03"
+          ],
+          "supporting_known_verdict_ids": [
+            "A2"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 5,
+          "target": "C2",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "A4-05"
+          ],
+          "supporting_known_verdict_ids": [
+            "B2"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 6,
+          "target": "D2",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "A4-06"
+          ],
+          "supporting_known_verdict_ids": [
+            "C2"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 7,
+          "target": "A3",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "A4-07"
+          ],
+          "supporting_known_verdict_ids": [
+            "A4"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 8,
+          "target": "B3",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "A4-08"
+          ],
+          "supporting_known_verdict_ids": [
+            "A3"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 9,
+          "target": "C3",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "A4-09"
+          ],
+          "supporting_known_verdict_ids": [
+            "B3"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 10,
+          "target": "D3",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 3,
+          "support_size": 4,
+          "supporting_clue_ids": [
+            "A4-10"
+          ],
+          "supporting_known_verdict_ids": [
+            "A3",
+            "B3",
+            "C3"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 11,
+          "target": "B4",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "A4-11"
+          ],
+          "supporting_known_verdict_ids": [
+            "B2"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 12,
+          "target": "C4",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "A4-14"
+          ],
+          "supporting_known_verdict_ids": [
+            "A4"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 13,
+          "target": "D4",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "A4-15"
+          ],
+          "supporting_known_verdict_ids": [
+            "C4"
+          ],
+          "direct_single_fact": false
+        }
+      ]
+    },
+    {
+      "puzzle_file": "extension_chain_3x3.json",
+      "puzzle_id": "extension-chain-3x3",
+      "display_name": "The Parity Gallery",
+      "size": 3,
+      "characters": 9,
+      "clues": 9,
+      "initial_revealed_clues": 1,
+      "clue_types": [
+        "DIFFERENT",
+        "FACT",
+        "IMPLIES",
+        "ODD",
+        "SAME"
+      ],
+      "regions": [
+        "EXPLICIT"
+      ],
+      "extensions": [
+        "IMPLIES",
+        "ODD"
+      ],
+      "fact_clues": 3,
+      "deduction_steps": 8,
+      "average_support_size": 1.75,
+      "maximum_support_size": 2,
+      "single_component_deductions": 2,
+      "direct_single_fact_deductions": 2,
+      "unique": true,
+      "consistent": true,
+      "progressively_solvable": true,
+      "steps": [
+        {
+          "step": 1,
+          "target": "B1",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "E3-01"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 2,
+          "target": "C1",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "E3-02"
+          ],
+          "supporting_known_verdict_ids": [
+            "B1"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 3,
+          "target": "A2",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "E3-03"
+          ],
+          "supporting_known_verdict_ids": [
+            "C1"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 4,
+          "target": "B2",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "E3-04"
+          ],
+          "supporting_known_verdict_ids": [
+            "A2"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 5,
+          "target": "C2",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "E3-05"
+          ],
+          "supporting_known_verdict_ids": [
+            "B2"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 6,
+          "target": "A3",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "E3-06"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 7,
+          "target": "B3",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "E3-07"
+          ],
+          "supporting_known_verdict_ids": [
+            "A3"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 8,
+          "target": "C3",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "E3-08"
+          ],
+          "supporting_known_verdict_ids": [
+            "B3"
+          ],
+          "direct_single_fact": false
+        }
+      ]
+    },
+    {
+      "puzzle_file": "extension_chain_4x4.json",
+      "puzzle_id": "extension-chain-4x4",
+      "display_name": "The Implication Archive",
+      "size": 4,
+      "characters": 16,
+      "clues": 16,
+      "initial_revealed_clues": 1,
+      "clue_types": [
+        "DIFFERENT",
+        "FACT",
+        "IMPLIES",
+        "ODD",
+        "SAME"
+      ],
+      "regions": [
+        "EXPLICIT"
+      ],
+      "extensions": [
+        "IMPLIES",
+        "ODD"
+      ],
+      "fact_clues": 12,
+      "deduction_steps": 15,
+      "average_support_size": 1.2666666666666666,
+      "maximum_support_size": 2,
+      "single_component_deductions": 11,
+      "direct_single_fact_deductions": 11,
+      "unique": true,
+      "consistent": true,
+      "progressively_solvable": true,
+      "steps": [
+        {
+          "step": 1,
+          "target": "B1",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "E4-01"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 2,
+          "target": "C1",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "E4-02"
+          ],
+          "supporting_known_verdict_ids": [
+            "B1"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 3,
+          "target": "D1",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "E4-03"
+          ],
+          "supporting_known_verdict_ids": [
+            "C1"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 4,
+          "target": "A2",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "E4-04"
+          ],
+          "supporting_known_verdict_ids": [
+            "D1"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 5,
+          "target": "B2",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "E4-05"
+          ],
+          "supporting_known_verdict_ids": [
+            "A2"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 6,
+          "target": "C2",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "E4-06"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 7,
+          "target": "D2",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "E4-07"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 8,
+          "target": "A3",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "E4-08"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 9,
+          "target": "B3",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "E4-09"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 10,
+          "target": "C3",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "E4-10"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 11,
+          "target": "D3",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "E4-11"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 12,
+          "target": "A4",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "E4-12"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 13,
+          "target": "B4",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "E4-13"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 14,
+          "target": "C4",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "E4-14"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 15,
+          "target": "D4",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "E4-15"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        }
+      ]
+    },
+    {
+      "puzzle_file": "fact_chain_4x4.json",
+      "puzzle_id": "fact-chain-4x4",
+      "display_name": "The Museum Circuit",
+      "size": 4,
+      "characters": 16,
+      "clues": 16,
+      "initial_revealed_clues": 1,
+      "clue_types": [
+        "FACT"
+      ],
+      "regions": [],
+      "extensions": [],
+      "fact_clues": 16,
+      "deduction_steps": 15,
+      "average_support_size": 1.0,
+      "maximum_support_size": 1,
+      "single_component_deductions": 15,
+      "direct_single_fact_deductions": 15,
+      "unique": true,
+      "consistent": true,
+      "progressively_solvable": true,
+      "steps": [
+        {
+          "step": 1,
+          "target": "B1",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "F4-01"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 2,
+          "target": "C1",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "F4-02"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 3,
+          "target": "D1",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "F4-03"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 4,
+          "target": "A2",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "F4-04"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 5,
+          "target": "B2",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "F4-05"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 6,
+          "target": "C2",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "F4-06"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 7,
+          "target": "D2",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "F4-07"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 8,
+          "target": "A3",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "F4-08"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 9,
+          "target": "B3",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "F4-09"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 10,
+          "target": "C3",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "F4-10"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 11,
+          "target": "D3",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "F4-11"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 12,
+          "target": "A4",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "F4-12"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 13,
+          "target": "B4",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "F4-13"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 14,
+          "target": "C4",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "F4-14"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 15,
+          "target": "D4",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "F4-15"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        }
+      ]
+    },
+    {
+      "puzzle_file": "sample_3x3.json",
+      "puzzle_id": "sample-3x3-fact-chain",
+      "display_name": "The Gallery Shift",
+      "size": 3,
+      "characters": 9,
+      "clues": 9,
+      "initial_revealed_clues": 1,
+      "clue_types": [
+        "FACT"
+      ],
+      "regions": [],
+      "extensions": [],
+      "fact_clues": 9,
+      "deduction_steps": 8,
+      "average_support_size": 1.0,
+      "maximum_support_size": 1,
+      "single_component_deductions": 8,
+      "direct_single_fact_deductions": 8,
+      "unique": true,
+      "consistent": true,
+      "progressively_solvable": true,
+      "steps": [
+        {
+          "step": 1,
+          "target": "B1",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "CL-01"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 2,
+          "target": "C1",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "CL-02"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 3,
+          "target": "A2",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "CL-03"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 4,
+          "target": "B2",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "CL-04"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 5,
+          "target": "C2",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "CL-05"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 6,
+          "target": "A3",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "CL-06"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 7,
+          "target": "B3",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "CL-07"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        },
+        {
+          "step": 8,
+          "target": "C3",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 0,
+          "support_size": 1,
+          "supporting_clue_ids": [
+            "CL-08"
+          ],
+          "supporting_known_verdict_ids": [],
+          "direct_single_fact": true
+        }
+      ]
+    },
+    {
+      "puzzle_file": "standard_deduction_3x3.json",
+      "puzzle_id": "standard-deduction-3x3",
+      "display_name": "The Atrium Ledger",
+      "size": 3,
+      "characters": 9,
+      "clues": 9,
+      "initial_revealed_clues": 2,
+      "clue_types": [
+        "AT_LEAST",
+        "DIFFERENT",
+        "EXACTLY",
+        "FACT",
+        "SAME"
+      ],
+      "regions": [
+        "COLUMN",
+        "ROW"
+      ],
+      "extensions": [],
+      "fact_clues": 1,
+      "deduction_steps": 7,
+      "average_support_size": 2.0,
+      "maximum_support_size": 2,
+      "single_component_deductions": 0,
+      "direct_single_fact_deductions": 0,
+      "unique": true,
+      "consistent": true,
+      "progressively_solvable": true,
+      "steps": [
+        {
+          "step": 1,
+          "target": "B1",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "S3-01"
+          ],
+          "supporting_known_verdict_ids": [
+            "C1"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 2,
+          "target": "A2",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "S3-03"
+          ],
+          "supporting_known_verdict_ids": [
+            "B1"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 3,
+          "target": "B2",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "S3-02"
+          ],
+          "supporting_known_verdict_ids": [
+            "A2"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 4,
+          "target": "C2",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "S3-04"
+          ],
+          "supporting_known_verdict_ids": [
+            "B2"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 5,
+          "target": "A3",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "S3-05"
+          ],
+          "supporting_known_verdict_ids": [
+            "C2"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 6,
+          "target": "B3",
+          "verdict": "INNOCENT",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "S3-06"
+          ],
+          "supporting_known_verdict_ids": [
+            "A3"
+          ],
+          "direct_single_fact": false
+        },
+        {
+          "step": 7,
+          "target": "C3",
+          "verdict": "CRIMINAL",
+          "supporting_clue_count": 1,
+          "supporting_known_verdict_count": 1,
+          "support_size": 2,
+          "supporting_clue_ids": [
+            "S3-07"
+          ],
+          "supporting_known_verdict_ids": [
+            "B3"
+          ],
+          "direct_single_fact": false
+        }
+      ]
+    }
+  ]
+}

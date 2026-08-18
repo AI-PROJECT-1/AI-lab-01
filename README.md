@@ -25,8 +25,9 @@ python -m pip install -r requirements.txt
 python main.py
 ```
 
-The default puzzle is `puzzles/sample_3x3.json`. Use **Load** in the application
-to choose another JSON puzzle.
+The default puzzle is the Tutorial `puzzles/sample_3x3.json`. Use **Puzzles** to
+choose any shipped Tutorial, Standard, or Advanced puzzle without leaving the
+application. **Load** remains available for an external/local JSON puzzle.
 
 ## Test
 
@@ -41,6 +42,12 @@ dependency.
 
 ```powershell
 python -m experiments.run_experiments
+```
+
+For the public-only deduction/support profile of each puzzle:
+
+```powershell
+python -m experiments.analyze_puzzles
 ```
 
 The command runs every distributable 3x3/4x4 puzzle and overwrites
@@ -61,7 +68,10 @@ Failures are retained and cause a non-zero exit code.
 - Phase 10: production agent wired through GameEngine and GUI
 - Phase 11: selectable clues with canonical referenced-cell highlighting
 - Phase 12: `IMPLIES` and `ODD` clue extensions
-- Phase 13: two validated 3x3 and two validated 4x4 puzzles
+- Phase 13/8.5: validated Tutorial, deduction-focused Standard 3x3, Advanced
+  4x4, and three additional shipped 3x3/4x4 puzzles
+- Phase 8.5 navigation: in-app Puzzle Select with current-puzzle indication,
+  scrolling, Back-without-reset, and lifecycle-safe Play
 
 The final experiment runner, report-support notes, demo script, requirement
 matrix, and known-limitations record are also included. The team must still

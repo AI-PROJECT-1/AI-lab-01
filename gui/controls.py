@@ -20,6 +20,7 @@ class Controls(ttk.Frame):
         self,
         parent: tk.Misc,
         *,
+        on_puzzles: Callable[[], None],
         on_load: Callable[[], None],
         on_restart: Callable[[], None],
         on_criminal: Callable[[], None],
@@ -35,8 +36,14 @@ class Controls(ttk.Frame):
 
         game = ControlGroup(self, CONTROL_GROUP_ORDER[0])
         game.grid(row=0, column=0, sticky="nsew", padx=(0, SPACING["sm"]))
-        ttk.Button(game, text="Load", command=on_load, style="Game.TButton").grid(row=0, column=0, padx=2)
-        ttk.Button(game, text="Restart", command=on_restart, style="Game.TButton").grid(row=0, column=1, padx=2)
+        self._puzzles_button = ttk.Button(game, text="Puzzles", command=on_puzzles, style="Game.TButton")
+        self._puzzles_button.grid(row=0, column=0, padx=2, sticky="ew")
+        ttk.Button(game, text="Load", command=on_load, style="Game.TButton").grid(row=0, column=1, padx=2, sticky="ew")
+        ttk.Button(game, text="Restart", command=on_restart, style="Game.TButton").grid(
+            row=1, column=0, columnspan=2, padx=2, pady=(4, 0), sticky="ew"
+        )
+        game.columnconfigure(0, weight=1)
+        game.columnconfigure(1, weight=1)
 
         self._verdict_panel = VerdictPanel(self, on_innocent, on_criminal)
         self._verdict_panel.grid(row=0, column=1, sticky="nsew", padx=(0, SPACING["sm"]))
@@ -91,6 +98,7 @@ class Controls(ttk.Frame):
         self._sync_solver_controls()
 
     def _sync_solver_controls(self) -> None:
+        self._puzzles_button.configure(state="disabled" if self._auto_running else "normal")
         self._solve_next_button.configure(state="disabled" if self._is_complete else "normal")
         self._auto_button.configure(
             state="disabled" if self._is_complete or self._auto_running else "normal"
@@ -107,6 +115,10 @@ class Controls(ttk.Frame):
     @property
     def auto_solve_available(self) -> bool:
         return str(self._auto_button.cget("state")) == "normal"
+
+    @property
+    def puzzles_available(self) -> bool:
+        return str(self._puzzles_button.cget("state")) == "normal"
 
     @property
     def hint_button_text(self) -> str:

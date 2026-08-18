@@ -99,19 +99,42 @@ primary model and DPLL runs again. UNSAT on the second call proves uniqueness;
 SAT provides evidence of a second model. This complete-clue validation is never
 used as the gameplay public KB.
 
+## Puzzle experience tiers
+
+- **Tutorial — The Gallery Shift:** intentionally direct FACT chain for learning
+  selection, verdict feedback, reveal, and clue inspection. It is not evidence
+  of full deduction difficulty.
+- **Standard — The Atrium Ledger:** 3x3 with two initial public clues/verdicts,
+  SAME/DIFFERENT relations, EXACTLY/AT_LEAST counting, and ROW/COLUMN regions.
+  All seven progressive deductions have support size 2 and none is a direct
+  single-FACT step.
+- **Advanced — The Meridian Conspiracy:** 4x4 using counting,
+  ROW/COLUMN/NEIGHBORS/EXPLICIT regions, relations, IMPLIES and ODD. Its first
+  deduction uses real clues `A4-01`, `A4-04`, and known verdict A1; maximum
+  progressive support size is 4.
+
+These are human-facing design categories, not a mathematically calibrated
+difficulty score. Every tier passes the same generic encoder, solver, target
+ordering, support extractor, uniqueness check, and reveal protocol.
+
 ## Final experiment summary
 
-| Puzzle | Size | Complete clauses | Progressive SAT calls | Propagations | Solve wall (s) | Unique |
-|---|---:|---:|---:|---:|---:|---|
-| The Parity Gallery | 3x3 | 14 | 19 | 100 | 0.001339 | yes |
-| The Gallery Shift | 3x3 | 9 | 20 | 100 | 0.000963 | yes |
-| The Implication Archive | 4x4 | 19 | 36 | 314 | 0.003511 | yes |
-| The Museum Circuit | 4x4 | 16 | 38 | 327 | 0.002968 | yes |
+| Puzzle | Tier | Size | Complete clauses | SAT calls | Decisions / backtracks | Propagations | Solve wall (s) | Avg/max support |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| The Gallery Shift | Tutorial | 3x3 | 9 | 20 | 0 / 0 | 100 | 0.001026 | 1.000 / 1 |
+| The Atrium Ledger | Standard | 3x3 | 24 | 16 | 0 / 0 | 105 | 0.001666 | 2.000 / 2 |
+| The Parity Gallery | Standard | 3x3 | 14 | 19 | 0 / 0 | 100 | 0.001190 | 1.750 / 2 |
+| The Museum Circuit | Tutorial | 4x4 | 16 | 38 | 0 / 0 | 327 | 0.002973 | 1.000 / 1 |
+| The Implication Archive | Standard | 4x4 | 19 | 36 | 0 / 0 | 314 | 0.003504 | 1.267 / 2 |
+| The Meridian Conspiracy | Advanced | 4x4 | 54 | 33 | 17 / 1 | 356 | 0.007940 | 2.308 / 4 |
 
-All four runs completed, remained consistent/unique, and recorded zero failures.
+All six runs completed, remained consistent/unique, and recorded zero failures.
+The Advanced run demonstrates real DPLL branching/backtracking without any
+puzzle-specific code; zero values for other runs remain honest observations.
 See `EXPERIMENT_LOG.md` and raw `experiments/results/final_regression.json` for
 metric definitions, Hint benchmarks, exact floating-point values, environment,
-and retained error fields.
+retained error fields, and exact per-step public support IDs. The earlier
+four-puzzle Phase 8 result is preserved in Git commit `2c8ed1b`.
 
 ## Report checklist
 

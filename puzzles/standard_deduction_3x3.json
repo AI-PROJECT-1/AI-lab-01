@@ -1,0 +1,16 @@
+{
+  "id": "standard-deduction-3x3",
+  "title": "The Atrium Ledger",
+  "size": 3,
+  "cards": [
+    {"cell":"A1","name":"Alden","profession":"Auditor","status":"CRIMINAL","initially_revealed":true,"clue":{"id":"S3-01","type":"EXACTLY","k":2,"region":{"type":"ROW","index":1},"text":"Exactly two people in Row 1 are Criminal."}},
+    {"cell":"B1","name":"Bria","profession":"Bookbinder","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"S3-02","type":"DIFFERENT","characters":["A2","B2"],"text":"A2 and B2 have different statuses."}},
+    {"cell":"C1","name":"Corin","profession":"Cartographer","status":"INNOCENT","initially_revealed":true,"clue":{"id":"S3-03","type":"SAME","characters":["A2","B1"],"text":"A2 and B1 have the same status."}},
+    {"cell":"A2","name":"Delia","profession":"Diplomat","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"S3-04","type":"EXACTLY","k":2,"region":{"type":"ROW","index":2},"text":"Exactly two people in Row 2 are Criminal."}},
+    {"cell":"B2","name":"Emil","profession":"Editor","status":"INNOCENT","initially_revealed":false,"clue":{"id":"S3-05","type":"SAME","characters":["A3","C2"],"text":"A3 and C2 have the same status."}},
+    {"cell":"C2","name":"Fara","profession":"Forensic Artist","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"S3-06","type":"DIFFERENT","characters":["A3","B3"],"text":"A3 and B3 have different statuses."}},
+    {"cell":"A3","name":"Gavin","profession":"Geometer","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"S3-07","type":"EXACTLY","k":2,"region":{"type":"ROW","index":3},"text":"Exactly two people in Row 3 are Criminal."}},
+    {"cell":"B3","name":"Helena","profession":"Historian","status":"INNOCENT","initially_revealed":false,"clue":{"id":"S3-08","type":"AT_LEAST","k":2,"region":{"type":"COLUMN","index":1},"text":"At least two people in Column A are Criminal."}},
+    {"cell":"C3","name":"Idris","profession":"Illustrator","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"S3-09","type":"FACT","target":"C1","status":"INNOCENT","text":"C1 is Innocent."}}
+  ]
+}

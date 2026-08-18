@@ -104,3 +104,23 @@ completion/uniqueness result into a retained FAIL row and non-zero exit status.
 This Phase 8 layer adds no edge to the production path: `main.py -> GUI ->
 GameEngine -> LogicAgent -> CNFEncoder -> DPLL` remains unchanged. Documentation
 and audit tests consume the evidence output; the game never consumes it.
+
+## Puzzle catalog and UI-only navigation
+
+`PuzzleCatalogEntry` contains only puzzle ID, display name, size, a human design
+category, and short description. A private ID-to-local-file mapping resolves a
+Play action; the catalog never loads or exposes solution labels, clue payloads,
+or deduction sequences.
+
+`ScreenManager` switches exactly two frames inside the existing Tk root:
+`GriductiveApp` (Game) and `PuzzleSelectScreen`. Opening/closing Puzzle Select
+only changes frame visibility. Play loads the selected file through
+`PuzzleLoader` and the existing `GameController.load()` path, then reuses the
+same lifecycle cleanup as external Load. Navigation state never enters
+GameEngine, LogicAgent, or PublicKnowledgeState.
+
+The experiment observer now also invokes `analyze_puzzle()` to record the public
+support components immediately before each normal progressive deduction. This
+profile uses fresh public snapshots and never reads hidden status to create Hint
+support; hidden solution remains confined to the engine's existing integrity
+check and the independent semantic-validity tests.

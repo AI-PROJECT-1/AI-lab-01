@@ -164,6 +164,21 @@
 - Goal: Commit approved Phase 7, audit all Project 2 requirements against actual implementation/evidence, correct only verified blocker/major defects, run final regression/experiments/E2E, and prepare honest demo/report support without producing submission artifacts.
 - Full prompt: User approved UI Phase 7, required atomic commit `feat(gui): finalize gameplay completion experience` and its real hash, then authorized only final regression, requirement audit, experiment/demo readiness, audit-document updates, repository/entrypoint validation, and a 46-item completion gate. Report generation, video recording, archive/upload/submission, feature creep, fabricated metrics/history, and new gameplay/AI semantics were prohibited.
 - Short summary of response: Created real Phase 7 commit `4150d867b6f2ce03cf273ced9895c4dd06105445`; found and corrected the missing reproducible experiment runner/documentation, added five release-audit tests, generated a four-puzzle raw result, rehearsed the deterministic 3x3/4x4 UI path, and converted the planned audit into an evidence/status matrix. Final submission artifacts and team attribution remain explicitly blocked rather than fabricated.
-- Decision: EXECUTED FOR UI PHASE 8 ONLY; approval of Phase 8 pending
+- Decision: EXECUTED FOR UI PHASE 8 ONLY; approved by the user
 - Related AI Usage ID: AI-015
-- Related commits: UI Phase 7 `4150d86`; UI Phase 8 uncommitted
+- Related commits: UI Phase 7 `4150d86`; UI Phase 8 `2c8ed1b`
+
+## PROMPT-013
+
+- Date: 2026-08-16
+- Tool: OpenAI Codex
+- Model: GPT-5
+- Member: Tran Huu Phuoc - 24127511
+- Phase: Phase 8.5 puzzle quality, deduction difficulty, and screen navigation
+- Goal: Preserve the solver while creating genuine Tutorial/Standard/Advanced experiences and same-window shipped-puzzle navigation with public-only metadata, reset-safe Play, Back-without-reset, quality profiles, rerun experiments, and complete verification.
+- Full prompt: User approved Phase 8, required its exact atomic commit and real hash, then authorized puzzle data, GUI navigation, tests, experiments, and documentation only. Required a Standard 3x3 with relations/counting/regions, an Advanced 4x4 with extensions and real support size >=2, a scrollable Puzzle Select screen, public/private gates, actual metrics, visual E2E, and a stop before Phase 9.
+- Short summary of response: Verified Phase 8 commit `2c8ed1b`; retained the direct Gallery Shift as Tutorial; added unique/progressive deduction-focused Standard and Advanced puzzles; added a safe catalog plus ScreenManager/PuzzleSelect; added public support analysis and 17 tests; reran six-puzzle experiments; and updated demo/report/audit evidence.
+- Decision: EXECUTED FOR PHASE 8.5 ONLY; approval pending
+- Revalidation: The same Phase 8.5 prompt was supplied again on 2026-08-18. Existing uncommitted work was preserved rather than duplicated; 196/196 tests and all required static boundaries passed again. Phase 9 was not started.
+- Related AI Usage ID: AI-016
+- Related commits: Phase 8 `2c8ed1b`; Phase 8.5 uncommitted
