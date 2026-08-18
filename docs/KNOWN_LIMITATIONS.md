@@ -53,5 +53,5 @@ These are verified limitations, not hidden defects or promised features.
   and the final student-ID archive have not been fabricated or generated.
 - Real member identities, ownership confirmation, honest contribution
   percentages, and final reference review require team input.
-- Phase 8.6 is intentionally uncommitted pending approval and no remote push is
-  claimed.
+- Phase 8.6 implementation is recorded in real commit `96cd8ae`; remote
+  publication is verified separately by the final Git push result.

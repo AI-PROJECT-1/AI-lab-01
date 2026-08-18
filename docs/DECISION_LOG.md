@@ -219,4 +219,4 @@
 - Experiment boundary: Production analysis follows the explicit catalog. Test fixtures are never discovered by glob, and generated JSON records the exact production manifest and real baseline hash.
 - Rejected: changing GameEngine/verdict semantics, adding lock fields to public/domain models, puzzle-specific CNF/LogicAgent order, random runtime generation, disabling logical assistance, hiding Solver Trace, or showing the correct answer as a penalty.
 - Related requirement: Phase 8.6 production hardening, public/private isolation, and no-guess gameplay.
-- Related commit: UNCOMMITTED - approval required.
+- Related commit: `96cd8ae68a0592e456547f6cccde3789f7a61163`.

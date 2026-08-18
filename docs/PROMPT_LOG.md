@@ -193,6 +193,6 @@
 - Goal: Commit no unapproved Phase 8.6 work; harden the production catalog to genuine Standard/Advanced deduction puzzles; remove Tutorial/direct FACT anchors; make reveal progression non-linear; add a public-only manual contradiction lock; rerun experiments, regression, boundary, and GUI review; update audit records; stop before Phase 9.
 - Full prompt: The user supplied the attached Phase 8.6 master prompt requiring a real Phase 8.5 checkpoint, production/test-fixture separation, deterministic validated puzzle data, no hidden-solution or protected-solver changes, one-run per-character manual lockout after CONTRADICTED, unchanged Hint/Solve/Auto semantics, complete test and visual evidence, and a fixed 72-item final gate report.
 - Short summary of response: Preserved `8c8c77d`; reduced production to two explicit catalog entries; moved four legacy chains to fixtures; removed all production FACT clues; remapped deterministic reveal ownership; added controller/presentation-only lockout; extended quality metrics and 16 Phase 8.6 tests; regenerated two-puzzle evidence and documentation.
-- Decision: EXECUTED FOR PHASE 8.6 ONLY; intentionally uncommitted pending approval
+- Decision: EXECUTED FOR PHASE 8.6 ONLY; committed after explicit user approval
 - Related AI Usage ID: AI-017
-- Related commits: Phase 8.5 checkpoint `8c8c77d`; Phase 8.6 UNCOMMITTED
+- Related commits: Phase 8.5 checkpoint `8c8c77d`; Phase 8.6 `96cd8ae`

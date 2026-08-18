@@ -28,9 +28,10 @@ Verified Phase 8.5 commit: `8c8c77d326ceb65beaa7b5454bc0bcd49f9da355` | 2026-08-
 Phase 8.6 began from a clean tree at `8c8c77d`; `main` was 11 commits ahead of
 `origin/main`. No Phase 8/8.5 push or upload is claimed.
 
-Phase 8.6 audit status on 2026-08-18: implementation and verification changes
-remain intentionally uncommitted for approval. There is no Phase 8.6 hash to
-record yet; history has not been rewritten or fabricated.
+Verified Phase 8.6 implementation commit: `96cd8ae68a0592e456547f6cccde3789f7a61163` | 2026-08-18 11:40:09 +0700 | Trần Phước | `feat(game): harden production puzzles and manual lockout`
+
+The commit was created only after explicit user approval. It follows Phase 8.5
+without amend, rebase, squash, or fabricated history.
 
 ```text
 4f59755 | 2026-06-30 15:07:17 +0700 | Trần Phước | Initial commit

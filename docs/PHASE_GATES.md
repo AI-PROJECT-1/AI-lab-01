@@ -253,7 +253,7 @@ complete until its required checks actually pass.
 
 ## Phase 8.6 - Production Puzzle Hardening and Anti-Guess Lock
 
-- Status: IMPLEMENTED AND VERIFIED; UNCOMMITTED PENDING APPROVAL
+- Status: IMPLEMENTED, VERIFIED, AND COMMITTED AFTER APPROVAL
 - Checkpoint: clean real Phase 8.5 commit `8c8c77d326ceb65beaa7b5454bc0bcd49f9da355`
 - Production set: exactly Standard 3x3 and Advanced 4x4; four legacy chains moved to test fixtures; default startup is Standard
 - Quality gate: 0 production FACT clues; non-linear deterministic reveal-owner sequences; all 20 progressive steps use support >=2; 2/2 consistent, unique, and complete
@@ -261,5 +261,5 @@ complete until its required checks actually pass.
 - Protected scope: no diff in GameEngine, core, LogicAgent, Hint extraction, CNF, semantic evaluator, uniqueness, or DPLL
 - Evidence: 212/212 unittests, 2/2 production experiments, static boundary scans, and 12-state Tkinter Standard/Advanced/1180x660 audit
 - Related logs: AI-017, PROMPT-014, DEC-018
-- Commit: UNCOMMITTED - do not invent a hash
+- Commit: `96cd8ae68a0592e456547f6cccde3789f7a61163` (`feat(game): harden production puzzles and manual lockout`)
 - Next phase: STOP before Phase 9
