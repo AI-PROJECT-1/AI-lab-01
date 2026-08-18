@@ -12,9 +12,10 @@ from logic.cnf_encoder import CNFEncoder
 from logic.semantic_evaluator import evaluate
 from sat.dpll import DPLLSolver
 from sat.sat_result import SATStatus
+from tests.fixture_paths import PUZZLE_FIXTURES
 
 
-SAMPLE_PATH = Path(__file__).parents[1] / "puzzles" / "sample_3x3.json"
+SAMPLE_PATH = PUZZLE_FIXTURES / "sample_3x3.json"
 
 
 class SamplePuzzleValidationTests(unittest.TestCase):

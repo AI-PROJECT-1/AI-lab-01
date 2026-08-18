@@ -17,11 +17,12 @@ from gui.trace_panel import (
     SolverDetailsModel,
     build_trace_presentations,
 )
+from tests.fixture_paths import PUZZLE_FIXTURES
 
 
 ROOT = Path(__file__).parents[1]
-SAMPLE_PATH = ROOT / "puzzles" / "sample_3x3.json"
-EXTENSION_PATH = ROOT / "puzzles" / "extension_chain_3x3.json"
+SAMPLE_PATH = PUZZLE_FIXTURES / "sample_3x3.json"
+EXTENSION_PATH = PUZZLE_FIXTURES / "extension_chain_3x3.json"
 
 
 class SolverDetailsPresentationTests(unittest.TestCase):

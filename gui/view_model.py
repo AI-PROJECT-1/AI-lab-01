@@ -75,6 +75,7 @@ class CardModifiers:
     newly_revealed: bool = False
     hint_target: bool = False
     hint_support: bool = False
+    manual_locked: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -91,10 +92,11 @@ def compose_card_visual_state(
     newly_revealed: bool = False,
     hint_target: bool = False,
     hint_support: bool = False,
+    manual_locked: bool = False,
 ) -> CardVisualState:
     return CardVisualState(
         card.base_state,
-        CardModifiers(selected, clue_highlighted, newly_revealed, hint_target, hint_support),
+        CardModifiers(selected, clue_highlighted, newly_revealed, hint_target, hint_support, manual_locked),
     )
 
 

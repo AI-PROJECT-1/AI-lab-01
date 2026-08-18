@@ -324,4 +324,23 @@
 - Revalidation: Repeated on 2026-08-18 after the Phase 8.5 prompt was supplied again. The unchanged worktree passed 196/196 tests in 8.012s, compile, protected-module diff, JSON parsing, public/private, hidden-data, external-solver, puzzle-specific logic, and whitespace scans. No production file or generated experiment result was rewritten.
 - Approved Phase 8 commit: `2c8ed1bd2f6edcdddd6583355110ccdd00470a6d` (`chore(project): complete final requirement audit`).
 - Related Prompt ID: PROMPT-013
-- Related Git commit hash: PENDING
+- Related Git commit hash: `8c8c77d326ceb65beaa7b5454bc0bcd49f9da355`
+
+## AI-017
+
+- Date: 2026-08-18
+- AI tool: OpenAI Codex
+- Model: GPT-5
+- Developer/member: Tran Huu Phuoc - 24127511
+- Phase: Phase 8.6 production puzzle hardening, non-linear reveals, and anti-guess lock
+- Purpose: Convert the Phase 8.5 showcase into a strict two-puzzle production set, remove direct answer anchors, make public reveal ownership non-linear, and prevent repeated manual opposite-verdict guessing without changing protected reasoning semantics.
+- Checkpoint: Verified and preserved real Phase 8.5 commit `8c8c77d326ceb65beaa7b5454bc0bcd49f9da355` before edits; no Phase 8.6 commit or push was created.
+- Puzzle result: Production catalog now contains only Atrium Ledger Standard 3x3 and Meridian Conspiracy Advanced 4x4. Both have zero FACT clues, deterministic scattered initial cells, non-linear reveal owners, complete-set uniqueness, progressive completion, and zero support-size-1 steps.
+- Legacy handling: Four former direct-chain puzzle JSON files were moved intact to `tests/fixtures/puzzles/`; test path imports were centralized in `tests/fixture_paths.py`; production experiments derive only from the explicit catalog.
+- Anti-guess design: A CONTRADICTED manual submission adds the unresolved ID to controller-owned per-run state. Retry is blocked before the engine call. The lock is neutral, reveals neither correct status nor clue, and is ignored by Hint/Solve Next/Auto Solve. Restart/Load clear it.
+- Accepted AI-assisted changes: explicit production manifest, deterministic design-time clue remapping saved as static JSON, zero-FACT production data, legacy fixture separation, controller-owned manual locks, public-only neutral presentation, stronger metrics/tests, and reproducible reruns.
+- Rejected/deferred suggestions: runtime/random shuffling, puzzle-specific target/support/CNF branches, hidden-answer comparison, placing locks in public or solver state, locking NOT_PROVABLE/INCONSISTENT, exposing the opposite answer, weakening solver assistance, deleting FACT engine support, optional 5x5, and Phase 9 work.
+- Protected scope: No changes to `game/`, `core/`, `agent/`, `logic/`, or `sat/`; no random runtime generation, hidden-answer inspection, puzzle-specific solver path, or verdict semantic change.
+- Evidence: 212 supported unittests, production quality/experiment runners, protected/boundary scans, and a 12-state Tkinter Standard/Advanced visual E2E are the Phase 8.6 gates; exact final results are recorded in `TEST_LOG.md`.
+- Related Prompt ID: PROMPT-014
+- Related Git commit hash: UNCOMMITTED - approval required

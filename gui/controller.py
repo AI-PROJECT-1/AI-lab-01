@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import StrEnum
 
-from core.enums import Status
+from core.enums import Status, VerdictOutcome
 from core.public_state import PublicKnowledgeState
 from core.puzzle import Puzzle
 from core.results import VerdictResult
@@ -13,6 +13,10 @@ from game.game_engine import GameEngine
 
 
 class SelectionRequiredError(ValueError):
+    pass
+
+
+class ManualVerdictLockedError(ValueError):
     pass
 
 
@@ -34,6 +38,7 @@ class GameController:
         self._engine = engine
         self._selected_character_id: str | None = None
         self._selected_clue_owner_id: str | None = None
+        self._manual_locked_ids: set[str] = set()
 
     @property
     def selected_character_id(self) -> str | None:
@@ -42,6 +47,15 @@ class GameController:
     @property
     def selected_clue_owner_id(self) -> str | None:
         return self._selected_clue_owner_id
+
+    @property
+    def manual_locked_ids(self) -> frozenset[str]:
+        """UI/session-only manual penalties; never part of public logic state."""
+
+        return frozenset(self._manual_locked_ids)
+
+    def is_manual_locked(self, character_id: str) -> bool:
+        return character_id in self._manual_locked_ids
 
     def state(self) -> PublicKnowledgeState:
         return self._engine.public_state()
@@ -88,16 +102,24 @@ class GameController:
     def submit_selected(self, status: Status) -> VerdictResult:
         if self._selected_character_id is None:
             raise SelectionRequiredError("select a character before submitting a verdict")
-        return self._engine.submit_verdict(self._selected_character_id, status)
+        character_id = self._selected_character_id
+        if character_id in self._manual_locked_ids:
+            raise ManualVerdictLockedError("manual verdicts are locked for this character for the current run")
+        result = self._engine.submit_verdict(character_id, status)
+        if result.outcome is VerdictOutcome.CONTRADICTED:
+            self._manual_locked_ids.add(character_id)
+        return result
 
     def restart(self) -> PublicKnowledgeState:
         self._selected_character_id = None
         self._selected_clue_owner_id = None
+        self._manual_locked_ids.clear()
         return self._engine.restart()
 
     def load(self, puzzle: Puzzle) -> PublicKnowledgeState:
         self._selected_character_id = None
         self._selected_clue_owner_id = None
+        self._manual_locked_ids.clear()
         return self._engine.load(puzzle)
 
     def hint(self):

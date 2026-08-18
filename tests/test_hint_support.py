@@ -19,11 +19,12 @@ from game.puzzle_loader import PuzzleLoader
 from gui.character_card import appearance_for
 from gui.hint_session import HintVisualState, begin_hint_session, can_advance_hint, progress_hint_session
 from gui.view_model import CardBaseState, CardModifiers, CardVisualState
+from tests.fixture_paths import PUZZLE_FIXTURES
 
 
 ROOT = Path(__file__).parents[1]
-SAMPLE_3X3 = ROOT / "puzzles" / "sample_3x3.json"
-SAMPLE_4X4 = ROOT / "puzzles" / "fact_chain_4x4.json"
+SAMPLE_3X3 = PUZZLE_FIXTURES / "sample_3x3.json"
+SAMPLE_4X4 = PUZZLE_FIXTURES / "fact_chain_4x4.json"
 
 
 def _characters() -> tuple[Character, ...]:

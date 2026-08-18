@@ -10,19 +10,17 @@ from agent.logic_agent import LogicAgent
 from core.public_state import PublicKnowledgeState, RevealedClue
 from game.game_engine import GameEngine
 from game.puzzle_loader import PuzzleLoader
+from gui.puzzle_catalog import PUZZLE_CATALOG, puzzle_path
 
 
 ROOT = Path(__file__).parents[1]
-PUZZLE_DIR = ROOT / "puzzles"
 DEFAULT_OUTPUT = ROOT / "experiments" / "results" / "puzzle_quality.json"
 
 
 def puzzle_paths() -> tuple[Path, ...]:
-    return tuple(
-        path
-        for path in sorted(PUZZLE_DIR.glob("*.json"))
-        if path.name != "schema.json"
-    )
+    """Return the explicit public production set in catalog order."""
+
+    return tuple(puzzle_path(entry.puzzle_id) for entry in PUZZLE_CATALOG)
 
 
 def complete_clue_state(puzzle) -> PublicKnowledgeState:
@@ -94,14 +92,25 @@ def analyze_puzzle(path: Path) -> dict[str, object]:
         "characters": len(puzzle.cards),
         "clues": len(puzzle.cards),
         "initial_revealed_clues": len(puzzle.initially_revealed_ids),
+        "initial_revealed_cells": list(puzzle.initially_revealed_ids),
         "clue_types": clue_types,
         "regions": regions,
         "extensions": extensions,
         "fact_clues": sum(card.clue.type.value == "FACT" for card in puzzle.cards),
+        "direct_answer_fact_ids": [
+            card.clue.id for card in puzzle.cards if card.clue.type.value == "FACT"
+        ],
         "deduction_steps": len(steps),
+        "deduction_target_sequence": [step["target"] for step in steps],
+        "reveal_owner_sequence": [
+            *puzzle.initially_revealed_ids,
+            *(step["target"] for step in steps),
+        ],
         "average_support_size": sum(support_sizes) / len(support_sizes) if support_sizes else 0.0,
         "maximum_support_size": max(support_sizes, default=0),
         "single_component_deductions": sum(size == 1 for size in support_sizes),
+        "support_size_1_count": sum(size == 1 for size in support_sizes),
+        "support_size_gte_2_count": sum(size >= 2 for size in support_sizes),
         "direct_single_fact_deductions": sum(step["direct_single_fact"] for step in steps),
         "unique": uniqueness.is_unique,
         "consistent": uniqueness.is_consistent,

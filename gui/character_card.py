@@ -24,6 +24,7 @@ class CardAppearance:
     highlight_outline: str | None
     reveal_outline: str | None
     hint_outline: str | None
+    lock_outline: str | None
 
 
 def appearance_for(state: CardVisualState) -> CardAppearance:
@@ -46,6 +47,9 @@ def appearance_for(state: CardVisualState) -> CardAppearance:
         badge_foreground = None
 
     modifiers = state.modifiers
+    if state.base is CardBaseState.UNRESOLVED and modifiers.manual_locked:
+        badge_background = COLORS["warning"]
+        badge_foreground = "#FFFFFF"
     return CardAppearance(
         surface=surface,
         base_border=base_border,
@@ -55,6 +59,7 @@ def appearance_for(state: CardVisualState) -> CardAppearance:
         highlight_outline=COLORS["focus"] if modifiers.clue_highlighted else None,
         reveal_outline=COLORS["info"] if modifiers.newly_revealed else None,
         hint_outline=COLORS["hint"] if modifiers.hint_target or modifiers.hint_support else None,
+        lock_outline=COLORS["warning"] if modifiers.manual_locked else None,
     )
 
 
@@ -153,12 +158,16 @@ class CharacterCard(tk.Frame):
             self._profession.grid(row=1, column=0, sticky="ew")
 
         self._badge: tk.Label | None = None
-        if card.status is not None:
-            badge_symbol = "!" if card.status.value == "CRIMINAL" else "✓"
+        if card.status is not None or visual_state.modifiers.manual_locked:
+            if card.status is None:
+                badge_symbol = "×"
+            else:
+                badge_symbol = "!" if card.status.value == "CRIMINAL" else "✓"
             badge_gap = " " if compact else "  "
+            badge_text = card.status.value if card.status is not None else "LOCKED"
             self._badge = tk.Label(
                 self._content,
-                text=f"{badge_symbol}{badge_gap}{card.status.value}",
+                text=f"{badge_symbol}{badge_gap}{badge_text}",
                 font=("Segoe UI Semibold", 7 if compact else 8),
                 padx=0 if compact else SPACING["sm"],
                 pady=1,
@@ -191,10 +200,11 @@ class CharacterCard(tk.Frame):
         newly_revealed: bool = False,
         hint_target: bool = False,
         hint_support: bool = False,
+        manual_locked: bool = False,
     ) -> None:
         self.visual_state = CardVisualState(
             self.visual_state.base,
-            CardModifiers(selected, clue_highlighted, newly_revealed, hint_target, hint_support),
+            CardModifiers(selected, clue_highlighted, newly_revealed, hint_target, hint_support, manual_locked),
         )
         self._apply_appearance()
 
@@ -206,9 +216,9 @@ class CharacterCard(tk.Frame):
             pady=2 if appearance.selection_outline else 0,
         )
         self._outline.configure(
-            background=appearance.highlight_outline or appearance.base_border,
-            padx=2 if appearance.highlight_outline else 1,
-            pady=2 if appearance.highlight_outline else 1,
+            background=appearance.highlight_outline or appearance.lock_outline or appearance.base_border,
+            padx=2 if appearance.highlight_outline or appearance.lock_outline else 1,
+            pady=2 if appearance.highlight_outline or appearance.lock_outline else 1,
         )
         self._hint_outline.configure(
             background=appearance.hint_outline or appearance.surface,

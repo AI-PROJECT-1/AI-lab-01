@@ -18,7 +18,12 @@ class VerdictContext:
     can_submit: bool
 
 
-def verdict_context_for(card: CardViewModel | None, *, is_complete: bool = False) -> VerdictContext:
+def verdict_context_for(
+    card: CardViewModel | None,
+    *,
+    is_complete: bool = False,
+    manual_locked: bool = False,
+) -> VerdictContext:
     if is_complete:
         return VerdictContext(
             "Puzzle solved · all verdicts are public",
@@ -35,6 +40,12 @@ def verdict_context_for(card: CardViewModel | None, *, is_complete: bool = False
         return VerdictContext(
             f"{card.name} · {card.coordinate} · {card.profession}",
             f"Already public: {card.status.value}",
+            False,
+        )
+    if manual_locked:
+        return VerdictContext(
+            f"{card.name} · {card.coordinate} · LOCKED",
+            "Manual verdict locked for this run.",
             False,
         )
     return VerdictContext(
@@ -82,8 +93,14 @@ class VerdictPanel(ControlGroup):
     def context_text(self) -> str:
         return str(self._identity.cget("text"))
 
-    def set_context(self, card: CardViewModel | None, *, is_complete: bool = False) -> None:
-        context = verdict_context_for(card, is_complete=is_complete)
+    def set_context(
+        self,
+        card: CardViewModel | None,
+        *,
+        is_complete: bool = False,
+        manual_locked: bool = False,
+    ) -> None:
+        context = verdict_context_for(card, is_complete=is_complete, manual_locked=manual_locked)
         identity = context.identity
         if card is not None and card.status is not None:
             identity = f"{identity} · {card.status.value}"

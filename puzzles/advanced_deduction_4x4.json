@@ -4,20 +4,20 @@
   "size": 4,
   "cards": [
     {"cell":"A1","name":"Amara","profession":"Architect","status":"CRIMINAL","initially_revealed":true,"clue":{"id":"A4-01","type":"EXACTLY","k":2,"region":{"type":"ROW","index":1},"text":"Exactly two people in Row 1 are Criminal."}},
-    {"cell":"B1","name":"Bennet","profession":"Biographer","status":"INNOCENT","initially_revealed":false,"clue":{"id":"A4-02","type":"SAME","characters":["A2","C1"],"text":"A2 and C1 have the same status."}},
-    {"cell":"C1","name":"Celeste","profession":"Cryptographer","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"A4-03","type":"IMPLIES","characters":["A2","B2"],"text":"If A2 is Criminal, then B2 is Criminal."}},
+    {"cell":"B1","name":"Bennet","profession":"Biographer","status":"INNOCENT","initially_revealed":false,"clue":{"id":"A4-10","type":"ODD","region":{"type":"ROW","index":3},"text":"An odd number of people in Row 3 are Criminal."}},
+    {"cell":"C1","name":"Celeste","profession":"Cryptographer","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"A4-07","type":"EXACTLY","k":3,"region":{"type":"COLUMN","index":1},"text":"Exactly three people in Column A are Criminal."}},
     {"cell":"D1","name":"Darius","profession":"Detective","status":"INNOCENT","initially_revealed":true,"clue":{"id":"A4-04","type":"IMPLIES","characters":["B1","C1"],"text":"If B1 is Criminal, then C1 is Criminal."}},
-    {"cell":"A2","name":"Elara","profession":"Engineer","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"A4-05","type":"DIFFERENT","characters":["B2","C2"],"text":"B2 and C2 have different statuses."}},
-    {"cell":"B2","name":"Felix","profession":"Florist","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"A4-06","type":"ODD","region":{"type":"EXPLICIT","cells":["C2","D2"]},"text":"An odd number of C2 and D2 are Criminal."}},
-    {"cell":"C2","name":"Greer","profession":"Geologist","status":"INNOCENT","initially_revealed":false,"clue":{"id":"A4-07","type":"EXACTLY","k":3,"region":{"type":"COLUMN","index":1},"text":"Exactly three people in Column A are Criminal."}},
-    {"cell":"D2","name":"Hugo","profession":"Harbor Master","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"A4-08","type":"AT_MOST","k":1,"region":{"type":"NEIGHBORS","center":"A4"},"text":"At most one neighbor of A4 is Criminal."}},
-    {"cell":"A3","name":"Imani","profession":"Inspector","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"A4-09","type":"IMPLIES","characters":["C3","B3"],"text":"If C3 is Criminal, then B3 is Criminal."}},
-    {"cell":"B3","name":"Jonah","profession":"Jeweler","status":"INNOCENT","initially_revealed":false,"clue":{"id":"A4-10","type":"ODD","region":{"type":"ROW","index":3},"text":"An odd number of people in Row 3 are Criminal."}},
-    {"cell":"C3","name":"Kaia","profession":"Keeper","status":"INNOCENT","initially_revealed":false,"clue":{"id":"A4-11","type":"AT_MOST","k":1,"region":{"type":"COLUMN","index":2},"text":"At most one person in Column B is Criminal."}},
-    {"cell":"D3","name":"Leander","profession":"Librarian","status":"INNOCENT","initially_revealed":false,"clue":{"id":"A4-12","type":"EXACTLY","k":1,"region":{"type":"ROW","index":4},"text":"Exactly one person in Row 4 is Criminal."}},
+    {"cell":"A2","name":"Elara","profession":"Engineer","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"A4-14","type":"SAME","characters":["C4","A4"],"text":"C4 and A4 have the same status."}},
+    {"cell":"B2","name":"Felix","profession":"Florist","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"A4-09","type":"IMPLIES","characters":["C3","B3"],"text":"If C3 is Criminal, then B3 is Criminal."}},
+    {"cell":"C2","name":"Greer","profession":"Geologist","status":"INNOCENT","initially_revealed":false,"clue":{"id":"A4-08","type":"AT_MOST","k":1,"region":{"type":"NEIGHBORS","center":"A4"},"text":"At most one neighbor of A4 is Criminal."}},
+    {"cell":"D2","name":"Hugo","profession":"Harbor Master","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"A4-11","type":"AT_MOST","k":1,"region":{"type":"COLUMN","index":2},"text":"At most one person in Column B is Criminal."}},
+    {"cell":"A3","name":"Imani","profession":"Inspector","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"A4-16","type":"EXACTLY","k":1,"region":{"type":"COLUMN","index":3},"text":"Exactly one person in Column C is Criminal."}},
+    {"cell":"B3","name":"Jonah","profession":"Jeweler","status":"INNOCENT","initially_revealed":false,"clue":{"id":"A4-03","type":"IMPLIES","characters":["A2","B2"],"text":"If A2 is Criminal, then B2 is Criminal."}},
+    {"cell":"C3","name":"Kaia","profession":"Keeper","status":"INNOCENT","initially_revealed":false,"clue":{"id":"A4-12","type":"EXACTLY","k":1,"region":{"type":"ROW","index":4},"text":"Exactly one person in Row 4 is Criminal."}},
+    {"cell":"D3","name":"Leander","profession":"Librarian","status":"INNOCENT","initially_revealed":false,"clue":{"id":"A4-05","type":"DIFFERENT","characters":["B2","C2"],"text":"B2 and C2 have different statuses."}},
     {"cell":"A4","name":"Mara","profession":"Musician","status":"INNOCENT","initially_revealed":true,"clue":{"id":"A4-13","type":"AT_LEAST","k":1,"region":{"type":"COLUMN","index":4},"text":"At least one person in Column D is Criminal."}},
-    {"cell":"B4","name":"Nolan","profession":"Navigator","status":"INNOCENT","initially_revealed":false,"clue":{"id":"A4-14","type":"SAME","characters":["C4","A4"],"text":"C4 and A4 have the same status."}},
-    {"cell":"C4","name":"Oriana","profession":"Optician","status":"INNOCENT","initially_revealed":false,"clue":{"id":"A4-15","type":"DIFFERENT","characters":["C4","D4"],"text":"C4 and D4 have different statuses."}},
-    {"cell":"D4","name":"Piers","profession":"Pilot","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"A4-16","type":"FACT","target":"A1","status":"CRIMINAL","text":"A1 is Criminal."}}
+    {"cell":"B4","name":"Nolan","profession":"Navigator","status":"INNOCENT","initially_revealed":false,"clue":{"id":"A4-15","type":"DIFFERENT","characters":["C4","D4"],"text":"C4 and D4 have different statuses."}},
+    {"cell":"C4","name":"Oriana","profession":"Optician","status":"INNOCENT","initially_revealed":false,"clue":{"id":"A4-02","type":"SAME","characters":["A2","C1"],"text":"A2 and C1 have the same status."}},
+    {"cell":"D4","name":"Piers","profession":"Pilot","status":"CRIMINAL","initially_revealed":false,"clue":{"id":"A4-06","type":"ODD","region":{"type":"EXPLICIT","cells":["C2","D2"]},"text":"An odd number of C2 and D2 are Criminal."}}
   ]
 }

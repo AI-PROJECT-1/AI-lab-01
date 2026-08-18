@@ -24,11 +24,11 @@ from gui.hint_session import (
     progress_hint_session,
 )
 from gui.view_model import CardBaseState, CardModifiers, CardVisualState
+from tests.fixture_paths import PUZZLE_FIXTURES
 
 
-PUZZLES = Path(__file__).parents[1] / "puzzles"
-SAMPLE_PATH = PUZZLES / "sample_3x3.json"
-FOUR_BY_FOUR_PATH = PUZZLES / "fact_chain_4x4.json"
+SAMPLE_PATH = PUZZLE_FIXTURES / "sample_3x3.json"
+FOUR_BY_FOUR_PATH = PUZZLE_FIXTURES / "fact_chain_4x4.json"
 
 
 class CountingController:

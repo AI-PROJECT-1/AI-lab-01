@@ -11,11 +11,13 @@ from core.enums import Status, VerdictOutcome
 from game.game_engine import GameEngine
 from game.puzzle_loader import PuzzleLoader
 from gui.app import DEFAULT_PUZZLE
-from gui.controller import GameController, SelectionRequiredError
+from gui.controller import GameController, ManualVerdictLockedError, SelectionRequiredError
 from gui.view_model import build_card_views
+from tests.fixture_paths import PUZZLE_FIXTURES
 
 
-SAMPLE_PATH = Path(__file__).parents[1] / "puzzles" / "sample_3x3.json"
+SAMPLE_PATH = PUZZLE_FIXTURES / "sample_3x3.json"
+STANDARD_PATH = Path(__file__).parents[1] / "puzzles" / "standard_deduction_3x3.json"
 
 
 class ViewModelTests(unittest.TestCase):
@@ -62,14 +64,15 @@ class ControllerTests(unittest.TestCase):
         puzzle = PuzzleLoader.load(SAMPLE_PATH)
         self.controller = GameController(GameEngine(puzzle, MockLogicAgent()))
 
-    def test_manual_selection_and_verdict_flow(self) -> None:
+    def test_manual_contradiction_locks_opposite_retry(self) -> None:
         with self.assertRaises(SelectionRequiredError):
             self.controller.submit_selected(Status.CRIMINAL)
         self.controller.select_character("B1")
         contradicted = self.controller.submit_selected(Status.CRIMINAL)
         self.assertEqual(contradicted.outcome, VerdictOutcome.CONTRADICTED)
-        accepted = self.controller.submit_selected(Status.INNOCENT)
-        self.assertEqual(accepted.outcome, VerdictOutcome.ACCEPTED)
+        self.assertTrue(self.controller.is_manual_locked("B1"))
+        with self.assertRaises(ManualVerdictLockedError):
+            self.controller.submit_selected(Status.INNOCENT)
 
     def test_restart_clears_selection_and_progress(self) -> None:
         self.controller.select_character("B1")
@@ -79,7 +82,7 @@ class ControllerTests(unittest.TestCase):
         self.assertIsNone(state.status_of("B1"))
 
     def test_default_puzzle_exists(self) -> None:
-        self.assertEqual(DEFAULT_PUZZLE.resolve(), SAMPLE_PATH.resolve())
+        self.assertEqual(DEFAULT_PUZZLE.resolve(), STANDARD_PATH.resolve())
         self.assertTrue(DEFAULT_PUZZLE.is_file())
 
     def test_canonical_clue_highlighting(self) -> None:

@@ -25,9 +25,9 @@ python -m pip install -r requirements.txt
 python main.py
 ```
 
-The default puzzle is the Tutorial `puzzles/sample_3x3.json`. Use **Puzzles** to
-choose any shipped Tutorial, Standard, or Advanced puzzle without leaving the
-application. **Load** remains available for an external/local JSON puzzle.
+The default puzzle is the production Standard `puzzles/standard_deduction_3x3.json`.
+Use **Puzzles** to choose a shipped Standard or Advanced puzzle without leaving
+the application. **Load** remains available for an external/local JSON puzzle.
 
 ## Test
 
@@ -50,7 +50,7 @@ For the public-only deduction/support profile of each puzzle:
 python -m experiments.analyze_puzzles
 ```
 
-The command runs every distributable 3x3/4x4 puzzle and overwrites
+The command runs every production-listed 3x3/4x4 puzzle and overwrites
 `experiments/results/final_regression.json` with machine-readable raw results.
 Failures are retained and cause a non-zero exit code.
 
@@ -68,10 +68,12 @@ Failures are retained and cause a non-zero exit code.
 - Phase 10: production agent wired through GameEngine and GUI
 - Phase 11: selectable clues with canonical referenced-cell highlighting
 - Phase 12: `IMPLIES` and `ODD` clue extensions
-- Phase 13/8.5: validated Tutorial, deduction-focused Standard 3x3, Advanced
-  4x4, and three additional shipped 3x3/4x4 puzzles
+- Phase 13/8.5: validated deduction-focused Standard 3x3 and Advanced 4x4;
+  legacy direct-chain fixtures remain test-only
 - Phase 8.5 navigation: in-app Puzzle Select with current-puzzle indication,
   scrolling, Back-without-reset, and lifecycle-safe Play
+- Phase 8.6 hardening: production-only catalog, FACT-free non-linear deduction
+  progression, test-only legacy fixtures, and per-run manual contradiction lock
 
 The final experiment runner, report-support notes, demo script, requirement
 matrix, and known-limitations record are also included. The team must still

@@ -14,6 +14,7 @@ from experiments.run_experiments import main, puzzle_paths, run_suite
 from game.game_engine import GameEngine
 from game.puzzle_loader import PuzzleLoader
 from tests.test_logic import make_grid_characters
+from tests.fixture_paths import PUZZLE_FIXTURES
 
 
 ROOT = Path(__file__).parents[1]
@@ -58,7 +59,7 @@ class ExperimentRunnerTests(unittest.TestCase):
 
 class FinalLogicAuditTests(unittest.TestCase):
     def test_complete_public_state_has_no_repeated_unresolved_target(self) -> None:
-        engine = GameEngine(PuzzleLoader.load(ROOT / "puzzles" / "sample_3x3.json"), LogicAgent())
+        engine = GameEngine(PuzzleLoader.load(PUZZLE_FIXTURES / "sample_3x3.json"), LogicAgent())
         engine.auto_solve()
         state = engine.public_state()
         agent = LogicAgent()

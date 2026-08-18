@@ -17,12 +17,12 @@ from gui.app import GriductiveApp
 from gui.completion_panel import completion_presentation_for
 from gui.controller import CharacterInteractionKind, GameController
 from gui.hint_session import HintStage
+from tests.fixture_paths import PUZZLE_FIXTURES
 
 
 ROOT = Path(__file__).parents[1]
-PUZZLES = ROOT / "puzzles"
-SAMPLE_PATH = PUZZLES / "sample_3x3.json"
-FOUR_BY_FOUR_PATH = PUZZLES / "fact_chain_4x4.json"
+SAMPLE_PATH = PUZZLE_FIXTURES / "sample_3x3.json"
+FOUR_BY_FOUR_PATH = PUZZLE_FIXTURES / "fact_chain_4x4.json"
 
 
 class SolverForbiddenEngine:

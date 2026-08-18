@@ -13,8 +13,8 @@ an honest contribution percentage whose total is 100%.
 | T-004 | DPLL and metrics | `e28322a`, `03584c3` | SAT/UNSAT and 500-case oracle PASS | TEAM INPUT REQUIRED |
 | T-005 | Game engine/privacy boundary | `bcf0393`, `03584c3` | Transition/privacy tests PASS | TEAM INPUT REQUIRED |
 | T-006 | Entailment, trace, uniqueness, grounded Hint support | `03584c3`, `ba7912b` | Public-only reasoning tests PASS | TEAM INPUT REQUIRED |
-| T-007 | GUI interactions, completion, and puzzle navigation | `3dec8a9`, `f6b5713`, `48bea9d`, `bd39263`, `dff07f0`, `d2682b3`, `5673fe0`, `4150d86`; Phase 8.5 pending | Game/PuzzleSelect/Back/Play E2E and visual audit PASS | TEAM INPUT REQUIRED |
-| T-008 | Puzzle suite, quality profile, and reproducible experiments | `03584c3`, `2c8ed1b`; Phase 8.5 pending | Six-puzzle truth/unique/progressive/experiment/support gates PASS | TEAM INPUT REQUIRED |
+| T-007 | GUI interactions, completion, navigation, and manual lock presentation | `3dec8a9`, `f6b5713`, `48bea9d`, `bd39263`, `dff07f0`, `d2682b3`, `5673fe0`, `4150d86`, `8c8c77d`; Phase 8.6 pending | Game/PuzzleSelect/Back/Play plus anti-guess lock E2E and visual audit PASS | TEAM INPUT REQUIRED |
+| T-008 | Production puzzle suite, fixture separation, quality profile, and reproducible experiments | `03584c3`, `2c8ed1b`, `8c8c77d`; Phase 8.6 pending | Two production puzzles FACT-free, unique, progressive, support >=2; experiment gates PASS | TEAM INPUT REQUIRED |
 | T-009 | Report/demo/release | No final artifact commit | Support notes/script ready; PDF/video/archive BLOCKED | TEAM INPUT REQUIRED |
 
 ## Required team sign-off

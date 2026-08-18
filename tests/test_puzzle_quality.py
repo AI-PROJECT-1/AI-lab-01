@@ -8,6 +8,7 @@ from core.enums import ClueType, RegionType
 from experiments.analyze_puzzles import analyze_puzzle
 from game.puzzle_loader import PuzzleLoader
 from gui.puzzle_catalog import puzzle_path
+from tests.fixture_paths import PUZZLE_FIXTURES
 
 
 TUTORIAL_ID = "sample-3x3-fact-chain"
@@ -18,7 +19,7 @@ ADVANCED_ID = "advanced-deduction-4x4"
 class PuzzleQualityTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.tutorial = analyze_puzzle(puzzle_path(TUTORIAL_ID))
+        cls.tutorial = analyze_puzzle(PUZZLE_FIXTURES / "sample_3x3.json")
         cls.standard = analyze_puzzle(puzzle_path(STANDARD_ID))
         cls.advanced = analyze_puzzle(puzzle_path(ADVANCED_ID))
 
@@ -34,6 +35,7 @@ class PuzzleQualityTests(unittest.TestCase):
         self.assertTrue(self.standard["progressively_solvable"])
         self.assertEqual(self.standard["deduction_steps"], 7)
         self.assertEqual(self.standard["direct_single_fact_deductions"], 0)
+        self.assertEqual(self.standard["fact_clues"], 0)
         self.assertGreaterEqual(self.standard["average_support_size"], 2)
         self.assertGreaterEqual(self.standard["maximum_support_size"], 2)
 
@@ -57,6 +59,7 @@ class PuzzleQualityTests(unittest.TestCase):
         self.assertGreaterEqual(self.advanced["maximum_support_size"], 2)
         self.assertTrue(any(step["support_size"] >= 2 for step in self.advanced["steps"]))
         self.assertEqual(self.advanced["direct_single_fact_deductions"], 0)
+        self.assertEqual(self.advanced["fact_clues"], 0)
 
     def test_advanced_uses_counting_regions_relations_and_both_extensions(self) -> None:
         puzzle = PuzzleLoader.load(puzzle_path(ADVANCED_ID))

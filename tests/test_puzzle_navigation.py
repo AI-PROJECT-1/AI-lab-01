@@ -12,17 +12,19 @@ from gui.app import GriductiveApp
 from game.puzzle_loader import PuzzleLoader
 from gui.puzzle_catalog import PUZZLE_CATALOG, PuzzleCatalogEntry, puzzle_path
 from gui.screen_manager import ScreenName
+from tests.fixture_paths import PUZZLE_FIXTURES
 
 
 ROOT = Path(__file__).parents[1]
-SAMPLE = ROOT / "puzzles" / "sample_3x3.json"
 STANDARD_ID = "standard-deduction-3x3"
 ADVANCED_ID = "advanced-deduction-4x4"
+INITIAL = puzzle_path(STANDARD_ID)
 
 
 class PuzzleCatalogTests(unittest.TestCase):
-    def test_catalog_has_tutorial_standard_advanced_and_matches_real_files(self) -> None:
-        self.assertTrue({"Tutorial", "Standard", "Advanced"}.issubset({entry.difficulty for entry in PUZZLE_CATALOG}))
+    def test_catalog_contains_only_production_standard_and_advanced(self) -> None:
+        self.assertEqual({entry.difficulty for entry in PUZZLE_CATALOG}, {"Standard", "Advanced"})
+        self.assertNotIn("sample-3x3-fact-chain", {entry.puzzle_id for entry in PUZZLE_CATALOG})
         catalog_paths = {puzzle_path(entry.puzzle_id).resolve() for entry in PUZZLE_CATALOG}
         shipped_paths = {
             path.resolve()
@@ -53,7 +55,7 @@ class PuzzleNavigationTests(unittest.TestCase):
         except tk.TclError as exc:
             self.skipTest(f"Tk is unavailable: {exc}")
         self.root.withdraw()
-        self.app = GriductiveApp(self.root, SAMPLE)
+        self.app = GriductiveApp(self.root, INITIAL)
         self.root.update_idletasks()
 
     def tearDown(self) -> None:
@@ -129,7 +131,7 @@ class PuzzleNavigationTests(unittest.TestCase):
 
     def test_current_puzzle_indication_tracks_public_puzzle_id(self) -> None:
         self.app._show_puzzles()
-        self.assertEqual(self.app._puzzle_select.current_puzzle_id, "sample-3x3-fact-chain")
+        self.assertEqual(self.app._puzzle_select.current_puzzle_id, STANDARD_ID)
         visible = " ".join(
             str(widget.cget("text"))
             for card in self.app._puzzle_select._cards.values()
@@ -148,7 +150,7 @@ class PuzzleNavigationTests(unittest.TestCase):
             yield from PuzzleNavigationTests._widget_tree(child)
 
     def test_external_load_and_restart_remain_available_after_navigation(self) -> None:
-        external = ROOT / "puzzles" / "extension_chain_3x3.json"
+        external = PUZZLE_FIXTURES / "extension_chain_3x3.json"
         self.app._show_puzzles()
         self.app._show_game()
         with patch("gui.app.filedialog.askopenfilename", return_value=str(external)):

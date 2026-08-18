@@ -13,11 +13,17 @@ from game.puzzle_loader import PuzzleFormatError, PuzzleLoader
 from gui.board_view import BoardView
 from gui.clue_panel import CluePanel
 from gui.completion_panel import CompletionPanel, completion_presentation_for
-from gui.controller import CharacterInteractionKind, GameController, SelectionRequiredError
+from gui.controller import (
+    CharacterInteractionKind,
+    GameController,
+    ManualVerdictLockedError,
+    SelectionRequiredError,
+)
 from gui.controls import Controls
 from gui.feedback import (
     FeedbackTone,
     feedback_for_verdict,
+    manual_lock_feedback,
     newly_revealed_character,
     notice_feedback,
 )
@@ -35,7 +41,7 @@ from gui.theme import SPACING, configure_theme
 from gui.view_model import CardViewModel, build_card_views
 
 
-DEFAULT_PUZZLE = Path(__file__).parents[1] / "puzzles" / "sample_3x3.json"
+DEFAULT_PUZZLE = Path(__file__).parents[1] / "puzzles" / "standard_deduction_3x3.json"
 
 
 class GriductiveApp(ttk.Frame):
@@ -164,6 +170,7 @@ class GriductiveApp(ttk.Frame):
             self._newly_revealed_id,
             self._hint_state.target_character_id,
             self._hint_state.supporting_verdict_ids,
+            self._controller.manual_locked_ids,
         )
         self._clues.render(
             state,
@@ -175,7 +182,13 @@ class GriductiveApp(ttk.Frame):
             self._solver_details_window.render(
                 self._solver_details_model.presentations(self._controller.trace())
             )
-        self._controls.set_verdict_context(selected_card)
+        self._controls.set_verdict_context(
+            selected_card,
+            manual_locked=(
+                selected_card is not None
+                and self._controller.is_manual_locked(selected_card.character_id)
+            ),
+        )
         self._controls.set_completion_state(state.is_complete)
 
     @staticmethod
@@ -202,6 +215,10 @@ class GriductiveApp(ttk.Frame):
             return
 
         self._highlighted_ids = ()
+        if card is not None and self._controller.is_manual_locked(character_id):
+            self._feedback.show(manual_lock_feedback(card))
+            self._render()
+            return
         self._feedback.show(
             notice_feedback(
                 "Character selected",
@@ -233,6 +250,13 @@ class GriductiveApp(ttk.Frame):
             self._newly_revealed_id = None
             self._feedback.show(notice_feedback("Selection required", str(exc), FeedbackTone.WARNING))
             return
+        except ManualVerdictLockedError:
+            self._newly_revealed_id = None
+            selected = self._card_for(self._controller.state(), self._controller.selected_character_id)
+            if selected is not None:
+                self._feedback.show(manual_lock_feedback(selected))
+            self._render()
+            return
         except AgentIntegrityError:
             self._record_new_trace(before_trace_count, ActionSource.MANUAL_VERDICT)
             self._newly_revealed_id = None
@@ -249,7 +273,13 @@ class GriductiveApp(ttk.Frame):
         card = self._card_for(after, result.character_id)
         if card is None:
             raise RuntimeError("verdict result references a character outside public state")
-        self._feedback.show(feedback_for_verdict(result, card))
+        self._feedback.show(
+            feedback_for_verdict(
+                result,
+                card,
+                manual_locked=self._controller.is_manual_locked(result.character_id),
+            )
+        )
         self._render()
 
     def _restart(self) -> None:

@@ -124,3 +124,21 @@ support components immediately before each normal progressive deduction. This
 profile uses fresh public snapshots and never reads hidden status to create Hint
 support; hidden solution remains confined to the engine's existing integrity
 check and the independent semantic-validity tests.
+
+## Phase 8.6 production manifest and manual lock boundary
+
+The production manifest is the explicit two-entry `PUZZLE_CATALOG`: Standard
+3x3 and Advanced 4x4. Puzzle selection and both experiment runners share this
+manifest/order. Legacy chain files live under `tests/fixtures/puzzles/`, so file
+discovery cannot silently reclassify them as shipped gameplay or benchmark data.
+
+`GameController` owns a set of unresolved character IDs whose manual attempt
+returned CONTRADICTED. The controller rejects later manual submissions for such
+an ID before invoking GameEngine. GUI view models receive only a boolean
+modifier used for disabled actions, warning outline, and a neutral `LOCKED`
+badge. The set is cleared on Restart/Load and is not serialized.
+
+This creates no production dependency from domain/reasoning layers back to the
+GUI. GameEngine, PublicKnowledgeState, LogicAgent, CNF, DPLL, Hint support, and
+trace DTOs know nothing about locks. Hint, Solve Next, and Auto Solve continue
+to consume the same public snapshot and may resolve a locked character normally.

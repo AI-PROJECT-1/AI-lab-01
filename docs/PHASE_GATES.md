@@ -235,7 +235,7 @@ complete until its required checks actually pass.
 
 ## Phase 8.5 - Puzzle Quality and Screen Navigation
 
-- Status: IMPLEMENTATION COMPLETE; APPROVAL PENDING
+- Status: APPROVED AND COMMITTED (`8c8c77d`)
 - Requirements satisfied: honest Tutorial; unique/progressive Standard 3x3 with
   counting/relationships/regions; unique/progressive Advanced 4x4 with all
   region kinds, both extensions, and real support >=2; same-root Puzzle Select;
@@ -245,8 +245,21 @@ complete until its required checks actually pass.
 - Quality evidence: Standard average/max support 2/2 with 0 direct FACT steps;
   Advanced 2.308/4 with initial `A4-01 + A4-04 + A1`, 17 decisions and 1 backtrack
 - Experiment result: 6/6 PASS, 0 failures; quality and regression JSON regenerated
-- Visual result: 17 DPI-aware states at 1180x800/660; six-card catalog scroll,
+- Visual result: 21 DPI-aware states at 1180x800/660; six-card catalog scroll,
   real multi-support Hint, Solver Details, and 16/16 completed badges PASS
 - Related logs: AI-016, PROMPT-013, DEC-017
-- Recommended commit: `feat(game): improve puzzle progression and selection`
-- Next phase: STOP for approval before Phase 9
+- Commit: `8c8c77d326ceb65beaa7b5454bc0bcd49f9da355` (`feat(game): improve puzzle progression and selection`)
+- Next phase: Phase 8.6 production hardening; Phase 9 remains blocked
+
+## Phase 8.6 - Production Puzzle Hardening and Anti-Guess Lock
+
+- Status: IMPLEMENTED AND VERIFIED; UNCOMMITTED PENDING APPROVAL
+- Checkpoint: clean real Phase 8.5 commit `8c8c77d326ceb65beaa7b5454bc0bcd49f9da355`
+- Production set: exactly Standard 3x3 and Advanced 4x4; four legacy chains moved to test fixtures; default startup is Standard
+- Quality gate: 0 production FACT clues; non-linear deterministic reveal-owner sequences; all 20 progressive steps use support >=2; 2/2 consistent, unique, and complete
+- Interaction gate: CONTRADICTED locks only repeated manual verdict attempts for the selected unresolved card; no answer/clue leak; Hint/Solve Next/Auto unaffected; Restart/Load clear locks
+- Protected scope: no diff in GameEngine, core, LogicAgent, Hint extraction, CNF, semantic evaluator, uniqueness, or DPLL
+- Evidence: 212/212 unittests, 2/2 production experiments, static boundary scans, and 12-state Tkinter Standard/Advanced/1180x660 audit
+- Related logs: AI-017, PROMPT-014, DEC-018
+- Commit: UNCOMMITTED - do not invent a hash
+- Next phase: STOP before Phase 9

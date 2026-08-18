@@ -32,7 +32,12 @@ def notice_feedback(title: str, message: str, tone: FeedbackTone = FeedbackTone.
     return GameplayFeedback(tone, title, message)
 
 
-def feedback_for_verdict(result: VerdictResult, card: CardViewModel) -> GameplayFeedback:
+def feedback_for_verdict(
+    result: VerdictResult,
+    card: CardViewModel,
+    *,
+    manual_locked: bool = False,
+) -> GameplayFeedback:
     """Describe a verdict using only its result category and public card data.
 
     The engine-provided free-form message and revealed clue payload are
@@ -56,15 +61,24 @@ def feedback_for_verdict(result: VerdictResult, card: CardViewModel) -> Gameplay
             f"Current public information does not force {result.requested_status.value} for {identity}.",
         )
     if result.outcome is VerdictOutcome.CONTRADICTED:
+        penalty = f" {identity} is locked for this run;" if manual_locked else ""
         return GameplayFeedback(
             FeedbackTone.WARNING,
-            "Verdict contradicted",
-            f"Public knowledge forces the opposite verdict for {identity}.",
+            "Contradicted deduction",
+            f"Public clues contradict that verdict.{penalty} clue stays hidden.",
         )
     return GameplayFeedback(
         FeedbackTone.ERROR,
         "Knowledge base inconsistent",
         "The public clues cannot be evaluated consistently. No character was revealed.",
+    )
+
+
+def manual_lock_feedback(card: CardViewModel) -> GameplayFeedback:
+    return GameplayFeedback(
+        FeedbackTone.WARNING,
+        "Manual verdict locked",
+        f"{card.name} ({card.coordinate}) is locked for this run; clue stays hidden.",
     )
 
 

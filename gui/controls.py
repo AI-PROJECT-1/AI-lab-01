@@ -74,6 +74,7 @@ class Controls(ttk.Frame):
         solver.columnconfigure(0, weight=1)
         solver.columnconfigure(1, weight=1)
         self._current_card: CardViewModel | None = None
+        self._manual_locked = False
         self._is_complete = False
         self._auto_running = False
 
@@ -85,13 +86,22 @@ class Controls(ttk.Frame):
     def verdict_panel(self) -> VerdictPanel:
         return self._verdict_panel
 
-    def set_verdict_context(self, card: CardViewModel | None) -> None:
+    def set_verdict_context(self, card: CardViewModel | None, *, manual_locked: bool = False) -> None:
         self._current_card = card
-        self._verdict_panel.set_context(card, is_complete=self._is_complete)
+        self._manual_locked = manual_locked
+        self._verdict_panel.set_context(
+            card,
+            is_complete=self._is_complete,
+            manual_locked=manual_locked,
+        )
 
     def set_completion_state(self, is_complete: bool) -> None:
         self._is_complete = is_complete
-        self._verdict_panel.set_context(self._current_card, is_complete=is_complete)
+        self._verdict_panel.set_context(
+            self._current_card,
+            is_complete=is_complete,
+            manual_locked=self._manual_locked,
+        )
         if is_complete:
             self.set_hint_button_text("Hint")
         self._hint_button.configure(state="disabled" if is_complete else "normal")

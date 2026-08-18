@@ -192,7 +192,7 @@
 - Chosen option: Add one deterministic standard-library runner over every distributable puzzle and retain its raw JSON snapshot for the proposed Phase 8 commit. Keep failures/exceptions as rows and make them fail the process. Prepare report-support notes and a timed demo script, but classify absent artifacts honestly as PARTIAL/BLOCKED.
 - Metric boundary: Progressive DPLL query statistics come only from existing trace DTOs. Whole-solve, uniqueness, and fresh-engine Hint support wall times are measured separately. Machine-specific runtimes are never represented as guarantees.
 - Scope rule: No GameEngine, LogicAgent, CNF, DPLL, verdict, Hint, trace, completion, or puzzle semantics change is authorized. Tests may validate terminal behavior and experiment schema only.
-- Attribution rule: Git hashes come from real history. Phase 8 was committed as `2c8ed1b`; later Phase 8.5 work remains pending. Team names/IDs/percentages, references approval, video URL, report, and archive cannot be inferred or fabricated.
+- Attribution rule: Git hashes come from real history. Phase 8 was committed as `2c8ed1b` and Phase 8.5 as `8c8c77d`. Team names/IDs/percentages, references approval, video URL, report, and archive cannot be inferred or fabricated.
 - Related requirement: Project 2 Sections 4.5-4.7 and Section 5; UI Phase 8 final audit/demo readiness.
 - Related commit: `2c8ed1bd2f6edcdddd6583355110ccdd00470a6d`.
 
@@ -206,4 +206,17 @@
 - Navigation choice: Use one root and a small `ScreenManager`. Opening/Back only changes frame visibility and preserves public/game/UI state. Play loads through the existing loader/controller APIs, cancels stale Auto callbacks, clears transient presentation, and returns to Game.
 - Catalog boundary: Presentation metadata is exactly ID, name, size, category, and description. File resolution is private; no status distribution, clue payload, future target, or solution enters the catalog.
 - Related requirement: Phase 8.5 puzzle quality, real multi-component Hint, local screen navigation, and public/private isolation.
-- Related commit: PENDING.
+- Related commit: `8c8c77d326ceb65beaa7b5454bc0bcd49f9da355`.
+
+## DEC-018 - Production-only deduction catalog and session-level manual lock
+
+- Context: Phase 8.5 still exposed a direct Tutorial and retained one late FACT anchor in each deduction-focused puzzle. A contradicted manual verdict also allowed immediate opposite retry, turning rejection into a low-cost answer oracle.
+- Production-set choice: Ship exactly Atrium Ledger Standard 3x3 and Meridian Conspiracy Advanced 4x4. Retain legacy chains intact as test fixtures so semantic coverage and history are preserved without representing them as gameplay difficulty.
+- Puzzle gate: Production data must be deterministic, semantically true, consistent, unique, progressively solvable, FACT-free, scattered at initialization, non-linear in clue-owner reveal order, and have no support-size-1 deduction. Runtime code contains no generator, seed, target list, or puzzle-ID branch.
+- Lock ownership: Store manually contradicted unresolved IDs in `GameController`, not GameEngine or PublicKnowledgeState. This is interaction state: it can disable manual verdict buttons and draw a neutral lock badge but cannot become a logical unit or reveal.
+- Information rule: Feedback says only that public clues contradict the attempted verdict and that the character is locked. It must not name the forced opposite/correct status or inspect `forced_status` to construct presentation.
+- Operation rule: Only manual verdict retry is blocked. NOT_PROVABLE, ACCEPTED, and INCONSISTENT do not create a lock. Hint, Solve Next, and Auto Solve remain unchanged and can resolve locked characters; Restart and Load clear the lock set.
+- Experiment boundary: Production analysis follows the explicit catalog. Test fixtures are never discovered by glob, and generated JSON records the exact production manifest and real baseline hash.
+- Rejected: changing GameEngine/verdict semantics, adding lock fields to public/domain models, puzzle-specific CNF/LogicAgent order, random runtime generation, disabling logical assistance, hiding Solver Trace, or showing the correct answer as a penalty.
+- Related requirement: Phase 8.6 production hardening, public/private isolation, and no-guess gameplay.
+- Related commit: UNCOMMITTED - approval required.

@@ -19,10 +19,13 @@ PUZZLE_PATHS = tuple(path for path in PUZZLE_PATHS if path.name != "schema.json"
 
 
 class PuzzleSuiteTests(unittest.TestCase):
-    def test_suite_has_multiple_3x3_and_4x4_puzzles(self) -> None:
+    def test_production_suite_has_standard_3x3_and_advanced_4x4(self) -> None:
         puzzles = tuple(PuzzleLoader.load(path) for path in PUZZLE_PATHS)
-        self.assertGreaterEqual(sum(puzzle.size == 3 for puzzle in puzzles), 2)
-        self.assertGreaterEqual(sum(puzzle.size == 4 for puzzle in puzzles), 2)
+        self.assertEqual(
+            {puzzle.id for puzzle in puzzles},
+            {"standard-deduction-3x3", "advanced-deduction-4x4"},
+        )
+        self.assertEqual({puzzle.size for puzzle in puzzles}, {3, 4})
 
     def test_every_puzzle_is_true_unique_and_progressively_solvable(self) -> None:
         for path in PUZZLE_PATHS:

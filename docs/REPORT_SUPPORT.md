@@ -99,42 +99,42 @@ primary model and DPLL runs again. UNSAT on the second call proves uniqueness;
 SAT provides evidence of a second model. This complete-clue validation is never
 used as the gameplay public KB.
 
-## Puzzle experience tiers
+## Production puzzle experiences
 
-- **Tutorial — The Gallery Shift:** intentionally direct FACT chain for learning
-  selection, verdict feedback, reveal, and clue inspection. It is not evidence
-  of full deduction difficulty.
-- **Standard — The Atrium Ledger:** 3x3 with two initial public clues/verdicts,
-  SAME/DIFFERENT relations, EXACTLY/AT_LEAST counting, and ROW/COLUMN regions.
-  All seven progressive deductions have support size 2 and none is a direct
-  single-FACT step.
-- **Advanced — The Meridian Conspiracy:** 4x4 using counting,
-  ROW/COLUMN/NEIGHBORS/EXPLICIT regions, relations, IMPLIES and ODD. Its first
-  deduction uses real clues `A4-01`, `A4-04`, and known verdict A1; maximum
-  progressive support size is 4.
+- **Standard - The Atrium Ledger:** 3x3 with two spatially separated initial
+  public cells, SAME/DIFFERENT relations, EXACTLY/AT_LEAST counting, and
+  ROW/COLUMN regions. All seven deductions have support size 2.
+- **Advanced - The Meridian Conspiracy:** 4x4 with three scattered initial
+  public cells, all region kinds, counting, relations, IMPLIES, and ODD. Its
+  first support is `A4-01`, `A4-04`, and public verdict A1; maximum support is 4.
 
-These are human-facing design categories, not a mathematically calibrated
-difficulty score. Every tier passes the same generic encoder, solver, target
-ordering, support extractor, uniqueness check, and reveal protocol.
+Both contain zero FACT clues and reveal clue owners in non-linear deterministic
+sequences. Standard/Advanced remain human design labels, not calibrated scores.
+The four former direct-chain puzzles are test fixtures, not production content.
+
+## Manual anti-guess boundary
+
+After a manual CONTRADICTED result, `GameController` records the selected ID in
+a per-run presentation/session lock set. A second manual verdict is rejected
+before `GameEngine.submit_verdict()`; public state is unchanged and feedback
+does not disclose the opposite verdict. Hint, Solve Next, and Auto Solve remain
+logical operations over the unchanged public KB and can resolve the character.
+Restart/Load clear the lock set. No lock field enters domain, public-state, CNF,
+DPLL, LogicAgent, or GameEngine contracts.
 
 ## Final experiment summary
 
 | Puzzle | Tier | Size | Complete clauses | SAT calls | Decisions / backtracks | Propagations | Solve wall (s) | Avg/max support |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
-| The Gallery Shift | Tutorial | 3x3 | 9 | 20 | 0 / 0 | 100 | 0.001026 | 1.000 / 1 |
-| The Atrium Ledger | Standard | 3x3 | 24 | 16 | 0 / 0 | 105 | 0.001666 | 2.000 / 2 |
-| The Parity Gallery | Standard | 3x3 | 14 | 19 | 0 / 0 | 100 | 0.001190 | 1.750 / 2 |
-| The Museum Circuit | Tutorial | 4x4 | 16 | 38 | 0 / 0 | 327 | 0.002973 | 1.000 / 1 |
-| The Implication Archive | Standard | 4x4 | 19 | 36 | 0 / 0 | 314 | 0.003504 | 1.267 / 2 |
-| The Meridian Conspiracy | Advanced | 4x4 | 54 | 33 | 17 / 1 | 356 | 0.007940 | 2.308 / 4 |
+| The Atrium Ledger | Standard | 3x3 | 23 | 34 | 6 / 0 | 208 | 0.002944 | 2.000 / 2 |
+| The Meridian Conspiracy | Advanced | 4x4 | 60 | 66 | 92 / 1 | 804 | 0.024452 | 2.308 / 4 |
 
-All six runs completed, remained consistent/unique, and recorded zero failures.
-The Advanced run demonstrates real DPLL branching/backtracking without any
-puzzle-specific code; zero values for other runs remain honest observations.
+Both production runs completed, remained consistent/unique, and recorded zero
+failures. They demonstrate real DPLL work without puzzle-specific code.
 See `EXPERIMENT_LOG.md` and raw `experiments/results/final_regression.json` for
 metric definitions, Hint benchmarks, exact floating-point values, environment,
-retained error fields, and exact per-step public support IDs. The earlier
-four-puzzle Phase 8 result is preserved in Git commit `2c8ed1b`.
+retained error fields, and exact per-step public support IDs. Earlier Phase 8
+and 8.5 results remain recoverable from commits `2c8ed1b` and `8c8c77d`.
 
 ## Report checklist
 

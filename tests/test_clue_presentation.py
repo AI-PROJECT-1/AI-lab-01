@@ -17,11 +17,11 @@ from gui.clue_card import ClueCardModifiers, build_clue_views, clue_appearance_f
 from gui.controller import GameController
 from gui.view_model import CardBaseState, CardModifiers, CardVisualState
 from tests.test_logic import make_grid_characters
+from tests.fixture_paths import PUZZLE_FIXTURES
 
 
-PUZZLES = Path(__file__).parents[1] / "puzzles"
-SAMPLE_PATH = PUZZLES / "sample_3x3.json"
-FOUR_BY_FOUR_PATH = PUZZLES / "fact_chain_4x4.json"
+SAMPLE_PATH = PUZZLE_FIXTURES / "sample_3x3.json"
+FOUR_BY_FOUR_PATH = PUZZLE_FIXTURES / "fact_chain_4x4.json"
 
 
 class PublicStateEngineStub:

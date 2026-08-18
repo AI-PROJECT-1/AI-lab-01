@@ -8,9 +8,10 @@ from core.enums import Classification, Status, VerdictOutcome
 from core.public_state import KnownVerdict, PublicKnowledgeState, RevealedClue
 from game.game_engine import GameEngine
 from game.puzzle_loader import PuzzleLoader
+from tests.fixture_paths import PUZZLE_FIXTURES
 
 
-SAMPLE_PATH = Path(__file__).parents[1] / "puzzles" / "sample_3x3.json"
+SAMPLE_PATH = PUZZLE_FIXTURES / "sample_3x3.json"
 
 
 class LogicAgentTests(unittest.TestCase):

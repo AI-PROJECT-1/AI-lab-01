@@ -15,11 +15,11 @@ from gui.controller import GameController, SelectionRequiredError
 from gui.feedback import FeedbackTone, feedback_for_verdict, newly_revealed_character
 from gui.verdict_panel import verdict_context_for
 from gui.view_model import build_card_views, compose_card_visual_state
+from tests.fixture_paths import PUZZLE_FIXTURES
 
 
-PUZZLES = Path(__file__).parents[1] / "puzzles"
-SAMPLE_PATH = PUZZLES / "sample_3x3.json"
-FOUR_BY_FOUR_PATH = PUZZLES / "fact_chain_4x4.json"
+SAMPLE_PATH = PUZZLE_FIXTURES / "sample_3x3.json"
+FOUR_BY_FOUR_PATH = PUZZLE_FIXTURES / "fact_chain_4x4.json"
 
 
 class StaticAgent:
@@ -119,7 +119,8 @@ class VerdictOutcomeFeedbackTests(unittest.TestCase):
         self.assertEqual(after, before)
         feedback = feedback_for_verdict(result, card_for(after, "B1"))
         self.assertEqual(feedback.tone, FeedbackTone.WARNING)
-        self.assertIn("forces the opposite verdict", feedback.message)
+        self.assertIn("Public clues contradict", feedback.message)
+        self.assertIn("clue stays hidden", feedback.message)
         self.assertNotIn(Status.INNOCENT.value, feedback.message)
 
     def test_inconsistent_does_not_reveal_and_has_error_feedback(self) -> None:

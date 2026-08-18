@@ -14,23 +14,14 @@ from time import perf_counter
 
 from agent.logic_agent import LogicAgent
 from core.public_state import PublicKnowledgeState, RevealedClue
-from experiments.analyze_puzzles import analyze_puzzle
+from experiments.analyze_puzzles import analyze_puzzle, puzzle_paths
 from game.game_engine import GameEngine
 from game.puzzle_loader import PuzzleLoader
 from logic.cnf_encoder import CNFEncoder
 
 
 ROOT = Path(__file__).parents[1]
-PUZZLE_DIR = ROOT / "puzzles"
 DEFAULT_OUTPUT = ROOT / "experiments" / "results" / "final_regression.json"
-
-
-def puzzle_paths() -> tuple[Path, ...]:
-    return tuple(
-        path
-        for path in sorted(PUZZLE_DIR.glob("*.json"))
-        if path.name != "schema.json"
-    )
 
 
 def complete_clue_state(puzzle) -> PublicKnowledgeState:
