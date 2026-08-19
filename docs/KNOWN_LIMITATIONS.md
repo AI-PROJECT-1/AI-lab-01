@@ -9,23 +9,23 @@ These are verified limitations, not hidden defects or promised features.
 - Solver Details preserves per-query statistics rather than inventing cumulative
   statistics for older trace records.
 - Direct combinational cardinality encoding is simple and auditable but can grow
-  quickly for large regions. Performance beyond the required 3x3/4x4 scope is
-  not claimed.
+  quickly for large regions. The shipped 5x5 cases remain fast, but performance
+  for arbitrary larger boards or much larger counting regions is not claimed.
 
 ## Production puzzle scope
 
-- The production catalog intentionally contains exactly two deduction-focused
-  puzzles: Standard 3x3 and Advanced 4x4. No Tutorial or optional 5x5 is shipped.
+- The production catalog contains exactly six deduction-focused puzzles: two
+  3x3, two 4x4, and two 5x5. Tutorial remains excluded.
 - The four previous direct-chain JSON files remain under
   `tests/fixtures/puzzles/` solely to preserve unit/regression coverage. They are
   not selectable and are not included in production experiments.
-- Both production puzzles contain zero FACT clues. Every recorded progressive
+- All six production puzzles contain zero FACT clues. Every recorded progressive
   deduction has support size at least 2, but this remains a support-component
   measurement rather than a calibrated player difficulty score.
-- Standard uses ROW/COLUMN counting and SAME/DIFFERENT but not NEIGHBORS or clue
-  extensions. Advanced supplies ROW/COLUMN/NEIGHBORS/EXPLICIT and IMPLIES/ODD.
-- The observed final Advanced run made 92 decisions and 1 backtrack; exact work
-  and timings are observations, not cross-platform guarantees.
+- The catalog collectively supplies ROW/COLUMN/NEIGHBORS/EXPLICIT plus both
+  extensions. Individual puzzles intentionally use narrower profiles.
+- Recorded 5x5 whole-solve times were 0.087805s and 0.019417s on the audit
+  machine. Exact work and timings are observations, not cross-platform guarantees.
 
 ## Manual anti-guess lock
 
@@ -40,8 +40,9 @@ These are verified limitations, not hidden defects or promised features.
 ## Presentation and environment
 
 - Tkinter requires a graphical desktop/display. At 1180x660 the full control
-  flow remains usable, though the 4x4 board and long clue text are necessarily
-  compact and use existing scrolling/truncation behavior.
+  flow remains usable. 5x5 uses dense cards and controls; card clue previews are
+  omitted at that density while full public clue text remains in the scrollable
+  Revealed Clues panel.
 - Optional portraits, animations, timers, player notes, scoring, accounts, and
   cloud progression are outside the project scope.
 - Runtime measurements depend on the Python build, operating system, and
@@ -53,5 +54,6 @@ These are verified limitations, not hidden defects or promised features.
   and the final student-ID archive have not been fabricated or generated.
 - Real member identities, ownership confirmation, honest contribution
   percentages, and final reference review require team input.
-- Phase 8.6 implementation is recorded in real commit `96cd8ae`; remote
-  publication is verified separately by the final Git push result.
+- Phase 8.7 starts from real clean checkpoint
+  `c347ef05f808a94c90f5529139f80cf10abca8cf`; its changes are intentionally
+  uncommitted pending approval.

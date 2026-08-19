@@ -344,3 +344,22 @@
 - Evidence: 212 supported unittests, production quality/experiment runners, protected/boundary scans, and a 12-state Tkinter Standard/Advanced visual E2E are the Phase 8.6 gates; exact final results are recorded in `TEST_LOG.md`.
 - Related Prompt ID: PROMPT-014
 - Related Git commit hash: `96cd8ae68a0592e456547f6cccde3789f7a61163`
+
+## AI-018
+
+- Date: 2026-08-19
+- AI tool: OpenAI Codex
+- Model: GPT-5
+- Developer/member: Tran Huu Phuoc - 24127511
+- Phase: Phase 8.7 production puzzle expansion
+- Purpose: Add exactly four validated main puzzles (1x3x3, 1x4x4, 2x5x5), establish objective non-clone evidence, and make the existing GUI readable at 5x5 without changing solver semantics.
+- Checkpoint: Verified clean real starting commit `c347ef05f808a94c90f5529139f80cf10abca8cf`; no amend/rebase/squash or Phase 8.7 commit was made.
+- Candidate process: Offline construction used complete assignments only for semantic/uniqueness validation. Two early 3x3/4x4 candidates were repaired after the uniqueness checker found secondary models. The original unique Obsidian chain was rejected as too similar in dependency shape to Celestial; its first branched revision exposed a second model; the accepted revision is a connected, unique branched forced-frontier DAG.
+- Accepted puzzles: `intermediate-cipher-3x3` / The Cipher Courtyard; `advanced-lantern-4x4` / The Lantern Assembly; `expert-orbit-5x5` / The Celestial Registry; `expert-parity-5x5` / The Obsidian Concord.
+- Quality evidence: All four are FACT-free, unique, consistent, and fully progressive. New step counts are 7/13/20/19; every support is >=2; 5x5 maximum supports are 5 and 4. Same-size final-solution Hamming distances across the six-puzzle catalog are 5/11/16 and no comparison is flagged suspicious.
+- GUI decision: Added presentation-only standard/compact/dense tiers and dense button styles. 5x5 retains identity, profession, coordinate, status badge, selection/modifiers, complete clue panel data, controls, trace, and completion; only the redundant in-card clue preview is suppressed.
+- Protected scope: No diff in DPLL, CNF encoder, semantic evaluator, Hint support extractor, uniqueness checker, or LogicAgent. No external solver, puzzle-ID reasoning branch, hidden GUI/agent dependency, or runtime puzzle generation was introduced.
+- Evidence: 228/228 supported unittests PASS; 6/6 experiment runs PASS; compile, whitespace, schema, boundary, external-solver, and puzzle-specific scans PASS; DPI-aware 3x3/4x4/5x5/Puzzle Select/Solver Details/completion review PASS. The audit display capped requested 800 height at 701; the stricter 1180x660 target rendered exactly and passed.
+- Rejected/deferred: unreadable card shrink, board data removal, solver optimization, direct FACT anchors, cloned 5x5 dependency paths, final PDF/report generation, commit, push, video, and Phase 9.
+- Related Prompt ID: PROMPT-015
+- Related Git commit hash: uncommitted; previous checkpoint `c347ef05f808a94c90f5529139f80cf10abca8cf`

@@ -1,7 +1,9 @@
 # Griductive Demo Script
 
-Target length: 8-9 minutes. The production catalog contains only **The Atrium
-Ledger** (Standard 3x3) and **The Meridian Conspiracy** (Advanced 4x4).
+Target length: 8-9 minutes. The production catalog contains six cases. The
+recommended live trio is **The Atrium Ledger** (3x3), **The Meridian
+Conspiracy** (4x4), and **The Celestial Registry** (5x5). The other three should
+be shown briefly in Puzzle Select, not fully played during the recording.
 
 ## Before recording
 
@@ -19,7 +21,7 @@ Ledger** (Standard 3x3) and **The Meridian Conspiracy** (Advanced 4x4).
 
 ## 0:50-1:25 - Production puzzle selection
 
-1. Open **Puzzles** and show exactly Standard and Advanced.
+1. Open **Puzzles** and show two 3x3, two 4x4, and two 5x5 production cases.
 2. Explain that direct Tutorial chains were moved to test fixtures and are not
    production choices or experiment inputs.
 3. Show **Back to Game** preserving current state; external **Load** remains.
@@ -66,20 +68,21 @@ Ledger** (Standard 3x3) and **The Meridian Conspiracy** (Advanced 4x4).
 4. Quote final experiment work only from `EXPERIMENT_LOG.md`: 66 progressive SAT
    calls, 92 decisions, 804 propagations, and 1 backtrack for this recorded run.
 
-## 6:45-7:45 - Advanced lock and completion
+## 6:45-7:45 - Optional Expert 5x5
 
-1. Restart Advanced, make one deliberately contradicted manual submission, and
-   show no public mutation plus the neutral lock treatment.
-2. Use **Auto Solve**. Confirm the lock does not block logical resolution and the
-   puzzle completes all 16 public cards.
-3. Show completion, clue inspection, and Solver Details still available.
+1. Play **The Celestial Registry**. Show its 25 readable dense cards and the
+   scrollable Revealed Clues panel.
+2. Click Hint Stage 1: initial support is EA-01 plus public verdicts A1, E3, B4,
+   and D5 (five components). Stage 2 shows target B1 without its verdict.
+3. Use Solve Next, open the long scrollable Solver Details trace, then Auto Solve.
+4. Show 5x5 completion, clue inspection, Solver Details, Restart, and Puzzles.
 
 ## 7:45-8:30 - Lifecycle and evidence close
 
 1. Demonstrate Restart or Play clearing old selection, feedback, emphasis, and
    manual locks.
 2. Open Puzzles/Back once more to show same-root navigation.
-3. State the final regression count and the 2/2 production experiment result
+3. State the final regression count and the 6/6 production experiment result
    from the latest logs.
 
 ## Hosting and submission checklist

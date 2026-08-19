@@ -1,4 +1,4 @@
-"""Validation gates for every distributable 3x3 and 4x4 puzzle."""
+"""Validation gates for every distributable 3x3, 4x4, and 5x5 puzzle."""
 
 from __future__ import annotations
 
@@ -19,13 +19,24 @@ PUZZLE_PATHS = tuple(path for path in PUZZLE_PATHS if path.name != "schema.json"
 
 
 class PuzzleSuiteTests(unittest.TestCase):
-    def test_production_suite_has_standard_3x3_and_advanced_4x4(self) -> None:
+    def test_production_suite_has_all_six_expected_puzzles(self) -> None:
         puzzles = tuple(PuzzleLoader.load(path) for path in PUZZLE_PATHS)
         self.assertEqual(
             {puzzle.id for puzzle in puzzles},
-            {"standard-deduction-3x3", "advanced-deduction-4x4"},
+            {
+                "standard-deduction-3x3",
+                "intermediate-cipher-3x3",
+                "advanced-deduction-4x4",
+                "advanced-lantern-4x4",
+                "expert-orbit-5x5",
+                "expert-parity-5x5",
+            },
         )
-        self.assertEqual({puzzle.size for puzzle in puzzles}, {3, 4})
+        self.assertEqual({puzzle.size for puzzle in puzzles}, {3, 4, 5})
+        self.assertEqual(
+            {size: sum(puzzle.size == size for puzzle in puzzles) for size in (3, 4, 5)},
+            {3: 2, 4: 2, 5: 2},
+        )
 
     def test_every_puzzle_is_true_unique_and_progressively_solvable(self) -> None:
         for path in PUZZLE_PATHS:

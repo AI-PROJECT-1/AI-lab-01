@@ -162,6 +162,7 @@ class GriductiveApp(ttk.Frame):
         else:
             self._instruction.grid()
         self._completion.show_presentation(completion_presentation_for(state))
+        self._controls.set_dense(state.size >= 5)
         selected_card = self._card_for(state, self._controller.selected_character_id)
         self._board.render(
             state,

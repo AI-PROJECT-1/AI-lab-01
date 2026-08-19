@@ -1,0 +1,156 @@
+{
+  "id": "intermediate-cipher-3x3",
+  "title": "The Cipher Courtyard",
+  "size": 3,
+  "cards": [
+    {
+      "cell": "A1",
+      "name": "Juno",
+      "profession": "Archivist",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N3-02",
+        "type": "DIFFERENT",
+        "characters": [
+          "A1",
+          "B2"
+        ],
+        "text": "A1 and B2 have different statuses."
+      }
+    },
+    {
+      "cell": "B1",
+      "name": "Kellan",
+      "profession": "Bellmaker",
+      "status": "CRIMINAL",
+      "initially_revealed": true,
+      "clue": {
+        "id": "N3-01",
+        "type": "EXACTLY",
+        "k": 1,
+        "region": {
+          "type": "EXPLICIT",
+          "cells": [
+            "B1",
+            "A3",
+            "C2"
+          ]
+        },
+        "text": "Exactly 1 people in the marked cells B1, A3, C2 are Criminal."
+      }
+    },
+    {
+      "cell": "C1",
+      "name": "Liora",
+      "profession": "Choreographer",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N3-04",
+        "type": "DIFFERENT",
+        "characters": [
+          "C1",
+          "B3"
+        ],
+        "text": "C1 and B3 have different statuses."
+      }
+    },
+    {
+      "cell": "A2",
+      "name": "Merrick",
+      "profession": "Drafter",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N3-09",
+        "type": "SAME",
+        "characters": [
+          "A3",
+          "A1"
+        ],
+        "text": "A3 and A1 have the same status."
+      }
+    },
+    {
+      "cell": "B2",
+      "name": "Nessa",
+      "profession": "Ecologist",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N3-05",
+        "type": "SAME",
+        "characters": [
+          "B2",
+          "B1"
+        ],
+        "text": "B2 and B1 have the same status."
+      }
+    },
+    {
+      "cell": "C2",
+      "name": "Orson",
+      "profession": "Fletcher",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N3-03",
+        "type": "SAME",
+        "characters": [
+          "C2",
+          "A1"
+        ],
+        "text": "C2 and A1 have the same status."
+      }
+    },
+    {
+      "cell": "A3",
+      "name": "Priya",
+      "profession": "Glassblower",
+      "status": "INNOCENT",
+      "initially_revealed": true,
+      "clue": {
+        "id": "N3-06",
+        "type": "SAME",
+        "characters": [
+          "A1",
+          "C1"
+        ],
+        "text": "A1 and C1 have the same status."
+      }
+    },
+    {
+      "cell": "B3",
+      "name": "Quill",
+      "profession": "Horologist",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N3-07",
+        "type": "SAME",
+        "characters": [
+          "B3",
+          "C3"
+        ],
+        "text": "B3 and C3 have the same status."
+      }
+    },
+    {
+      "cell": "C3",
+      "name": "Rhea",
+      "profession": "Interpreter",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N3-08",
+        "type": "SAME",
+        "characters": [
+          "C3",
+          "A2"
+        ],
+        "text": "C3 and A2 have the same status."
+      }
+    }
+  ]
+}

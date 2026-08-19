@@ -85,12 +85,14 @@ class CharacterCard(tk.Frame):
         on_select,
         *,
         compact: bool,
+        dense: bool = False,
     ) -> None:
         super().__init__(parent, borderwidth=0, highlightthickness=0, cursor="hand2")
         self.card = card
         self.visual_state = visual_state
         self._on_select = on_select
         self._compact = compact
+        self._dense = dense
 
         self._outline = tk.Frame(self, borderwidth=0, highlightthickness=0)
         self._outline.pack(fill="both", expand=True)
@@ -129,7 +131,7 @@ class CharacterCard(tk.Frame):
         self._avatar.grid(
             row=0,
             column=0,
-            rowspan=1 if compact else 2,
+            rowspan=2 if dense or not compact else 1,
             sticky="w",
             padx=(0, SPACING["xs"]),
         )
@@ -141,7 +143,7 @@ class CharacterCard(tk.Frame):
         self._name = tk.Label(
             self._identity,
             text=card.name,
-            font=("Segoe UI Semibold", 8 if compact else 10),
+            font=("Segoe UI Semibold", 7 if dense else 8 if compact else 10),
             anchor="w",
         )
         self._name.grid(row=0, column=0, sticky="w" if compact else "ew")
@@ -149,10 +151,12 @@ class CharacterCard(tk.Frame):
         self._profession = tk.Label(
             self._identity,
             text=card.profession,
-            font=("Segoe UI", 7 if compact else 8),
+            font=("Segoe UI", 6 if dense else 7 if compact else 8),
             anchor="w",
         )
-        if compact:
+        if dense:
+            self._profession.grid(row=1, column=0, sticky="w")
+        elif compact:
             self._profession.grid(row=0, column=1, sticky="w", padx=(SPACING["xs"], 0))
         else:
             self._profession.grid(row=1, column=0, sticky="ew")
@@ -168,14 +172,19 @@ class CharacterCard(tk.Frame):
             self._badge = tk.Label(
                 self._content,
                 text=f"{badge_symbol}{badge_gap}{badge_text}",
-                font=("Segoe UI Semibold", 7 if compact else 8),
+                font=("Segoe UI Semibold", 6 if dense else 7 if compact else 8),
                 padx=0 if compact else SPACING["sm"],
                 pady=1,
             )
-            self._badge.grid(row=1, column=0, sticky="e", padx=(SPACING["xs"], 2))
+            if dense:
+                self._badge.grid(row=1, column=0, columnspan=2, sticky="w", padx=SPACING["xs"])
+            else:
+                self._badge.grid(row=1, column=0, sticky="e", padx=(SPACING["xs"], 2))
 
         self._clue: tk.Label | None = None
-        preview = card.clue_preview(16 if compact else 20)
+        # Dense 5x5 cards reserve their second line for a readable verdict
+        # badge. The complete public clue remains in the scrollable clue panel.
+        preview = None if dense else card.clue_preview(16 if compact else 20)
         if preview is not None:
             self._clue = tk.Label(
                 self._content,
@@ -183,7 +192,10 @@ class CharacterCard(tk.Frame):
                 font=("Segoe UI", 6 if compact else 8, "italic"),
                 justify="left",
             )
-            self._clue.grid(row=1, column=1, sticky="w", padx=(2, SPACING["xs"]))
+            if dense:
+                self._clue.grid(row=2, column=0, columnspan=2, sticky="w", padx=SPACING["xs"])
+            else:
+                self._clue.grid(row=1, column=1, sticky="w", padx=(2, SPACING["xs"]))
 
         self._apply_appearance()
         self._bind_click_tree(self)

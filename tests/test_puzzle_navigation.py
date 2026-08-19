@@ -22,8 +22,11 @@ INITIAL = puzzle_path(STANDARD_ID)
 
 
 class PuzzleCatalogTests(unittest.TestCase):
-    def test_catalog_contains_only_production_standard_and_advanced(self) -> None:
-        self.assertEqual({entry.difficulty for entry in PUZZLE_CATALOG}, {"Standard", "Advanced"})
+    def test_catalog_contains_only_production_difficulty_tiers(self) -> None:
+        self.assertEqual(
+            {entry.difficulty for entry in PUZZLE_CATALOG},
+            {"Standard", "Intermediate", "Advanced", "Expert"},
+        )
         self.assertNotIn("sample-3x3-fact-chain", {entry.puzzle_id for entry in PUZZLE_CATALOG})
         catalog_paths = {puzzle_path(entry.puzzle_id).resolve() for entry in PUZZLE_CATALOG}
         shipped_paths = {

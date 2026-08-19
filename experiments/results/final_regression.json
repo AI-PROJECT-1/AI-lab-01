@@ -1,14 +1,18 @@
 {
   "schema_version": 1,
-  "generated_at_utc": "2026-08-18T04:28:17.960971+00:00",
-  "baseline_commit": "8c8c77d326ceb65beaa7b5454bc0bcd49f9da355",
+  "generated_at_utc": "2026-08-19T10:00:02.620031+00:00",
+  "baseline_commit": "c347ef05f808a94c90f5529139f80cf10abca8cf",
   "command": "python -m experiments.run_experiments",
   "python": "3.14.0",
   "platform": "Windows-10-10.0.19044-SP0",
   "hint_support_runs_per_puzzle": 25,
   "puzzle_set": [
     "standard_deduction_3x3.json",
-    "advanced_deduction_4x4.json"
+    "intermediate_cipher_3x3.json",
+    "advanced_deduction_4x4.json",
+    "advanced_lantern_4x4.json",
+    "expert_orbit_5x5.json",
+    "expert_parity_5x5.json"
   ],
   "results": [
     {
@@ -38,14 +42,14 @@
         "decisions": 6,
         "propagations": 208,
         "backtracks": 0,
-        "sat_query_runtime_seconds": 0.00159320019884035,
-        "whole_puzzle_wall_runtime_seconds": 0.0029436000040732324
+        "sat_query_runtime_seconds": 0.0014634999679401517,
+        "whole_puzzle_wall_runtime_seconds": 0.002667799999471754
       },
       "uniqueness": {
         "consistent": true,
         "unique": true,
         "sat_calls": 2,
-        "wall_runtime_seconds": 0.0002982000005431473
+        "wall_runtime_seconds": 0.0002647999790497124
       },
       "hint_support": {
         "runs": 25,
@@ -53,10 +57,10 @@
         "method": "deletion_irreducible",
         "target_character_id": "B1",
         "support_extraction_sat_calls": 12,
-        "median_hint_wall_runtime_seconds": 0.0004987000138498843,
-        "median_support_runtime_seconds": 0.0003704000264406204,
-        "minimum_support_runtime_seconds": 0.00035089999437332153,
-        "maximum_support_runtime_seconds": 0.0004121999954804778
+        "median_hint_wall_runtime_seconds": 0.00044920004438608885,
+        "median_support_runtime_seconds": 0.0003402000293135643,
+        "minimum_support_runtime_seconds": 0.0003360999980941415,
+        "maximum_support_runtime_seconds": 0.0003727000439539552
       },
       "quality_profile": {
         "puzzle_file": "standard_deduction_3x3.json",
@@ -81,6 +85,34 @@
           "ROW"
         ],
         "extensions": [],
+        "solution_fingerprint": "CCICICCIC",
+        "clue_type_histogram": {
+          "FACT": 0,
+          "SAME": 4,
+          "DIFFERENT": 2,
+          "EXACTLY": 2,
+          "AT_LEAST": 1,
+          "AT_MOST": 0,
+          "IMPLIES": 0,
+          "ODD": 0
+        },
+        "region_type_histogram": {
+          "ROW": 2,
+          "COLUMN": 1,
+          "NEIGHBORS": 0,
+          "EXPLICIT": 0
+        },
+        "clue_ownership_map": {
+          "A1": "S3-01",
+          "B1": "S3-02",
+          "C1": "S3-03",
+          "A2": "S3-04",
+          "B2": "S3-05",
+          "C2": "S3-06",
+          "A3": "S3-07",
+          "B3": "S3-08",
+          "C3": "S3-09"
+        },
         "fact_clues": 0,
         "direct_answer_fact_ids": [],
         "deduction_steps": 7,
@@ -109,6 +141,73 @@
         "single_component_deductions": 0,
         "support_size_1_count": 0,
         "support_size_gte_2_count": 7,
+        "support_size_sequence": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "supporting_component_sequence": [
+          {
+            "clue_ids": [
+              "S3-01"
+            ],
+            "known_verdict_ids": [
+              "C1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "S3-02"
+            ],
+            "known_verdict_ids": [
+              "A1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "S3-06"
+            ],
+            "known_verdict_ids": [
+              "C1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "S3-07"
+            ],
+            "known_verdict_ids": [
+              "A3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "S3-04"
+            ],
+            "known_verdict_ids": [
+              "A2"
+            ]
+          },
+          {
+            "clue_ids": [
+              "S3-09"
+            ],
+            "known_verdict_ids": [
+              "C3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "S3-05"
+            ],
+            "known_verdict_ids": [
+              "B2"
+            ]
+          }
+        ],
         "direct_single_fact_deductions": 0,
         "unique": true,
         "consistent": true,
@@ -116,6 +215,18 @@
         "steps": [
           {
             "step": 1,
+            "unresolved_ids": [
+              "B1",
+              "A2",
+              "B2",
+              "C2",
+              "A3",
+              "B3",
+              "C3"
+            ],
+            "forced_character_ids": [
+              "B1"
+            ],
             "target": "B1",
             "verdict": "CRIMINAL",
             "supporting_clue_count": 1,
@@ -131,6 +242,17 @@
           },
           {
             "step": 2,
+            "unresolved_ids": [
+              "A2",
+              "B2",
+              "C2",
+              "A3",
+              "B3",
+              "C3"
+            ],
+            "forced_character_ids": [
+              "C2"
+            ],
             "target": "C2",
             "verdict": "CRIMINAL",
             "supporting_clue_count": 1,
@@ -146,6 +268,16 @@
           },
           {
             "step": 3,
+            "unresolved_ids": [
+              "A2",
+              "B2",
+              "A3",
+              "B3",
+              "C3"
+            ],
+            "forced_character_ids": [
+              "A3"
+            ],
             "target": "A3",
             "verdict": "CRIMINAL",
             "supporting_clue_count": 1,
@@ -161,6 +293,15 @@
           },
           {
             "step": 4,
+            "unresolved_ids": [
+              "A2",
+              "B2",
+              "B3",
+              "C3"
+            ],
+            "forced_character_ids": [
+              "A2"
+            ],
             "target": "A2",
             "verdict": "CRIMINAL",
             "supporting_clue_count": 1,
@@ -176,6 +317,14 @@
           },
           {
             "step": 5,
+            "unresolved_ids": [
+              "B2",
+              "B3",
+              "C3"
+            ],
+            "forced_character_ids": [
+              "C3"
+            ],
             "target": "C3",
             "verdict": "CRIMINAL",
             "supporting_clue_count": 1,
@@ -191,6 +340,13 @@
           },
           {
             "step": 6,
+            "unresolved_ids": [
+              "B2",
+              "B3"
+            ],
+            "forced_character_ids": [
+              "B2"
+            ],
             "target": "B2",
             "verdict": "INNOCENT",
             "supporting_clue_count": 1,
@@ -206,6 +362,12 @@
           },
           {
             "step": 7,
+            "unresolved_ids": [
+              "B3"
+            ],
+            "forced_character_ids": [
+              "B3"
+            ],
             "target": "B3",
             "verdict": "INNOCENT",
             "supporting_clue_count": 1,
@@ -216,6 +378,376 @@
             ],
             "supporting_known_verdict_ids": [
               "B2"
+            ],
+            "direct_single_fact": false
+          }
+        ]
+      }
+    },
+    {
+      "puzzle_file": "intermediate_cipher_3x3.json",
+      "puzzle_id": "intermediate-cipher-3x3",
+      "title": "The Cipher Courtyard",
+      "size": 3,
+      "status": "PASS",
+      "error": null,
+      "initial_kb": {
+        "primary_variables": 9,
+        "auxiliary_variables": 0,
+        "clauses": 8
+      },
+      "complete_clue_set_cnf": {
+        "primary_variables": 9,
+        "auxiliary_variables": 0,
+        "clauses": 20
+      },
+      "progressive_solve": {
+        "completed": true,
+        "initially_revealed": 2,
+        "reveals": 7,
+        "reveal_waves": 7,
+        "trace_steps": 14,
+        "sat_calls": 38,
+        "decisions": 10,
+        "propagations": 226,
+        "backtracks": 0,
+        "sat_query_runtime_seconds": 0.0013583001564256847,
+        "whole_puzzle_wall_runtime_seconds": 0.002385699946898967
+      },
+      "uniqueness": {
+        "consistent": true,
+        "unique": true,
+        "sat_calls": 2,
+        "wall_runtime_seconds": 0.00022360001457855105
+      },
+      "hint_support": {
+        "runs": 25,
+        "available_every_run": true,
+        "method": "deletion_irreducible",
+        "target_character_id": "C2",
+        "support_extraction_sat_calls": 15,
+        "median_hint_wall_runtime_seconds": 0.0009639000054448843,
+        "median_support_runtime_seconds": 0.00039579998701810837,
+        "minimum_support_runtime_seconds": 0.00039030000334605575,
+        "maximum_support_runtime_seconds": 0.0006125000072643161
+      },
+      "quality_profile": {
+        "puzzle_file": "intermediate_cipher_3x3.json",
+        "puzzle_id": "intermediate-cipher-3x3",
+        "display_name": "The Cipher Courtyard",
+        "size": 3,
+        "characters": 9,
+        "clues": 9,
+        "initial_revealed_clues": 2,
+        "initial_revealed_cells": [
+          "B1",
+          "A3"
+        ],
+        "clue_types": [
+          "DIFFERENT",
+          "EXACTLY",
+          "SAME"
+        ],
+        "regions": [
+          "EXPLICIT"
+        ],
+        "extensions": [],
+        "solution_fingerprint": "ICICCIICC",
+        "clue_type_histogram": {
+          "FACT": 0,
+          "SAME": 6,
+          "DIFFERENT": 2,
+          "EXACTLY": 1,
+          "AT_LEAST": 0,
+          "AT_MOST": 0,
+          "IMPLIES": 0,
+          "ODD": 0
+        },
+        "region_type_histogram": {
+          "ROW": 0,
+          "COLUMN": 0,
+          "NEIGHBORS": 0,
+          "EXPLICIT": 1
+        },
+        "clue_ownership_map": {
+          "A1": "N3-02",
+          "B1": "N3-01",
+          "C1": "N3-04",
+          "A2": "N3-09",
+          "B2": "N3-05",
+          "C2": "N3-03",
+          "A3": "N3-06",
+          "B3": "N3-07",
+          "C3": "N3-08"
+        },
+        "fact_clues": 0,
+        "direct_answer_fact_ids": [],
+        "deduction_steps": 7,
+        "deduction_target_sequence": [
+          "C2",
+          "A1",
+          "C1",
+          "B2",
+          "B3",
+          "C3",
+          "A2"
+        ],
+        "reveal_owner_sequence": [
+          "B1",
+          "A3",
+          "C2",
+          "A1",
+          "C1",
+          "B2",
+          "B3",
+          "C3",
+          "A2"
+        ],
+        "average_support_size": 2.0,
+        "maximum_support_size": 2,
+        "single_component_deductions": 0,
+        "support_size_1_count": 0,
+        "support_size_gte_2_count": 7,
+        "support_size_sequence": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "supporting_component_sequence": [
+          {
+            "clue_ids": [
+              "N3-01"
+            ],
+            "known_verdict_ids": [
+              "B1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "N3-03"
+            ],
+            "known_verdict_ids": [
+              "C2"
+            ]
+          },
+          {
+            "clue_ids": [
+              "N3-06"
+            ],
+            "known_verdict_ids": [
+              "A1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "N3-02"
+            ],
+            "known_verdict_ids": [
+              "A1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "N3-04"
+            ],
+            "known_verdict_ids": [
+              "C1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "N3-07"
+            ],
+            "known_verdict_ids": [
+              "B3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "N3-08"
+            ],
+            "known_verdict_ids": [
+              "C3"
+            ]
+          }
+        ],
+        "direct_single_fact_deductions": 0,
+        "unique": true,
+        "consistent": true,
+        "progressively_solvable": true,
+        "steps": [
+          {
+            "step": 1,
+            "unresolved_ids": [
+              "A1",
+              "C1",
+              "A2",
+              "B2",
+              "C2",
+              "B3",
+              "C3"
+            ],
+            "forced_character_ids": [
+              "C2"
+            ],
+            "target": "C2",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N3-01"
+            ],
+            "supporting_known_verdict_ids": [
+              "B1"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 2,
+            "unresolved_ids": [
+              "A1",
+              "C1",
+              "A2",
+              "B2",
+              "B3",
+              "C3"
+            ],
+            "forced_character_ids": [
+              "A1",
+              "C1"
+            ],
+            "target": "A1",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N3-03"
+            ],
+            "supporting_known_verdict_ids": [
+              "C2"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 3,
+            "unresolved_ids": [
+              "C1",
+              "A2",
+              "B2",
+              "B3",
+              "C3"
+            ],
+            "forced_character_ids": [
+              "C1",
+              "B2"
+            ],
+            "target": "C1",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N3-06"
+            ],
+            "supporting_known_verdict_ids": [
+              "A1"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 4,
+            "unresolved_ids": [
+              "A2",
+              "B2",
+              "B3",
+              "C3"
+            ],
+            "forced_character_ids": [
+              "B2",
+              "B3"
+            ],
+            "target": "B2",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N3-02"
+            ],
+            "supporting_known_verdict_ids": [
+              "A1"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 5,
+            "unresolved_ids": [
+              "A2",
+              "B3",
+              "C3"
+            ],
+            "forced_character_ids": [
+              "B3"
+            ],
+            "target": "B3",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N3-04"
+            ],
+            "supporting_known_verdict_ids": [
+              "C1"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 6,
+            "unresolved_ids": [
+              "A2",
+              "C3"
+            ],
+            "forced_character_ids": [
+              "C3"
+            ],
+            "target": "C3",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N3-07"
+            ],
+            "supporting_known_verdict_ids": [
+              "B3"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 7,
+            "unresolved_ids": [
+              "A2"
+            ],
+            "forced_character_ids": [
+              "A2"
+            ],
+            "target": "A2",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N3-08"
+            ],
+            "supporting_known_verdict_ids": [
+              "C3"
             ],
             "direct_single_fact": false
           }
@@ -249,14 +781,14 @@
         "decisions": 92,
         "propagations": 804,
         "backtracks": 1,
-        "sat_query_runtime_seconds": 0.019911299576051533,
-        "whole_puzzle_wall_runtime_seconds": 0.02445239998633042
+        "sat_query_runtime_seconds": 0.016283400414977223,
+        "whole_puzzle_wall_runtime_seconds": 0.019979699980467558
       },
       "uniqueness": {
         "consistent": true,
         "unique": true,
         "sat_calls": 2,
-        "wall_runtime_seconds": 0.0011071999906562269
+        "wall_runtime_seconds": 0.0010152999893762171
       },
       "hint_support": {
         "runs": 25,
@@ -264,10 +796,10 @@
         "method": "deletion_irreducible",
         "target_character_id": "B1",
         "support_extraction_sat_calls": 21,
-        "median_hint_wall_runtime_seconds": 0.0016856000293046236,
-        "median_support_runtime_seconds": 0.001367200049571693,
-        "minimum_support_runtime_seconds": 0.0012521999888122082,
-        "maximum_support_runtime_seconds": 0.0024013000074774027
+        "median_hint_wall_runtime_seconds": 0.0015168999671004713,
+        "median_support_runtime_seconds": 0.0012332000187598169,
+        "minimum_support_runtime_seconds": 0.0012182000209577382,
+        "maximum_support_runtime_seconds": 0.0012867000186815858
       },
       "quality_profile": {
         "puzzle_file": "advanced_deduction_4x4.json",
@@ -301,6 +833,41 @@
           "IMPLIES",
           "ODD"
         ],
+        "solution_fingerprint": "CICICCICCIIIIIIC",
+        "clue_type_histogram": {
+          "FACT": 0,
+          "SAME": 2,
+          "DIFFERENT": 2,
+          "EXACTLY": 4,
+          "AT_LEAST": 1,
+          "AT_MOST": 2,
+          "IMPLIES": 3,
+          "ODD": 2
+        },
+        "region_type_histogram": {
+          "ROW": 3,
+          "COLUMN": 4,
+          "NEIGHBORS": 1,
+          "EXPLICIT": 1
+        },
+        "clue_ownership_map": {
+          "A1": "A4-01",
+          "B1": "A4-10",
+          "C1": "A4-07",
+          "D1": "A4-04",
+          "A2": "A4-14",
+          "B2": "A4-09",
+          "C2": "A4-08",
+          "D2": "A4-11",
+          "A3": "A4-16",
+          "B3": "A4-03",
+          "C3": "A4-12",
+          "D3": "A4-05",
+          "A4": "A4-13",
+          "B4": "A4-15",
+          "C4": "A4-02",
+          "D4": "A4-06"
+        },
         "fact_clues": 0,
         "direct_answer_fact_ids": [],
         "deduction_steps": 13,
@@ -342,6 +909,131 @@
         "single_component_deductions": 0,
         "support_size_1_count": 0,
         "support_size_gte_2_count": 13,
+        "support_size_sequence": [
+          3,
+          3,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          4,
+          2,
+          2,
+          2,
+          2
+        ],
+        "supporting_component_sequence": [
+          {
+            "clue_ids": [
+              "A4-01",
+              "A4-04"
+            ],
+            "known_verdict_ids": [
+              "A1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "A4-01"
+            ],
+            "known_verdict_ids": [
+              "B1",
+              "D1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "A4-07"
+            ],
+            "known_verdict_ids": [
+              "A4"
+            ]
+          },
+          {
+            "clue_ids": [
+              "A4-07"
+            ],
+            "known_verdict_ids": [
+              "A4"
+            ]
+          },
+          {
+            "clue_ids": [
+              "A4-16"
+            ],
+            "known_verdict_ids": [
+              "C1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "A4-08"
+            ],
+            "known_verdict_ids": [
+              "A3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "A4-03"
+            ],
+            "known_verdict_ids": [
+              "A2"
+            ]
+          },
+          {
+            "clue_ids": [
+              "A4-16"
+            ],
+            "known_verdict_ids": [
+              "C1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "A4-10"
+            ],
+            "known_verdict_ids": [
+              "A3",
+              "B3",
+              "C3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "A4-08"
+            ],
+            "known_verdict_ids": [
+              "A3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "A4-16"
+            ],
+            "known_verdict_ids": [
+              "C1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "A4-15"
+            ],
+            "known_verdict_ids": [
+              "C4"
+            ]
+          },
+          {
+            "clue_ids": [
+              "A4-06"
+            ],
+            "known_verdict_ids": [
+              "C2"
+            ]
+          }
+        ],
         "direct_single_fact_deductions": 0,
         "unique": true,
         "consistent": true,
@@ -349,6 +1041,25 @@
         "steps": [
           {
             "step": 1,
+            "unresolved_ids": [
+              "B1",
+              "C1",
+              "A2",
+              "B2",
+              "C2",
+              "D2",
+              "A3",
+              "B3",
+              "C3",
+              "D3",
+              "B4",
+              "C4",
+              "D4"
+            ],
+            "forced_character_ids": [
+              "B1",
+              "C1"
+            ],
             "target": "B1",
             "verdict": "INNOCENT",
             "supporting_clue_count": 2,
@@ -365,6 +1076,23 @@
           },
           {
             "step": 2,
+            "unresolved_ids": [
+              "C1",
+              "A2",
+              "B2",
+              "C2",
+              "D2",
+              "A3",
+              "B3",
+              "C3",
+              "D3",
+              "B4",
+              "C4",
+              "D4"
+            ],
+            "forced_character_ids": [
+              "C1"
+            ],
             "target": "C1",
             "verdict": "CRIMINAL",
             "supporting_clue_count": 1,
@@ -381,6 +1109,23 @@
           },
           {
             "step": 3,
+            "unresolved_ids": [
+              "A2",
+              "B2",
+              "C2",
+              "D2",
+              "A3",
+              "B3",
+              "C3",
+              "D3",
+              "B4",
+              "C4",
+              "D4"
+            ],
+            "forced_character_ids": [
+              "A2",
+              "A3"
+            ],
             "target": "A2",
             "verdict": "CRIMINAL",
             "supporting_clue_count": 1,
@@ -396,6 +1141,22 @@
           },
           {
             "step": 4,
+            "unresolved_ids": [
+              "B2",
+              "C2",
+              "D2",
+              "A3",
+              "B3",
+              "C3",
+              "D3",
+              "B4",
+              "C4",
+              "D4"
+            ],
+            "forced_character_ids": [
+              "A3",
+              "C4"
+            ],
             "target": "A3",
             "verdict": "CRIMINAL",
             "supporting_clue_count": 1,
@@ -411,6 +1172,22 @@
           },
           {
             "step": 5,
+            "unresolved_ids": [
+              "B2",
+              "C2",
+              "D2",
+              "B3",
+              "C3",
+              "D3",
+              "B4",
+              "C4",
+              "D4"
+            ],
+            "forced_character_ids": [
+              "C2",
+              "C3",
+              "C4"
+            ],
             "target": "C2",
             "verdict": "INNOCENT",
             "supporting_clue_count": 1,
@@ -426,6 +1203,23 @@
           },
           {
             "step": 6,
+            "unresolved_ids": [
+              "B2",
+              "D2",
+              "B3",
+              "C3",
+              "D3",
+              "B4",
+              "C4",
+              "D4"
+            ],
+            "forced_character_ids": [
+              "B3",
+              "C3",
+              "D3",
+              "B4",
+              "C4"
+            ],
             "target": "B3",
             "verdict": "INNOCENT",
             "supporting_clue_count": 1,
@@ -441,6 +1235,22 @@
           },
           {
             "step": 7,
+            "unresolved_ids": [
+              "B2",
+              "D2",
+              "C3",
+              "D3",
+              "B4",
+              "C4",
+              "D4"
+            ],
+            "forced_character_ids": [
+              "B2",
+              "C3",
+              "D3",
+              "B4",
+              "C4"
+            ],
             "target": "B2",
             "verdict": "CRIMINAL",
             "supporting_clue_count": 1,
@@ -456,6 +1266,20 @@
           },
           {
             "step": 8,
+            "unresolved_ids": [
+              "D2",
+              "C3",
+              "D3",
+              "B4",
+              "C4",
+              "D4"
+            ],
+            "forced_character_ids": [
+              "C3",
+              "D3",
+              "B4",
+              "C4"
+            ],
             "target": "C3",
             "verdict": "INNOCENT",
             "supporting_clue_count": 1,
@@ -471,6 +1295,19 @@
           },
           {
             "step": 9,
+            "unresolved_ids": [
+              "D2",
+              "D3",
+              "B4",
+              "C4",
+              "D4"
+            ],
+            "forced_character_ids": [
+              "D3",
+              "B4",
+              "C4",
+              "D4"
+            ],
             "target": "D3",
             "verdict": "INNOCENT",
             "supporting_clue_count": 1,
@@ -488,6 +1325,17 @@
           },
           {
             "step": 10,
+            "unresolved_ids": [
+              "D2",
+              "B4",
+              "C4",
+              "D4"
+            ],
+            "forced_character_ids": [
+              "B4",
+              "C4",
+              "D4"
+            ],
             "target": "B4",
             "verdict": "INNOCENT",
             "supporting_clue_count": 1,
@@ -503,6 +1351,15 @@
           },
           {
             "step": 11,
+            "unresolved_ids": [
+              "D2",
+              "C4",
+              "D4"
+            ],
+            "forced_character_ids": [
+              "C4",
+              "D4"
+            ],
             "target": "C4",
             "verdict": "INNOCENT",
             "supporting_clue_count": 1,
@@ -518,6 +1375,13 @@
           },
           {
             "step": 12,
+            "unresolved_ids": [
+              "D2",
+              "D4"
+            ],
+            "forced_character_ids": [
+              "D4"
+            ],
             "target": "D4",
             "verdict": "CRIMINAL",
             "supporting_clue_count": 1,
@@ -533,6 +1397,12 @@
           },
           {
             "step": 13,
+            "unresolved_ids": [
+              "D2"
+            ],
+            "forced_character_ids": [
+              "D2"
+            ],
             "target": "D2",
             "verdict": "CRIMINAL",
             "supporting_clue_count": 1,
@@ -543,6 +1413,2641 @@
             ],
             "supporting_known_verdict_ids": [
               "C2"
+            ],
+            "direct_single_fact": false
+          }
+        ]
+      }
+    },
+    {
+      "puzzle_file": "advanced_lantern_4x4.json",
+      "puzzle_id": "advanced-lantern-4x4",
+      "title": "The Lantern Assembly",
+      "size": 4,
+      "status": "PASS",
+      "error": null,
+      "initial_kb": {
+        "primary_variables": 16,
+        "auxiliary_variables": 0,
+        "clauses": 11
+      },
+      "complete_clue_set_cnf": {
+        "primary_variables": 16,
+        "auxiliary_variables": 0,
+        "clauses": 33
+      },
+      "progressive_solve": {
+        "completed": true,
+        "initially_revealed": 3,
+        "reveals": 13,
+        "reveal_waves": 13,
+        "trace_steps": 19,
+        "sat_calls": 50,
+        "decisions": 0,
+        "propagations": 381,
+        "backtracks": 0,
+        "sat_query_runtime_seconds": 0.003175800258759409,
+        "whole_puzzle_wall_runtime_seconds": 0.005155000020749867
+      },
+      "uniqueness": {
+        "consistent": true,
+        "unique": true,
+        "sat_calls": 2,
+        "wall_runtime_seconds": 0.0005028999876230955
+      },
+      "hint_support": {
+        "runs": 25,
+        "available_every_run": true,
+        "method": "deletion_irreducible",
+        "target_character_id": "B2",
+        "support_extraction_sat_calls": 16,
+        "median_hint_wall_runtime_seconds": 0.0010926999966613948,
+        "median_support_runtime_seconds": 0.0005685000214725733,
+        "minimum_support_runtime_seconds": 0.0005571999936364591,
+        "maximum_support_runtime_seconds": 0.0006449000211432576
+      },
+      "quality_profile": {
+        "puzzle_file": "advanced_lantern_4x4.json",
+        "puzzle_id": "advanced-lantern-4x4",
+        "display_name": "The Lantern Assembly",
+        "size": 4,
+        "characters": 16,
+        "clues": 16,
+        "initial_revealed_clues": 3,
+        "initial_revealed_cells": [
+          "B1",
+          "A2",
+          "D4"
+        ],
+        "clue_types": [
+          "DIFFERENT",
+          "EXACTLY",
+          "IMPLIES",
+          "SAME"
+        ],
+        "regions": [
+          "NEIGHBORS"
+        ],
+        "extensions": [
+          "IMPLIES"
+        ],
+        "solution_fingerprint": "ICICICCICCIICICI",
+        "clue_type_histogram": {
+          "FACT": 0,
+          "SAME": 6,
+          "DIFFERENT": 8,
+          "EXACTLY": 1,
+          "AT_LEAST": 0,
+          "AT_MOST": 0,
+          "IMPLIES": 1,
+          "ODD": 0
+        },
+        "region_type_histogram": {
+          "ROW": 0,
+          "COLUMN": 0,
+          "NEIGHBORS": 1,
+          "EXPLICIT": 0
+        },
+        "clue_ownership_map": {
+          "A1": "N4-04",
+          "B1": "N4-01",
+          "C1": "N4-05",
+          "D1": "N4-03",
+          "A2": "N4-15",
+          "B2": "N4-02",
+          "C2": "N4-07",
+          "D2": "N4-06",
+          "A3": "N4-08",
+          "B3": "N4-09",
+          "C3": "N4-10",
+          "D3": "N4-11",
+          "A4": "N4-12",
+          "B4": "N4-13",
+          "C4": "N4-14",
+          "D4": "N4-16"
+        },
+        "fact_clues": 0,
+        "direct_answer_fact_ids": [],
+        "deduction_steps": 13,
+        "deduction_target_sequence": [
+          "B2",
+          "D1",
+          "A1",
+          "C1",
+          "D2",
+          "C2",
+          "A3",
+          "B3",
+          "C3",
+          "D3",
+          "A4",
+          "B4",
+          "C4"
+        ],
+        "reveal_owner_sequence": [
+          "B1",
+          "A2",
+          "D4",
+          "B2",
+          "D1",
+          "A1",
+          "C1",
+          "D2",
+          "C2",
+          "A3",
+          "B3",
+          "C3",
+          "D3",
+          "A4",
+          "B4",
+          "C4"
+        ],
+        "average_support_size": 2.0,
+        "maximum_support_size": 2,
+        "single_component_deductions": 0,
+        "support_size_1_count": 0,
+        "support_size_gte_2_count": 13,
+        "support_size_sequence": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "supporting_component_sequence": [
+          {
+            "clue_ids": [
+              "N4-01"
+            ],
+            "known_verdict_ids": [
+              "A2"
+            ]
+          },
+          {
+            "clue_ids": [
+              "N4-02"
+            ],
+            "known_verdict_ids": [
+              "B2"
+            ]
+          },
+          {
+            "clue_ids": [
+              "N4-03"
+            ],
+            "known_verdict_ids": [
+              "D1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "N4-04"
+            ],
+            "known_verdict_ids": [
+              "A1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "N4-05"
+            ],
+            "known_verdict_ids": [
+              "C1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "N4-06"
+            ],
+            "known_verdict_ids": [
+              "D2"
+            ]
+          },
+          {
+            "clue_ids": [
+              "N4-07"
+            ],
+            "known_verdict_ids": [
+              "C2"
+            ]
+          },
+          {
+            "clue_ids": [
+              "N4-08"
+            ],
+            "known_verdict_ids": [
+              "A3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "N4-09"
+            ],
+            "known_verdict_ids": [
+              "B3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "N4-10"
+            ],
+            "known_verdict_ids": [
+              "C3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "N4-11"
+            ],
+            "known_verdict_ids": [
+              "D3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "N4-12"
+            ],
+            "known_verdict_ids": [
+              "A4"
+            ]
+          },
+          {
+            "clue_ids": [
+              "N4-13"
+            ],
+            "known_verdict_ids": [
+              "B4"
+            ]
+          }
+        ],
+        "direct_single_fact_deductions": 0,
+        "unique": true,
+        "consistent": true,
+        "progressively_solvable": true,
+        "steps": [
+          {
+            "step": 1,
+            "unresolved_ids": [
+              "A1",
+              "C1",
+              "D1",
+              "B2",
+              "C2",
+              "D2",
+              "A3",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "B4",
+              "C4"
+            ],
+            "forced_character_ids": [
+              "B2"
+            ],
+            "target": "B2",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N4-01"
+            ],
+            "supporting_known_verdict_ids": [
+              "A2"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 2,
+            "unresolved_ids": [
+              "A1",
+              "C1",
+              "D1",
+              "C2",
+              "D2",
+              "A3",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "B4",
+              "C4"
+            ],
+            "forced_character_ids": [
+              "D1"
+            ],
+            "target": "D1",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N4-02"
+            ],
+            "supporting_known_verdict_ids": [
+              "B2"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 3,
+            "unresolved_ids": [
+              "A1",
+              "C1",
+              "C2",
+              "D2",
+              "A3",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "B4",
+              "C4"
+            ],
+            "forced_character_ids": [
+              "A1"
+            ],
+            "target": "A1",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N4-03"
+            ],
+            "supporting_known_verdict_ids": [
+              "D1"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 4,
+            "unresolved_ids": [
+              "C1",
+              "C2",
+              "D2",
+              "A3",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "B4",
+              "C4"
+            ],
+            "forced_character_ids": [
+              "C1"
+            ],
+            "target": "C1",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N4-04"
+            ],
+            "supporting_known_verdict_ids": [
+              "A1"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 5,
+            "unresolved_ids": [
+              "C2",
+              "D2",
+              "A3",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "B4",
+              "C4"
+            ],
+            "forced_character_ids": [
+              "D2"
+            ],
+            "target": "D2",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N4-05"
+            ],
+            "supporting_known_verdict_ids": [
+              "C1"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 6,
+            "unresolved_ids": [
+              "C2",
+              "A3",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "B4",
+              "C4"
+            ],
+            "forced_character_ids": [
+              "C2"
+            ],
+            "target": "C2",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N4-06"
+            ],
+            "supporting_known_verdict_ids": [
+              "D2"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 7,
+            "unresolved_ids": [
+              "A3",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "B4",
+              "C4"
+            ],
+            "forced_character_ids": [
+              "A3"
+            ],
+            "target": "A3",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N4-07"
+            ],
+            "supporting_known_verdict_ids": [
+              "C2"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 8,
+            "unresolved_ids": [
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "B4",
+              "C4"
+            ],
+            "forced_character_ids": [
+              "B3"
+            ],
+            "target": "B3",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N4-08"
+            ],
+            "supporting_known_verdict_ids": [
+              "A3"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 9,
+            "unresolved_ids": [
+              "C3",
+              "D3",
+              "A4",
+              "B4",
+              "C4"
+            ],
+            "forced_character_ids": [
+              "C3"
+            ],
+            "target": "C3",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N4-09"
+            ],
+            "supporting_known_verdict_ids": [
+              "B3"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 10,
+            "unresolved_ids": [
+              "D3",
+              "A4",
+              "B4",
+              "C4"
+            ],
+            "forced_character_ids": [
+              "D3"
+            ],
+            "target": "D3",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N4-10"
+            ],
+            "supporting_known_verdict_ids": [
+              "C3"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 11,
+            "unresolved_ids": [
+              "A4",
+              "B4",
+              "C4"
+            ],
+            "forced_character_ids": [
+              "A4"
+            ],
+            "target": "A4",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N4-11"
+            ],
+            "supporting_known_verdict_ids": [
+              "D3"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 12,
+            "unresolved_ids": [
+              "B4",
+              "C4"
+            ],
+            "forced_character_ids": [
+              "B4"
+            ],
+            "target": "B4",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N4-12"
+            ],
+            "supporting_known_verdict_ids": [
+              "A4"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 13,
+            "unresolved_ids": [
+              "C4"
+            ],
+            "forced_character_ids": [
+              "C4"
+            ],
+            "target": "C4",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "N4-13"
+            ],
+            "supporting_known_verdict_ids": [
+              "B4"
+            ],
+            "direct_single_fact": false
+          }
+        ]
+      }
+    },
+    {
+      "puzzle_file": "expert_orbit_5x5.json",
+      "puzzle_id": "expert-orbit-5x5",
+      "title": "The Celestial Registry",
+      "size": 5,
+      "status": "PASS",
+      "error": null,
+      "initial_kb": {
+        "primary_variables": 25,
+        "auxiliary_variables": 0,
+        "clauses": 39
+      },
+      "complete_clue_set_cnf": {
+        "primary_variables": 25,
+        "auxiliary_variables": 0,
+        "clauses": 96
+      },
+      "progressive_solve": {
+        "completed": true,
+        "initially_revealed": 5,
+        "reveals": 20,
+        "reveal_waves": 20,
+        "trace_steps": 75,
+        "sat_calls": 216,
+        "decisions": 0,
+        "propagations": 3176,
+        "backtracks": 0,
+        "sat_query_runtime_seconds": 0.0752587002934888,
+        "whole_puzzle_wall_runtime_seconds": 0.0878054000204429
+      },
+      "uniqueness": {
+        "consistent": true,
+        "unique": true,
+        "sat_calls": 2,
+        "wall_runtime_seconds": 0.0019082000362686813
+      },
+      "hint_support": {
+        "runs": 25,
+        "available_every_run": true,
+        "method": "deletion_irreducible",
+        "target_character_id": "B1",
+        "support_extraction_sat_calls": 33,
+        "median_hint_wall_runtime_seconds": 0.004871200013440102,
+        "median_support_runtime_seconds": 0.004375100019387901,
+        "minimum_support_runtime_seconds": 0.004331699979957193,
+        "maximum_support_runtime_seconds": 0.004971600021235645
+      },
+      "quality_profile": {
+        "puzzle_file": "expert_orbit_5x5.json",
+        "puzzle_id": "expert-orbit-5x5",
+        "display_name": "The Celestial Registry",
+        "size": 5,
+        "characters": 25,
+        "clues": 25,
+        "initial_revealed_clues": 5,
+        "initial_revealed_cells": [
+          "A1",
+          "C2",
+          "E3",
+          "B4",
+          "D5"
+        ],
+        "clue_types": [
+          "DIFFERENT",
+          "EXACTLY",
+          "IMPLIES",
+          "ODD",
+          "SAME"
+        ],
+        "regions": [
+          "COLUMN",
+          "EXPLICIT",
+          "NEIGHBORS",
+          "ROW"
+        ],
+        "extensions": [
+          "IMPLIES",
+          "ODD"
+        ],
+        "solution_fingerprint": "CICCIICICCCCIICICCIICIICI",
+        "clue_type_histogram": {
+          "FACT": 0,
+          "SAME": 4,
+          "DIFFERENT": 10,
+          "EXACTLY": 4,
+          "AT_LEAST": 0,
+          "AT_MOST": 0,
+          "IMPLIES": 6,
+          "ODD": 1
+        },
+        "region_type_histogram": {
+          "ROW": 1,
+          "COLUMN": 1,
+          "NEIGHBORS": 1,
+          "EXPLICIT": 2
+        },
+        "clue_ownership_map": {
+          "A1": "EA-01",
+          "B1": "EA-02",
+          "C1": "EA-06",
+          "D1": "EA-10",
+          "E1": "EA-03",
+          "A2": "EA-09",
+          "B2": "EA-08",
+          "C2": "EA-22",
+          "D2": "EA-04",
+          "E2": "EA-18",
+          "A3": "EA-05",
+          "B3": "EA-14",
+          "C3": "EA-21",
+          "D3": "EA-15",
+          "E3": "EA-23",
+          "A4": "EA-16",
+          "B4": "EA-24",
+          "C4": "EA-11",
+          "D4": "EA-13",
+          "E4": "EA-12",
+          "A5": "EA-19",
+          "B5": "EA-20",
+          "C5": "EA-17",
+          "D5": "EA-25",
+          "E5": "EA-07"
+        },
+        "fact_clues": 0,
+        "direct_answer_fact_ids": [],
+        "deduction_steps": 20,
+        "deduction_target_sequence": [
+          "B1",
+          "E1",
+          "D2",
+          "A3",
+          "C1",
+          "E5",
+          "B2",
+          "A2",
+          "D1",
+          "C4",
+          "E4",
+          "D4",
+          "B3",
+          "D3",
+          "A4",
+          "C5",
+          "E2",
+          "A5",
+          "B5",
+          "C3"
+        ],
+        "reveal_owner_sequence": [
+          "A1",
+          "C2",
+          "E3",
+          "B4",
+          "D5",
+          "B1",
+          "E1",
+          "D2",
+          "A3",
+          "C1",
+          "E5",
+          "B2",
+          "A2",
+          "D1",
+          "C4",
+          "E4",
+          "D4",
+          "B3",
+          "D3",
+          "A4",
+          "C5",
+          "E2",
+          "A5",
+          "B5",
+          "C3"
+        ],
+        "average_support_size": 2.25,
+        "maximum_support_size": 5,
+        "single_component_deductions": 0,
+        "support_size_1_count": 0,
+        "support_size_gte_2_count": 20,
+        "support_size_sequence": [
+          5,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          4
+        ],
+        "supporting_component_sequence": [
+          {
+            "clue_ids": [
+              "EA-01"
+            ],
+            "known_verdict_ids": [
+              "A1",
+              "E3",
+              "B4",
+              "D5"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-02"
+            ],
+            "known_verdict_ids": [
+              "B1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-03"
+            ],
+            "known_verdict_ids": [
+              "E1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-04"
+            ],
+            "known_verdict_ids": [
+              "D2"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-05"
+            ],
+            "known_verdict_ids": [
+              "A3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-06"
+            ],
+            "known_verdict_ids": [
+              "C1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-07"
+            ],
+            "known_verdict_ids": [
+              "E5"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-08"
+            ],
+            "known_verdict_ids": [
+              "B2"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-09"
+            ],
+            "known_verdict_ids": [
+              "A2"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-10"
+            ],
+            "known_verdict_ids": [
+              "D1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-11"
+            ],
+            "known_verdict_ids": [
+              "C4"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-12"
+            ],
+            "known_verdict_ids": [
+              "D5"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-13"
+            ],
+            "known_verdict_ids": [
+              "D4"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-14"
+            ],
+            "known_verdict_ids": [
+              "B3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-15"
+            ],
+            "known_verdict_ids": [
+              "D3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-16"
+            ],
+            "known_verdict_ids": [
+              "A4"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-17"
+            ],
+            "known_verdict_ids": [
+              "C5"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-18"
+            ],
+            "known_verdict_ids": [
+              "E2"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-19"
+            ],
+            "known_verdict_ids": [
+              "A5"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EA-20"
+            ],
+            "known_verdict_ids": [
+              "A3",
+              "B3",
+              "E3"
+            ]
+          }
+        ],
+        "direct_single_fact_deductions": 0,
+        "unique": true,
+        "consistent": true,
+        "progressively_solvable": true,
+        "steps": [
+          {
+            "step": 1,
+            "unresolved_ids": [
+              "B1",
+              "C1",
+              "D1",
+              "E1",
+              "A2",
+              "B2",
+              "D2",
+              "E2",
+              "A3",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "C5",
+              "E5"
+            ],
+            "forced_character_ids": [
+              "B1"
+            ],
+            "target": "B1",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 4,
+            "support_size": 5,
+            "supporting_clue_ids": [
+              "EA-01"
+            ],
+            "supporting_known_verdict_ids": [
+              "A1",
+              "E3",
+              "B4",
+              "D5"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 2,
+            "unresolved_ids": [
+              "C1",
+              "D1",
+              "E1",
+              "A2",
+              "B2",
+              "D2",
+              "E2",
+              "A3",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "C5",
+              "E5"
+            ],
+            "forced_character_ids": [
+              "E1"
+            ],
+            "target": "E1",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EA-02"
+            ],
+            "supporting_known_verdict_ids": [
+              "B1"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 3,
+            "unresolved_ids": [
+              "C1",
+              "D1",
+              "A2",
+              "B2",
+              "D2",
+              "E2",
+              "A3",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "C5",
+              "E5"
+            ],
+            "forced_character_ids": [
+              "D2"
+            ],
+            "target": "D2",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EA-03"
+            ],
+            "supporting_known_verdict_ids": [
+              "E1"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 4,
+            "unresolved_ids": [
+              "C1",
+              "D1",
+              "A2",
+              "B2",
+              "E2",
+              "A3",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "C5",
+              "E5"
+            ],
+            "forced_character_ids": [
+              "A3"
+            ],
+            "target": "A3",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EA-04"
+            ],
+            "supporting_known_verdict_ids": [
+              "D2"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 5,
+            "unresolved_ids": [
+              "C1",
+              "D1",
+              "A2",
+              "B2",
+              "E2",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "C5",
+              "E5"
+            ],
+            "forced_character_ids": [
+              "C1"
+            ],
+            "target": "C1",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EA-05"
+            ],
+            "supporting_known_verdict_ids": [
+              "A3"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 6,
+            "unresolved_ids": [
+              "D1",
+              "A2",
+              "B2",
+              "E2",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "C5",
+              "E5"
+            ],
+            "forced_character_ids": [
+              "E5"
+            ],
+            "target": "E5",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EA-06"
+            ],
+            "supporting_known_verdict_ids": [
+              "C1"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 7,
+            "unresolved_ids": [
+              "D1",
+              "A2",
+              "B2",
+              "E2",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "C5"
+            ],
+            "forced_character_ids": [
+              "B2"
+            ],
+            "target": "B2",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EA-07"
+            ],
+            "supporting_known_verdict_ids": [
+              "E5"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 8,
+            "unresolved_ids": [
+              "D1",
+              "A2",
+              "E2",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "C5"
+            ],
+            "forced_character_ids": [
+              "A2"
+            ],
+            "target": "A2",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EA-08"
+            ],
+            "supporting_known_verdict_ids": [
+              "B2"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 9,
+            "unresolved_ids": [
+              "D1",
+              "E2",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "C5"
+            ],
+            "forced_character_ids": [
+              "D1"
+            ],
+            "target": "D1",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EA-09"
+            ],
+            "supporting_known_verdict_ids": [
+              "A2"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 10,
+            "unresolved_ids": [
+              "E2",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "C5"
+            ],
+            "forced_character_ids": [
+              "C4"
+            ],
+            "target": "C4",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EA-10"
+            ],
+            "supporting_known_verdict_ids": [
+              "D1"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 11,
+            "unresolved_ids": [
+              "E2",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "C5"
+            ],
+            "forced_character_ids": [
+              "E4"
+            ],
+            "target": "E4",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EA-11"
+            ],
+            "supporting_known_verdict_ids": [
+              "C4"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 12,
+            "unresolved_ids": [
+              "E2",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "D4",
+              "A5",
+              "B5",
+              "C5"
+            ],
+            "forced_character_ids": [
+              "D4"
+            ],
+            "target": "D4",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EA-12"
+            ],
+            "supporting_known_verdict_ids": [
+              "D5"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 13,
+            "unresolved_ids": [
+              "E2",
+              "B3",
+              "C3",
+              "D3",
+              "A4",
+              "A5",
+              "B5",
+              "C5"
+            ],
+            "forced_character_ids": [
+              "B3"
+            ],
+            "target": "B3",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EA-13"
+            ],
+            "supporting_known_verdict_ids": [
+              "D4"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 14,
+            "unresolved_ids": [
+              "E2",
+              "C3",
+              "D3",
+              "A4",
+              "A5",
+              "B5",
+              "C5"
+            ],
+            "forced_character_ids": [
+              "D3"
+            ],
+            "target": "D3",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EA-14"
+            ],
+            "supporting_known_verdict_ids": [
+              "B3"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 15,
+            "unresolved_ids": [
+              "E2",
+              "C3",
+              "A4",
+              "A5",
+              "B5",
+              "C5"
+            ],
+            "forced_character_ids": [
+              "A4"
+            ],
+            "target": "A4",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EA-15"
+            ],
+            "supporting_known_verdict_ids": [
+              "D3"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 16,
+            "unresolved_ids": [
+              "E2",
+              "C3",
+              "A5",
+              "B5",
+              "C5"
+            ],
+            "forced_character_ids": [
+              "C5"
+            ],
+            "target": "C5",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EA-16"
+            ],
+            "supporting_known_verdict_ids": [
+              "A4"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 17,
+            "unresolved_ids": [
+              "E2",
+              "C3",
+              "A5",
+              "B5"
+            ],
+            "forced_character_ids": [
+              "E2"
+            ],
+            "target": "E2",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EA-17"
+            ],
+            "supporting_known_verdict_ids": [
+              "C5"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 18,
+            "unresolved_ids": [
+              "C3",
+              "A5",
+              "B5"
+            ],
+            "forced_character_ids": [
+              "A5"
+            ],
+            "target": "A5",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EA-18"
+            ],
+            "supporting_known_verdict_ids": [
+              "E2"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 19,
+            "unresolved_ids": [
+              "C3",
+              "B5"
+            ],
+            "forced_character_ids": [
+              "B5"
+            ],
+            "target": "B5",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EA-19"
+            ],
+            "supporting_known_verdict_ids": [
+              "A5"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 20,
+            "unresolved_ids": [
+              "C3"
+            ],
+            "forced_character_ids": [
+              "C3"
+            ],
+            "target": "C3",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 3,
+            "support_size": 4,
+            "supporting_clue_ids": [
+              "EA-20"
+            ],
+            "supporting_known_verdict_ids": [
+              "A3",
+              "B3",
+              "E3"
+            ],
+            "direct_single_fact": false
+          }
+        ]
+      }
+    },
+    {
+      "puzzle_file": "expert_parity_5x5.json",
+      "puzzle_id": "expert-parity-5x5",
+      "title": "The Obsidian Concord",
+      "size": 5,
+      "status": "PASS",
+      "error": null,
+      "initial_kb": {
+        "primary_variables": 25,
+        "auxiliary_variables": 0,
+        "clauses": 26
+      },
+      "complete_clue_set_cnf": {
+        "primary_variables": 25,
+        "auxiliary_variables": 0,
+        "clauses": 70
+      },
+      "progressive_solve": {
+        "completed": true,
+        "initially_revealed": 6,
+        "reveals": 19,
+        "reveal_waves": 19,
+        "trace_steps": 21,
+        "sat_calls": 54,
+        "decisions": 0,
+        "propagations": 890,
+        "backtracks": 0,
+        "sat_query_runtime_seconds": 0.015377000148873776,
+        "whole_puzzle_wall_runtime_seconds": 0.019417099945712835
+      },
+      "uniqueness": {
+        "consistent": true,
+        "unique": true,
+        "sat_calls": 2,
+        "wall_runtime_seconds": 0.003263499995227903
+      },
+      "hint_support": {
+        "runs": 25,
+        "available_every_run": true,
+        "method": "deletion_irreducible",
+        "target_character_id": "B1",
+        "support_extraction_sat_calls": 39,
+        "median_hint_wall_runtime_seconds": 0.003055900044273585,
+        "median_support_runtime_seconds": 0.002098600030876696,
+        "minimum_support_runtime_seconds": 0.0020443000248633325,
+        "maximum_support_runtime_seconds": 0.0036536999978125095
+      },
+      "quality_profile": {
+        "puzzle_file": "expert_parity_5x5.json",
+        "puzzle_id": "expert-parity-5x5",
+        "display_name": "The Obsidian Concord",
+        "size": 5,
+        "characters": 25,
+        "clues": 25,
+        "initial_revealed_clues": 6,
+        "initial_revealed_cells": [
+          "E1",
+          "D2",
+          "B3",
+          "A4",
+          "C5",
+          "E5"
+        ],
+        "clue_types": [
+          "DIFFERENT",
+          "EXACTLY",
+          "IMPLIES",
+          "ODD",
+          "SAME"
+        ],
+        "regions": [
+          "COLUMN",
+          "EXPLICIT"
+        ],
+        "extensions": [
+          "IMPLIES",
+          "ODD"
+        ],
+        "solution_fingerprint": "IICICCICCIICCICCIICCICICI",
+        "clue_type_histogram": {
+          "FACT": 0,
+          "SAME": 8,
+          "DIFFERENT": 13,
+          "EXACTLY": 2,
+          "AT_LEAST": 0,
+          "AT_MOST": 0,
+          "IMPLIES": 1,
+          "ODD": 1
+        },
+        "region_type_histogram": {
+          "ROW": 0,
+          "COLUMN": 1,
+          "NEIGHBORS": 0,
+          "EXPLICIT": 2
+        },
+        "clue_ownership_map": {
+          "A1": "EB-13",
+          "B1": "EB-08",
+          "C1": "EB-07",
+          "D1": "EB-10",
+          "E1": "EB-01",
+          "A2": "EB-09",
+          "B2": "EB-12",
+          "C2": "EB-14",
+          "D2": "EB-02",
+          "E2": "EB-11",
+          "A3": "EB-15",
+          "B3": "EB-03",
+          "C3": "EB-16",
+          "D3": "EB-17",
+          "E3": "EB-18",
+          "A4": "EB-04",
+          "B4": "EB-19",
+          "C4": "EB-20",
+          "D4": "EB-21",
+          "E4": "EB-22",
+          "A5": "EB-23",
+          "B5": "EB-24",
+          "C5": "EB-05",
+          "D5": "EB-25",
+          "E5": "EB-06"
+        },
+        "fact_clues": 0,
+        "direct_answer_fact_ids": [],
+        "deduction_steps": 19,
+        "deduction_target_sequence": [
+          "B1",
+          "C1",
+          "A1",
+          "D1",
+          "A2",
+          "B2",
+          "C2",
+          "E2",
+          "A3",
+          "C3",
+          "D3",
+          "E3",
+          "B4",
+          "C4",
+          "D4",
+          "E4",
+          "A5",
+          "B5",
+          "D5"
+        ],
+        "reveal_owner_sequence": [
+          "E1",
+          "D2",
+          "B3",
+          "A4",
+          "C5",
+          "E5",
+          "B1",
+          "C1",
+          "A1",
+          "D1",
+          "A2",
+          "B2",
+          "C2",
+          "E2",
+          "A3",
+          "C3",
+          "D3",
+          "E3",
+          "B4",
+          "C4",
+          "D4",
+          "E4",
+          "A5",
+          "B5",
+          "D5"
+        ],
+        "average_support_size": 2.1052631578947367,
+        "maximum_support_size": 4,
+        "single_component_deductions": 0,
+        "support_size_1_count": 0,
+        "support_size_gte_2_count": 19,
+        "support_size_sequence": [
+          2,
+          4,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "supporting_component_sequence": [
+          {
+            "clue_ids": [
+              "EB-02"
+            ],
+            "known_verdict_ids": [
+              "D2"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EB-01"
+            ],
+            "known_verdict_ids": [
+              "E1",
+              "D2",
+              "C5"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EB-07"
+            ],
+            "known_verdict_ids": [
+              "C1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EB-04"
+            ],
+            "known_verdict_ids": [
+              "A4"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EB-03"
+            ],
+            "known_verdict_ids": [
+              "B3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EB-06"
+            ],
+            "known_verdict_ids": [
+              "B3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EB-08"
+            ],
+            "known_verdict_ids": [
+              "B1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EB-05"
+            ],
+            "known_verdict_ids": [
+              "C5"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EB-09"
+            ],
+            "known_verdict_ids": [
+              "A2"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EB-10"
+            ],
+            "known_verdict_ids": [
+              "D1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EB-11"
+            ],
+            "known_verdict_ids": [
+              "E2"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EB-12"
+            ],
+            "known_verdict_ids": [
+              "B2"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EB-13"
+            ],
+            "known_verdict_ids": [
+              "A1"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EB-14"
+            ],
+            "known_verdict_ids": [
+              "C2"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EB-15"
+            ],
+            "known_verdict_ids": [
+              "A3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EB-16"
+            ],
+            "known_verdict_ids": [
+              "C3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EB-17"
+            ],
+            "known_verdict_ids": [
+              "D3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EB-18"
+            ],
+            "known_verdict_ids": [
+              "E3"
+            ]
+          },
+          {
+            "clue_ids": [
+              "EB-19"
+            ],
+            "known_verdict_ids": [
+              "B4"
+            ]
+          }
+        ],
+        "direct_single_fact_deductions": 0,
+        "unique": true,
+        "consistent": true,
+        "progressively_solvable": true,
+        "steps": [
+          {
+            "step": 1,
+            "unresolved_ids": [
+              "A1",
+              "B1",
+              "C1",
+              "D1",
+              "A2",
+              "B2",
+              "C2",
+              "E2",
+              "A3",
+              "C3",
+              "D3",
+              "E3",
+              "B4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "forced_character_ids": [
+              "B1",
+              "C1",
+              "D1",
+              "A2",
+              "B2",
+              "E2"
+            ],
+            "target": "B1",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EB-02"
+            ],
+            "supporting_known_verdict_ids": [
+              "D2"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 2,
+            "unresolved_ids": [
+              "A1",
+              "C1",
+              "D1",
+              "A2",
+              "B2",
+              "C2",
+              "E2",
+              "A3",
+              "C3",
+              "D3",
+              "E3",
+              "B4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "forced_character_ids": [
+              "C1",
+              "D1",
+              "A2",
+              "B2",
+              "C2",
+              "E2"
+            ],
+            "target": "C1",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 3,
+            "support_size": 4,
+            "supporting_clue_ids": [
+              "EB-01"
+            ],
+            "supporting_known_verdict_ids": [
+              "E1",
+              "D2",
+              "C5"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 3,
+            "unresolved_ids": [
+              "A1",
+              "D1",
+              "A2",
+              "B2",
+              "C2",
+              "E2",
+              "A3",
+              "C3",
+              "D3",
+              "E3",
+              "B4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "forced_character_ids": [
+              "A1",
+              "D1",
+              "A2",
+              "B2",
+              "C2",
+              "E2"
+            ],
+            "target": "A1",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EB-07"
+            ],
+            "supporting_known_verdict_ids": [
+              "C1"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 4,
+            "unresolved_ids": [
+              "D1",
+              "A2",
+              "B2",
+              "C2",
+              "E2",
+              "A3",
+              "C3",
+              "D3",
+              "E3",
+              "B4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "forced_character_ids": [
+              "D1",
+              "A2",
+              "B2",
+              "C2",
+              "E2",
+              "B4"
+            ],
+            "target": "D1",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EB-04"
+            ],
+            "supporting_known_verdict_ids": [
+              "A4"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 5,
+            "unresolved_ids": [
+              "A2",
+              "B2",
+              "C2",
+              "E2",
+              "A3",
+              "C3",
+              "D3",
+              "E3",
+              "B4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "forced_character_ids": [
+              "A2",
+              "B2",
+              "C2",
+              "E2",
+              "C3",
+              "B4"
+            ],
+            "target": "A2",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EB-03"
+            ],
+            "supporting_known_verdict_ids": [
+              "B3"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 6,
+            "unresolved_ids": [
+              "B2",
+              "C2",
+              "E2",
+              "A3",
+              "C3",
+              "D3",
+              "E3",
+              "B4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "forced_character_ids": [
+              "B2",
+              "C2",
+              "E2",
+              "A3",
+              "C3",
+              "B4"
+            ],
+            "target": "B2",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EB-06"
+            ],
+            "supporting_known_verdict_ids": [
+              "B3"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 7,
+            "unresolved_ids": [
+              "C2",
+              "E2",
+              "A3",
+              "C3",
+              "D3",
+              "E3",
+              "B4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "forced_character_ids": [
+              "C2",
+              "E2",
+              "A3",
+              "C3",
+              "E3",
+              "B4"
+            ],
+            "target": "C2",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EB-08"
+            ],
+            "supporting_known_verdict_ids": [
+              "B1"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 8,
+            "unresolved_ids": [
+              "E2",
+              "A3",
+              "C3",
+              "D3",
+              "E3",
+              "B4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "forced_character_ids": [
+              "E2",
+              "A3",
+              "C3",
+              "E3",
+              "B4",
+              "C4"
+            ],
+            "target": "E2",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EB-05"
+            ],
+            "supporting_known_verdict_ids": [
+              "C5"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 9,
+            "unresolved_ids": [
+              "A3",
+              "C3",
+              "D3",
+              "E3",
+              "B4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "forced_character_ids": [
+              "A3",
+              "C3",
+              "D3",
+              "E3",
+              "B4",
+              "C4"
+            ],
+            "target": "A3",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EB-09"
+            ],
+            "supporting_known_verdict_ids": [
+              "A2"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 10,
+            "unresolved_ids": [
+              "C3",
+              "D3",
+              "E3",
+              "B4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "forced_character_ids": [
+              "C3",
+              "D3",
+              "E3",
+              "B4",
+              "C4",
+              "D4"
+            ],
+            "target": "C3",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EB-10"
+            ],
+            "supporting_known_verdict_ids": [
+              "D1"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 11,
+            "unresolved_ids": [
+              "D3",
+              "E3",
+              "B4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "forced_character_ids": [
+              "D3",
+              "E3",
+              "B4",
+              "C4",
+              "D4",
+              "E4"
+            ],
+            "target": "D3",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EB-11"
+            ],
+            "supporting_known_verdict_ids": [
+              "E2"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 12,
+            "unresolved_ids": [
+              "E3",
+              "B4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "forced_character_ids": [
+              "E3",
+              "B4",
+              "C4",
+              "D4",
+              "E4",
+              "A5"
+            ],
+            "target": "E3",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EB-12"
+            ],
+            "supporting_known_verdict_ids": [
+              "B2"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 13,
+            "unresolved_ids": [
+              "B4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "forced_character_ids": [
+              "B4",
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5"
+            ],
+            "target": "B4",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EB-13"
+            ],
+            "supporting_known_verdict_ids": [
+              "A1"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 14,
+            "unresolved_ids": [
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "forced_character_ids": [
+              "C4",
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "target": "C4",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EB-14"
+            ],
+            "supporting_known_verdict_ids": [
+              "C2"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 15,
+            "unresolved_ids": [
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "forced_character_ids": [
+              "D4",
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "target": "D4",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EB-15"
+            ],
+            "supporting_known_verdict_ids": [
+              "A3"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 16,
+            "unresolved_ids": [
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "forced_character_ids": [
+              "E4",
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "target": "E4",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EB-16"
+            ],
+            "supporting_known_verdict_ids": [
+              "C3"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 17,
+            "unresolved_ids": [
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "forced_character_ids": [
+              "A5",
+              "B5",
+              "D5"
+            ],
+            "target": "A5",
+            "verdict": "INNOCENT",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EB-17"
+            ],
+            "supporting_known_verdict_ids": [
+              "D3"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 18,
+            "unresolved_ids": [
+              "B5",
+              "D5"
+            ],
+            "forced_character_ids": [
+              "B5",
+              "D5"
+            ],
+            "target": "B5",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EB-18"
+            ],
+            "supporting_known_verdict_ids": [
+              "E3"
+            ],
+            "direct_single_fact": false
+          },
+          {
+            "step": 19,
+            "unresolved_ids": [
+              "D5"
+            ],
+            "forced_character_ids": [
+              "D5"
+            ],
+            "target": "D5",
+            "verdict": "CRIMINAL",
+            "supporting_clue_count": 1,
+            "supporting_known_verdict_count": 1,
+            "support_size": 2,
+            "supporting_clue_ids": [
+              "EB-19"
+            ],
+            "supporting_known_verdict_ids": [
+              "B4"
             ],
             "direct_single_fact": false
           }

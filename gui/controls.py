@@ -38,8 +38,10 @@ class Controls(ttk.Frame):
         game.grid(row=0, column=0, sticky="nsew", padx=(0, SPACING["sm"]))
         self._puzzles_button = ttk.Button(game, text="Puzzles", command=on_puzzles, style="Game.TButton")
         self._puzzles_button.grid(row=0, column=0, padx=2, sticky="ew")
-        ttk.Button(game, text="Load", command=on_load, style="Game.TButton").grid(row=0, column=1, padx=2, sticky="ew")
-        ttk.Button(game, text="Restart", command=on_restart, style="Game.TButton").grid(
+        self._load_button = ttk.Button(game, text="Load", command=on_load, style="Game.TButton")
+        self._load_button.grid(row=0, column=1, padx=2, sticky="ew")
+        self._restart_button = ttk.Button(game, text="Restart", command=on_restart, style="Game.TButton")
+        self._restart_button.grid(
             row=1, column=0, columnspan=2, padx=2, pady=(4, 0), sticky="ew"
         )
         game.columnconfigure(0, weight=1)
@@ -77,6 +79,22 @@ class Controls(ttk.Frame):
         self._manual_locked = False
         self._is_complete = False
         self._auto_running = False
+        self._dense = False
+
+    def set_dense(self, dense: bool) -> None:
+        """Compact only vertical control padding when a 5x5 board is active."""
+
+        if self._dense == dense:
+            return
+        self._dense = dense
+        game_style = "DenseGame.TButton" if dense else "Game.TButton"
+        assist_style = "DenseAssist.TButton" if dense else "Assist.TButton"
+        solver_style = "DenseSolver.TButton" if dense else "Solver.TButton"
+        for button in (self._puzzles_button, self._load_button, self._restart_button):
+            button.configure(style=game_style)
+        self._hint_button.configure(style=assist_style)
+        for button in (self._solve_next_button, self._auto_button, self._details_button):
+            button.configure(style=solver_style)
 
     def set_auto_running(self, running: bool) -> None:
         self._auto_running = running

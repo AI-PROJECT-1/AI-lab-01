@@ -196,3 +196,17 @@
 - Decision: EXECUTED FOR PHASE 8.6 ONLY; committed after explicit user approval
 - Related AI Usage ID: AI-017
 - Related commits: Phase 8.5 checkpoint `8c8c77d`; Phase 8.6 `96cd8ae`
+
+## PROMPT-015
+
+- Date: 2026-08-19
+- Tool: OpenAI Codex
+- Model: GPT-5
+- Member: Tran Huu Phuoc - 24127511
+- Phase: Phase 8.7 production puzzle expansion
+- Goal: Add exactly one new 3x3, one new 4x4, and two genuinely distinct 5x5 main puzzles while preserving the two validated production puzzles, generic public-only solver, Hint support, anti-guess flow, trace, completion, and lifecycle behavior.
+- Full prompt: The user supplied the Phase 8.7 master prompt requiring a real checkpoint, four unique/progressive/guess-free/FACT-free puzzle additions, same-size solution and structural non-clone analysis, forced-target/support profiles, 5x5 performance and GUI validation at 1180x800/660, full experiments/scans/docs, an 81-item phase gate, and a stop before commit/report finalization.
+- Short summary of response: Started from clean real checkpoint `c347ef0`; designed and rejected non-unique/overly chain-like candidates; accepted four validated puzzles; expanded the catalog/experiment fingerprints; added responsive dense 5x5 presentation and Phase 8.7 tests; reran generated evidence and visual E2E. No protected solver behavior or final report artifact was changed.
+- Decision: EXECUTED FOR PHASE 8.7 ONLY; uncommitted pending approval
+- Related AI Usage ID: AI-018
+- Related commit: previous-phase audit checkpoint `c347ef05f808a94c90f5529139f80cf10abca8cf`

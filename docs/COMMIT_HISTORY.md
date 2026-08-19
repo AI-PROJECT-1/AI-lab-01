@@ -1,7 +1,7 @@
 # Commit History
 
-Generated from real Git history through Phase 8.5 commit `8c8c77d` on
-2026-08-18. Phase 8.6 begins from that clean checkpoint.
+Generated from real Git history through the Phase 8.6 audit checkpoint
+`c347ef0` on 2026-08-18. Phase 8.7 begins from that clean checkpoint.
 
 Verified checkpoint: `03584c3859a12e7a57385a7d860e48f084d0c210` | 2026-08-12 22:14:30 +0700 | Trần Phước | `feat(project): checkpoint phases 08-13`
 
@@ -32,6 +32,14 @@ Verified Phase 8.6 implementation commit: `96cd8ae68a0592e456547f6cccde3789f7a61
 
 The commit was created only after explicit user approval. It follows Phase 8.5
 without amend, rebase, squash, or fabricated history.
+
+Verified Phase 8.6 audit checkpoint: `c347ef05f808a94c90f5529139f80cf10abca8cf` |
+2026-08-18 11:41:06 +0700 | Tráº§n PhÆ°á»›c |
+`docs(audit): record phase 8.6 implementation commit`
+
+Phase 8.7 began from that clean checkpoint on 2026-08-19. Its four-puzzle
+expansion, 5x5 presentation work, tests, experiments, and audit updates remain
+uncommitted pending explicit approval. No Phase 8.7 hash is claimed.
 
 ```text
 4f59755 | 2026-06-30 15:07:17 +0700 | Trần Phước | Initial commit

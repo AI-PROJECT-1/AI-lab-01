@@ -246,6 +246,14 @@ def configure_theme(root: tk.Misc) -> ttk.Style:
         )
 
     _configure_button(style, "Game.TButton", COLORS["surface_alt"], COLORS["ink"], "#DDD6C9")
+    _configure_button(
+        style,
+        "DenseGame.TButton",
+        COLORS["surface_alt"],
+        COLORS["ink"],
+        "#DDD6C9",
+        padding=(8, 1),
+    )
     _configure_button(style, "Primary.TButton", COLORS["accent"], "#FFFFFF", COLORS["accent_hover"])
     _configure_button(style, "Danger.TButton", COLORS["danger"], "#FFFFFF", COLORS["danger_hover"])
     _configure_button(
@@ -266,6 +274,22 @@ def configure_theme(root: tk.Misc) -> ttk.Style:
     )
     _configure_button(style, "Assist.TButton", COLORS["focus_soft"], COLORS["ink"], "#EBD69D")
     _configure_button(style, "Solver.TButton", COLORS["accent_soft"], COLORS["ink"], "#CADDD6")
+    _configure_button(
+        style,
+        "DenseAssist.TButton",
+        COLORS["focus_soft"],
+        COLORS["ink"],
+        "#EBD69D",
+        padding=(8, 1),
+    )
+    _configure_button(
+        style,
+        "DenseSolver.TButton",
+        COLORS["accent_soft"],
+        COLORS["ink"],
+        "#CADDD6",
+        padding=(8, 1),
+    )
     return style
 
 

@@ -1,0 +1,264 @@
+{
+  "id": "advanced-lantern-4x4",
+  "title": "The Lantern Assembly",
+  "size": 4,
+  "cards": [
+    {
+      "cell": "A1",
+      "name": "Soren",
+      "profession": "Jeweler",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N4-04",
+        "type": "SAME",
+        "characters": [
+          "A1",
+          "C1"
+        ],
+        "text": "A1 and C1 have the same status."
+      }
+    },
+    {
+      "cell": "B1",
+      "name": "Talia",
+      "profession": "Kite Maker",
+      "status": "CRIMINAL",
+      "initially_revealed": true,
+      "clue": {
+        "id": "N4-01",
+        "type": "EXACTLY",
+        "k": 2,
+        "region": {
+          "type": "NEIGHBORS",
+          "center": "A1"
+        },
+        "text": "Exactly 2 people in the neighbors of A1 are Criminal."
+      }
+    },
+    {
+      "cell": "C1",
+      "name": "Ulric",
+      "profession": "Luthier",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N4-05",
+        "type": "SAME",
+        "characters": [
+          "C1",
+          "D2"
+        ],
+        "text": "C1 and D2 have the same status."
+      }
+    },
+    {
+      "cell": "D1",
+      "name": "Vera",
+      "profession": "Metallurgist",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N4-03",
+        "type": "DIFFERENT",
+        "characters": [
+          "D1",
+          "A1"
+        ],
+        "text": "D1 and A1 have different statuses."
+      }
+    },
+    {
+      "cell": "A2",
+      "name": "Wes",
+      "profession": "Notary",
+      "status": "INNOCENT",
+      "initially_revealed": true,
+      "clue": {
+        "id": "N4-15",
+        "type": "SAME",
+        "characters": [
+          "A2",
+          "D4"
+        ],
+        "text": "A2 and D4 have the same status."
+      }
+    },
+    {
+      "cell": "B2",
+      "name": "Xenia",
+      "profession": "Ornithologist",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N4-02",
+        "type": "IMPLIES",
+        "characters": [
+          "B2",
+          "D1"
+        ],
+        "text": "If B2 is Criminal, then D1 is Criminal."
+      }
+    },
+    {
+      "cell": "C2",
+      "name": "Yara",
+      "profession": "Perfumer",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N4-07",
+        "type": "SAME",
+        "characters": [
+          "C2",
+          "A3"
+        ],
+        "text": "C2 and A3 have the same status."
+      }
+    },
+    {
+      "cell": "D2",
+      "name": "Zane",
+      "profession": "Quartermaster",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N4-06",
+        "type": "DIFFERENT",
+        "characters": [
+          "D2",
+          "C2"
+        ],
+        "text": "D2 and C2 have different statuses."
+      }
+    },
+    {
+      "cell": "A3",
+      "name": "Arden",
+      "profession": "Restorer",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N4-08",
+        "type": "SAME",
+        "characters": [
+          "A3",
+          "B3"
+        ],
+        "text": "A3 and B3 have the same status."
+      }
+    },
+    {
+      "cell": "B3",
+      "name": "Blythe",
+      "profession": "Surveyor",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N4-09",
+        "type": "DIFFERENT",
+        "characters": [
+          "B3",
+          "C3"
+        ],
+        "text": "B3 and C3 have different statuses."
+      }
+    },
+    {
+      "cell": "C3",
+      "name": "Cassian",
+      "profession": "Tailor",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N4-10",
+        "type": "SAME",
+        "characters": [
+          "C3",
+          "D3"
+        ],
+        "text": "C3 and D3 have the same status."
+      }
+    },
+    {
+      "cell": "D3",
+      "name": "Daphne",
+      "profession": "Urbanist",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N4-11",
+        "type": "DIFFERENT",
+        "characters": [
+          "D3",
+          "A4"
+        ],
+        "text": "D3 and A4 have different statuses."
+      }
+    },
+    {
+      "cell": "A4",
+      "name": "Evren",
+      "profession": "Violinist",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N4-12",
+        "type": "DIFFERENT",
+        "characters": [
+          "A4",
+          "B4"
+        ],
+        "text": "A4 and B4 have different statuses."
+      }
+    },
+    {
+      "cell": "B4",
+      "name": "Freya",
+      "profession": "Watchmaker",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N4-13",
+        "type": "DIFFERENT",
+        "characters": [
+          "B4",
+          "C4"
+        ],
+        "text": "B4 and C4 have different statuses."
+      }
+    },
+    {
+      "cell": "C4",
+      "name": "Galen",
+      "profession": "Xylographer",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "N4-14",
+        "type": "DIFFERENT",
+        "characters": [
+          "D4",
+          "C4"
+        ],
+        "text": "D4 and C4 have different statuses."
+      }
+    },
+    {
+      "cell": "D4",
+      "name": "Hester",
+      "profession": "Yeoman",
+      "status": "INNOCENT",
+      "initially_revealed": true,
+      "clue": {
+        "id": "N4-16",
+        "type": "DIFFERENT",
+        "characters": [
+          "D4",
+          "B1"
+        ],
+        "text": "D4 and B1 have different statuses."
+      }
+    }
+  ]
+}

@@ -127,8 +127,9 @@ check and the independent semantic-validity tests.
 
 ## Phase 8.6 production manifest and manual lock boundary
 
-The production manifest is the explicit two-entry `PUZZLE_CATALOG`: Standard
-3x3 and Advanced 4x4. Puzzle selection and both experiment runners share this
+The original hardened manifest contained Standard 3x3 and Advanced 4x4. Phase
+8.7 extends the same explicit `PUZZLE_CATALOG` to six entries: two each at
+3x3/4x4/5x5. Puzzle selection and both experiment runners share this
 manifest/order. Legacy chain files live under `tests/fixtures/puzzles/`, so file
 discovery cannot silently reclassify them as shipped gameplay or benchmark data.
 
@@ -142,3 +143,18 @@ This creates no production dependency from domain/reasoning layers back to the
 GUI. GameEngine, PublicKnowledgeState, LogicAgent, CNF, DPLL, Hint support, and
 trace DTOs know nothing about locks. Hint, Solve Next, and Auto Solve continue
 to consume the same public snapshot and may resolve a locked character normally.
+
+## Phase 8.7 offline fingerprints and 5x5 presentation
+
+`analyze_puzzles` is an offline validation observer. It records each public
+state's unresolved and forced frontiers plus the real Hint support, then adds a
+row-major final-solution fingerprint only after loading the authoritative puzzle
+for validation. That fingerprint never enters GUI, GameEngine decisions, CNF
+gameplay state, LogicAgent, or Hint presentation.
+
+The board chooses a presentation density solely from public `state.size`:
+standard (3x3), compact (4x4), or dense (5x5). Dense cards retain public identity,
+profession, coordinate, modifiers and verdict badge. Their redundant small clue
+preview is omitted; the full public clue stays in the scrollable CluePanel.
+Controls switch to lower vertical padding for 5x5 and revert on puzzle change.
+No solver/gameplay API or state transition depends on this density tier.

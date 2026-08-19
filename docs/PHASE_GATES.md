@@ -196,14 +196,14 @@ complete until its required checks actually pass.
 ## Phase 14 - Reproducible Experiments
 
 - Status: COMPLETED in UI Phase 8
-- Requirements satisfied: all distributable 3x3/4x4 puzzles; CNF counts; SAT
+- Requirements satisfied: all distributable 3x3/4x4/5x5 puzzles; CNF counts; SAT
   calls/decisions/propagations/backtracks/runtime; reveal waves; trace length;
   uniqueness; Hint support diagnostics; failures retained
 - Evidence: `experiments/run_experiments.py`,
   `experiments/results/final_regression.json`, `docs/EXPERIMENT_LOG.md`
-- Test results: Phase 8 baseline 4/4; Phase 8.5 final set 6/6 puzzles PASS,
-  0 failures/timeouts, with public support profiles retained separately
-- Known issues: no optional 5x5 run; timings are machine-specific
+- Test results: Phase 8.7 final set 6/6 puzzles PASS, 0 failures/timeouts, with
+  public support and structural fingerprints retained separately
+- Known issues: timings are machine-specific; arbitrary boards beyond 5x5 are not claimed
 - Related log: AI-015, PROMPT-012
 
 ## Phase 15 - Full Verification
@@ -263,3 +263,18 @@ complete until its required checks actually pass.
 - Related logs: AI-017, PROMPT-014, DEC-018
 - Commit: `96cd8ae68a0592e456547f6cccde3789f7a61163` (`feat(game): harden production puzzles and manual lockout`)
 - Next phase: STOP before Phase 9
+
+## Phase 8.7 - Production Puzzle Expansion
+
+- Status: IMPLEMENTED AND VERIFIED; UNCOMMITTED PENDING APPROVAL
+- Checkpoint: clean real Phase 8.6 audit commit `c347ef05f808a94c90f5529139f80cf10abca8cf`
+- Production set: six main puzzles, exactly two each at 3x3/4x4/5x5; Tutorial remains test-only
+- Quality gate: four additions are semantic-valid, consistent, unique, progressively solvable, guess-free and FACT-free; all 59 new deductions have support >=2
+- Distinctness gate: same-size Hamming distances 5/11/16; different initial layouts, clue/region histograms, ownership/target/reveal/support paths; no suspicious duplicate; Obsidian uses a branched forced frontier rather than Celestial's single-frontier route
+- 5x5 gate: dense presentation keeps all 25 identities/coordinates/status badges and all controls at 1180x660; full clues, highlights, Hint, Solver Details, completion, Restart, Load, Puzzles and non-blocking Auto Solve remain available
+- Performance gate: 5x5 whole solves 0.087805s and 0.019417s; median Hint support extraction 0.004375s and 0.002099s on the audit machine
+- Protected scope: no diff in DPLL, CNF, semantic evaluator, LogicAgent, Hint support extractor, or uniqueness checker; no puzzle-specific branch or external solver
+- Evidence: 228/228 unittests, 6/6 experiments, schema/compile/boundary/whitespace scans, and DPI-aware visual E2E
+- Related logs: AI-018, PROMPT-015, DEC-019
+- Recommended commits: `feat(puzzles): expand production deduction puzzle set`; optionally separate `feat(gui): support responsive 5x5 gameplay`
+- Next phase: STOP for approval; do not finalize report automatically

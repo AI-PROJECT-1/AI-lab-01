@@ -220,3 +220,15 @@
 - Rejected: changing GameEngine/verdict semantics, adding lock fields to public/domain models, puzzle-specific CNF/LogicAgent order, random runtime generation, disabling logical assistance, hiding Solver Trace, or showing the correct answer as a penalty.
 - Related requirement: Phase 8.6 production hardening, public/private isolation, and no-guess gameplay.
 - Related commit: `96cd8ae68a0592e456547f6cccde3789f7a61163`.
+
+## DEC-019 - Six-puzzle production catalog and adaptive 5x5 density
+
+- Context: Phase 8.7 requires four additional main puzzles, including two 5x5 experiences that are not reskins or dependency-graph clones, while forbidding solver special cases and report finalization.
+- Puzzle gate: Accept only loader-valid, semantically true, CNF-consistent, complete-set unique, progressively solvable candidates with a forced unresolved target at every state. All four new puzzles use zero FACT clues and every extracted support has at least two public components.
+- Distinctness choice: Record row-major solution, initial coordinates, clue/region histograms, extension set, ownership map, forced frontier, target/reveal sequence, support-size sequence, and exact supporting-component sequence. Compare same-size pairs and flag identical/full-complement plus structurally matching profiles. Obsidian was redesigned from a linear draft into a six-root branched DAG before acceptance.
+- 5x5 presentation choice: Add an explicit `dense` board tier. Keep name, profession, coordinate, and textual verdict badge; omit only the small in-card clue preview at 5x5 because the complete public clue remains in the existing scrollable clue panel. Compact only GAME/ASSISTANCE/SOLVER button vertical padding while 5x5 is active.
+- Performance choice: Redesign puzzle data before considering solver work. Both 5x5 cases complete through the unchanged generic stack in under 0.1 seconds on the audit machine, so no DPLL/CNF/LogicAgent optimization or puzzle-ID branch is justified.
+- Demo choice: Recommend The Celestial Registry as the optional Expert demo because its five-component opening support, all-region profile, and longer trace explain the AI more clearly; The Obsidian Concord remains the contrasting faster branched case.
+- Rejected: runtime generation, direct FACT anchors, copied chain topology, hidden-answer catalog metadata, puzzle-specific target ordering, external SAT libraries, protected solver edits, and automatic report finalization.
+- Related requirement: Phase 8.7 production expansion, structural uniqueness, 5x5 responsiveness, and source protection.
+- Related commit: uncommitted; starts from `c347ef05f808a94c90f5529139f80cf10abca8cf`.

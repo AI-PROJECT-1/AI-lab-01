@@ -14,12 +14,23 @@ from gui.character_card import CharacterCard
 from gui.view_model import compose_card_visual_state
 
 
+def board_density_for(size: int) -> str:
+    """Return a presentation-only density tier for supported board sizes."""
+
+    if size >= 5:
+        return "dense"
+    if size >= 4:
+        return "compact"
+    return "standard"
+
+
 class BoardView(ttk.LabelFrame):
     def __init__(self, parent: tk.Misc, on_select: Callable[[str], None]) -> None:
         super().__init__(parent, text="BOARD", style="Panel.TLabelframe", padding=SPACING["sm"])
         self._on_select = on_select
         self._buttons: dict[str, CharacterCard] = {}
         self._selected_id: str | None = None
+        self._density = "standard"
 
     def render(
         self,
@@ -49,7 +60,9 @@ class BoardView(ttk.LabelFrame):
             )
             self.rowconfigure(row, weight=1, uniform="board")
 
-        compact = state.size >= 4
+        self._density = board_density_for(state.size)
+        compact = self._density != "standard"
+        dense = self._density == "dense"
         for card in build_card_views(state):
             visual_state = compose_card_visual_state(
                 card,
@@ -66,13 +79,14 @@ class BoardView(ttk.LabelFrame):
                 visual_state,
                 self._select,
                 compact=compact,
+                dense=dense,
             )
             widget.grid(
                 row=card.row,
                 column=card.column,
                 sticky="nsew",
-                padx=SPACING["xs"],
-                pady=2,
+                padx=1 if dense else SPACING["xs"],
+                pady=1 if dense else 2,
             )
             self._buttons[card.character_id] = widget
 

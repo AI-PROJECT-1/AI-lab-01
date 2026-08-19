@@ -107,9 +107,19 @@ used as the gameplay public KB.
 - **Advanced - The Meridian Conspiracy:** 4x4 with three scattered initial
   public cells, all region kinds, counting, relations, IMPLIES, and ODD. Its
   first support is `A4-01`, `A4-04`, and public verdict A1; maximum support is 4.
+- **Intermediate - The Cipher Courtyard:** 3x3 relational relay grounded by an
+  EXPLICIT three-cell EXACTLY clue; seven support-size-2 steps.
+- **Advanced - The Lantern Assembly:** 4x4 neighborhood counting plus a deeper
+  relation/IMPLIES route; thirteen support-size-2 steps.
+- **Expert - The Celestial Registry:** 5x5 regional-count/implication route with
+  twenty deductions, both extensions, all four region families, and support up
+  to 5 components.
+- **Expert - The Obsidian Concord:** 5x5 branched forced frontier (six initial
+  forced candidates), parity/explicit anchoring, nineteen deductions, and
+  support up to 4 components.
 
-Both contain zero FACT clues and reveal clue owners in non-linear deterministic
-sequences. Standard/Advanced remain human design labels, not calibrated scores.
+All six contain zero FACT clues and reveal clue owners in deterministic,
+non-row-major sequences. Difficulty tiers remain design labels, not calibrated scores.
 The four former direct-chain puzzles are test fixtures, not production content.
 
 ## Manual anti-guess boundary
@@ -126,11 +136,16 @@ DPLL, LogicAgent, or GameEngine contracts.
 
 | Puzzle | Tier | Size | Complete clauses | SAT calls | Decisions / backtracks | Propagations | Solve wall (s) | Avg/max support |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
-| The Atrium Ledger | Standard | 3x3 | 23 | 34 | 6 / 0 | 208 | 0.002944 | 2.000 / 2 |
-| The Meridian Conspiracy | Advanced | 4x4 | 60 | 66 | 92 / 1 | 804 | 0.024452 | 2.308 / 4 |
+| The Atrium Ledger | Standard | 3x3 | 23 | 34 | 6 / 0 | 208 | 0.002668 | 2.000 / 2 |
+| The Cipher Courtyard | Intermediate | 3x3 | 20 | 38 | 10 / 0 | 226 | 0.002386 | 2.000 / 2 |
+| The Meridian Conspiracy | Advanced | 4x4 | 60 | 66 | 92 / 1 | 804 | 0.019980 | 2.308 / 4 |
+| The Lantern Assembly | Advanced | 4x4 | 33 | 50 | 0 / 0 | 381 | 0.005155 | 2.000 / 2 |
+| The Celestial Registry | Expert | 5x5 | 96 | 216 | 0 / 0 | 3176 | 0.087805 | 2.250 / 5 |
+| The Obsidian Concord | Expert | 5x5 | 70 | 54 | 0 / 0 | 890 | 0.019417 | 2.105 / 4 |
 
-Both production runs completed, remained consistent/unique, and recorded zero
-failures. They demonstrate real DPLL work without puzzle-specific code.
+All six production runs completed, remained consistent/unique, and recorded
+zero failures. Same-size solution Hamming distances are 5 (3x3), 11 (4x4),
+and 16 (5x5); the structural fingerprint audit flags no suspicious duplicate.
 See `EXPERIMENT_LOG.md` and raw `experiments/results/final_regression.json` for
 metric definitions, Hint benchmarks, exact floating-point values, environment,
 retained error fields, and exact per-step public support IDs. Earlier Phase 8

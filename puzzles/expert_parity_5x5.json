@@ -1,0 +1,418 @@
+{
+  "id": "expert-parity-5x5",
+  "title": "The Obsidian Concord",
+  "size": 5,
+  "cards": [
+    {
+      "cell": "A1",
+      "name": "Hadrian",
+      "profession": "Acoustician",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-13",
+        "type": "SAME",
+        "characters": [
+          "A1",
+          "B4"
+        ],
+        "text": "A1 and B4 have the same status."
+      }
+    },
+    {
+      "cell": "B1",
+      "name": "Isolde",
+      "profession": "Bridge Inspector",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-08",
+        "type": "DIFFERENT",
+        "characters": [
+          "B1",
+          "C2"
+        ],
+        "text": "B1 and C2 have different statuses."
+      }
+    },
+    {
+      "cell": "C1",
+      "name": "Jasper",
+      "profession": "Ceramicist",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-07",
+        "type": "DIFFERENT",
+        "characters": [
+          "C1",
+          "A1"
+        ],
+        "text": "C1 and A1 have different statuses."
+      }
+    },
+    {
+      "cell": "D1",
+      "name": "Keira",
+      "profession": "Dramaturge",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-10",
+        "type": "DIFFERENT",
+        "characters": [
+          "D1",
+          "C3"
+        ],
+        "text": "D1 and C3 have different statuses."
+      }
+    },
+    {
+      "cell": "E1",
+      "name": "Lucan",
+      "profession": "Ethnographer",
+      "status": "CRIMINAL",
+      "initially_revealed": true,
+      "clue": {
+        "id": "EB-01",
+        "type": "ODD",
+        "region": {
+          "type": "EXPLICIT",
+          "cells": [
+            "E1",
+            "D2",
+            "C5",
+            "C1"
+          ]
+        },
+        "text": "An odd number of people in the marked cells E1, D2, C5, C1 are Criminal."
+      }
+    },
+    {
+      "cell": "A2",
+      "name": "Mirelle",
+      "profession": "Forensic Chemist",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-09",
+        "type": "DIFFERENT",
+        "characters": [
+          "A2",
+          "A3"
+        ],
+        "text": "A2 and A3 have different statuses."
+      }
+    },
+    {
+      "cell": "B2",
+      "name": "Noam",
+      "profession": "Gemologist",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-12",
+        "type": "DIFFERENT",
+        "characters": [
+          "B2",
+          "E3"
+        ],
+        "text": "B2 and E3 have different statuses."
+      }
+    },
+    {
+      "cell": "C2",
+      "name": "Opal",
+      "profession": "Hydrologist",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-14",
+        "type": "DIFFERENT",
+        "characters": [
+          "C2",
+          "C4"
+        ],
+        "text": "C2 and C4 have different statuses."
+      }
+    },
+    {
+      "cell": "D2",
+      "name": "Pascal",
+      "profession": "Illuminator",
+      "status": "CRIMINAL",
+      "initially_revealed": true,
+      "clue": {
+        "id": "EB-02",
+        "type": "DIFFERENT",
+        "characters": [
+          "D2",
+          "B1"
+        ],
+        "text": "D2 and B1 have different statuses."
+      }
+    },
+    {
+      "cell": "E2",
+      "name": "Reina",
+      "profession": "Joiner",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-11",
+        "type": "SAME",
+        "characters": [
+          "E2",
+          "D3"
+        ],
+        "text": "E2 and D3 have the same status."
+      }
+    },
+    {
+      "cell": "A3",
+      "name": "Stellan",
+      "profession": "Kennel Master",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-15",
+        "type": "DIFFERENT",
+        "characters": [
+          "A3",
+          "D4"
+        ],
+        "text": "A3 and D4 have different statuses."
+      }
+    },
+    {
+      "cell": "B3",
+      "name": "Tamsin",
+      "profession": "Language Tutor",
+      "status": "CRIMINAL",
+      "initially_revealed": true,
+      "clue": {
+        "id": "EB-03",
+        "type": "SAME",
+        "characters": [
+          "B3",
+          "A2"
+        ],
+        "text": "B3 and A2 have the same status."
+      }
+    },
+    {
+      "cell": "C3",
+      "name": "Uriel",
+      "profession": "Marine Pilot",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-16",
+        "type": "SAME",
+        "characters": [
+          "C3",
+          "E4"
+        ],
+        "text": "C3 and E4 have the same status."
+      }
+    },
+    {
+      "cell": "D3",
+      "name": "Vesper",
+      "profession": "Neurologist",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-17",
+        "type": "SAME",
+        "characters": [
+          "D3",
+          "A5"
+        ],
+        "text": "D3 and A5 have the same status."
+      }
+    },
+    {
+      "cell": "E3",
+      "name": "Wynn",
+      "profession": "Optometrist",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-18",
+        "type": "SAME",
+        "characters": [
+          "E3",
+          "B5"
+        ],
+        "text": "E3 and B5 have the same status."
+      }
+    },
+    {
+      "cell": "A4",
+      "name": "Xanthe",
+      "profession": "Pattern Cutter",
+      "status": "CRIMINAL",
+      "initially_revealed": true,
+      "clue": {
+        "id": "EB-04",
+        "type": "DIFFERENT",
+        "characters": [
+          "A4",
+          "D1"
+        ],
+        "text": "A4 and D1 have different statuses."
+      }
+    },
+    {
+      "cell": "B4",
+      "name": "Yael",
+      "profession": "Quality Analyst",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-19",
+        "type": "DIFFERENT",
+        "characters": [
+          "B4",
+          "D5"
+        ],
+        "text": "B4 and D5 have different statuses."
+      }
+    },
+    {
+      "cell": "C4",
+      "name": "Zora",
+      "profession": "Rope Maker",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-20",
+        "type": "SAME",
+        "characters": [
+          "C5",
+          "E2"
+        ],
+        "text": "C5 and E2 have the same status."
+      }
+    },
+    {
+      "cell": "D4",
+      "name": "Ansel",
+      "profession": "Stone Carver",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-21",
+        "type": "IMPLIES",
+        "characters": [
+          "E1",
+          "B3"
+        ],
+        "text": "If E1 is Criminal, then B3 is Criminal."
+      }
+    },
+    {
+      "cell": "E4",
+      "name": "Beatrix",
+      "profession": "Translator",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-22",
+        "type": "DIFFERENT",
+        "characters": [
+          "D2",
+          "E5"
+        ],
+        "text": "D2 and E5 have different statuses."
+      }
+    },
+    {
+      "cell": "A5",
+      "name": "Conrad",
+      "profession": "Usher",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-23",
+        "type": "DIFFERENT",
+        "characters": [
+          "A4",
+          "C5"
+        ],
+        "text": "A4 and C5 have different statuses."
+      }
+    },
+    {
+      "cell": "B5",
+      "name": "Dahlia",
+      "profession": "Vehicle Designer",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-24",
+        "type": "DIFFERENT",
+        "characters": [
+          "E1",
+          "E5"
+        ],
+        "text": "E1 and E5 have different statuses."
+      }
+    },
+    {
+      "cell": "C5",
+      "name": "Eamon",
+      "profession": "Wood Turner",
+      "status": "INNOCENT",
+      "initially_revealed": true,
+      "clue": {
+        "id": "EB-05",
+        "type": "SAME",
+        "characters": [
+          "C5",
+          "E2"
+        ],
+        "text": "C5 and E2 have the same status."
+      }
+    },
+    {
+      "cell": "D5",
+      "name": "Flora",
+      "profession": "X-ray Technician",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EB-25",
+        "type": "EXACTLY",
+        "k": 3,
+        "region": {
+          "type": "COLUMN",
+          "index": 4
+        },
+        "text": "Exactly 3 people in Column D are Criminal."
+      }
+    },
+    {
+      "cell": "E5",
+      "name": "Griffin",
+      "profession": "Yacht Broker",
+      "status": "INNOCENT",
+      "initially_revealed": true,
+      "clue": {
+        "id": "EB-06",
+        "type": "EXACTLY",
+        "k": 1,
+        "region": {
+          "type": "EXPLICIT",
+          "cells": [
+            "E5",
+            "B3",
+            "B2"
+          ]
+        },
+        "text": "Exactly 1 people in the marked cells E5, B3, B2 are Criminal."
+      }
+    }
+  ]
+}

@@ -32,7 +32,7 @@ class PuzzleSelectScreen(ttk.Frame):
         ttk.Label(heading, text="Choose a Puzzle", style="PuzzleSelectTitle.TLabel").grid(row=0, column=0, sticky="w")
         ttk.Label(
             heading,
-            text="Choose a deduction-focused Standard or Advanced case.",
+            text="Choose a deduction-focused case from Standard through Expert.",
             style="Muted.TLabel",
         ).grid(row=1, column=0, sticky="w", pady=(SPACING["xs"], 0))
 

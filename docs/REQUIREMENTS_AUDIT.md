@@ -8,9 +8,9 @@ evidence, not intended future work.
 
 | ID | Requirement | Project section | Implementation files | Tests | Status | Evidence | Notes / limitation |
 |---|---|---|---|---|---|---|---|
-| R-01 | Python source; main algorithms implemented by the team | General | `main.py`, `logic/`, `sat/`, `agent/` | dependency/boundary scan, 212-test suite | PASS | Standard-library implementation; no external SAT package | Team must review authorship records before submission |
+| R-01 | Python source; main algorithms implemented by the team | General | `main.py`, `logic/`, `sat/`, `agent/` | dependency/boundary scan, 228-test suite | PASS | Standard-library implementation; no external SAT package | Team must review authorship records before submission |
 | R-02 | Playable desktop or web GUI | 4.1 | `gui/app.py`, `gui/board_view.py`, `gui/puzzle_select.py`, `main.py` | GUI/navigation/E2E smoke | PASS | Clean launch plus same-root Game/Puzzle Select navigation | Desktop display and Tkinter are required |
-| R-03 | NxN board, coordinates, public identity/status, face-up clues and face-down cards | 4.1 | `gui/board_view.py`, `gui/character_card.py`, `gui/clue_panel.py` | GUI/card/clue/completion tests | PASS | Production Standard/Advanced visual audit; all 16 low-height status badges visible | No external portraits are required |
+| R-03 | NxN board, coordinates, public identity/status, face-up clues and face-down cards | 4.1 | `gui/board_view.py`, `gui/character_card.py`, `gui/clue_panel.py` | GUI/card/clue/completion tests | PASS | 3x3/4x4/5x5 visual audit; all 25 cards and low-height status badges readable | 5x5 omits only card clue preview; full clue panel remains |
 | R-04 | Submit CRIMINAL/INNOCENT; accept only entailed verdicts; reveal after acceptance | 4.1 | `game/game_engine.py`, `gui/verdict_panel.py`, `agent/logic_agent.py` | verdict and engine tests | PASS | ACCEPTED alone mutates public state through `GameEngine` | GUI never compares against hidden status |
 | R-05 | Distinct NOT_PROVABLE and CONTRADICTED; rejected submissions do not mutate | 4.1 | `core/results.py`, `game/game_engine.py`, `gui/feedback.py` | verdict interaction and Phase 8.6 hardening tests | PASS | Rejections preserve public state; CONTRADICTED also creates a GUI-session manual lock without revealing the opposite status | Feedback uses public/result contracts only |
 | R-06 | Select a revealed clue and highlight referenced/counted cells | 4.1 | `gui/clue_panel.py`, `gui/controller.py`, `logic/region_resolver.py` | clue presentation and E2E tests | PASS | Canonical resolver drives explicit, row, column, and neighbor highlights | Standard/Advanced shipped data visibly exercises real regions |
@@ -27,7 +27,7 @@ evidence, not intended future work.
 | R-17 | Entailment via UNSAT assumptions; four states; no guessing | 3.4, 4.4 | `agent/entailment.py`, `agent/logic_agent.py` | classification/entailment tests | PASS | Both opposite assumptions are queried; UNKNOWN and INCONSISTENT are explicit | A single satisfying model is never treated as proof |
 | R-18 | Progressive deterministic deductions, reveal protocol, and trace | 2.2, 4.4 | `agent/logic_agent.py`, `agent/deduction_trace.py`, `game/game_engine.py` | agent/game/completion tests | PASS | Row-major forced choice; trace records exact SAT queries and public reveals | Solver Details reports per-query, not invented cumulative, evidence |
 | R-19 | Separate complete-clue-set uniqueness check | 4.4 | `agent/uniqueness.py` | unique and non-unique tests | PASS | Primary-model blocking plus a second SAT call; separate from public play KB | Complete clue set is used only for validation |
-| R-20 | Several 3x3/4x4 experiments with counts, SAT work, runtime, reveal waves, failures retained | 4.5 | `experiments/run_experiments.py`, `experiments/analyze_puzzles.py`, raw result JSON | experiment/final/puzzle-quality tests | PASS | Explicit production manifest: Standard 3x3 and Advanced 4x4, 2/2 PASS; real support profiles and raw metrics retained | Runtime is machine-specific; legacy fixtures and optional 5x5 are excluded |
+| R-20 | Several 3x3/4x4 experiments with counts, SAT work, runtime, reveal waves, failures retained | 4.5 | `experiments/run_experiments.py`, `experiments/analyze_puzzles.py`, raw result JSON | experiment/final/puzzle-quality tests | PASS | Explicit six-puzzle manifest: two each at 3x3/4x4/5x5, 6/6 PASS; real support/fingerprint profiles retained | Runtime is machine-specific; legacy fixtures remain excluded |
 | R-21 | PDF report covering formulation, CNF, algorithms, experiments, limitations, references, AI appendix | 4.6 | `docs/REPORT_SUPPORT.md`, audit/log documents | documentation audit | PARTIAL | Required technical material and real measurements are prepared | Final `Report.pdf`, references review, layout and team approval remain outside Phase 8 |
 | R-22 | 5-10 minute narrated/subtitled demo, Drive link, permission check, no YouTube | 4.7 | `docs/DEMO_SCRIPT.md` | deterministic E2E rehearsal | PARTIAL | Timed script and verified interaction path exist | Video, narration/subtitles, hosted Drive link and incognito permission check remain |
 | R-23 | Student-ID archive containing Source, README, requirements, report; deadline integrity | Section 5 | `README.md`, `requirements.txt`, source tree | clean-entrypoint/git audit | PARTIAL | Source/run/test paths are ready | Student-ID filename, final PDF, clean archive and deadline freeze remain; Phase 8 intentionally did not package |
@@ -37,7 +37,7 @@ evidence, not intended future work.
 
 | Capability | Exact evidence | Status |
 |---|---|---|
-| NxN/coordinates/names/professions/public status/face state | `test_cards_show_public_metadata_and_face_state`; 3x3/4x4 E2E | PASS |
+| NxN/coordinates/names/professions/public status/face state | `test_cards_show_public_metadata_and_face_state`; 3x3/4x4/5x5 E2E | PASS |
 | CRIMINAL and INNOCENT manual actions | `test_manual_contradiction_locks_opposite_retry`; deterministic E2E exercises contextual submissions | PASS |
 | ACCEPTED and exact reveal | `test_accepted_uses_engine_api_and_reveals_exact_public_clue` | PASS |
 | NOT_PROVABLE without reveal | `test_not_provable_preserves_public_state`; 3x3 C1 CRIMINAL E2E | PASS |
@@ -90,10 +90,10 @@ or CNF verification.
 - Solver Details preserves structured query purpose, assumptions, SAT result,
   decisions, propagations, backtracks, runtime, and public reveal ID. It does
   not invent clause-level proofs or final hidden assignments.
-- The production suite contains one Standard 3x3 and one Advanced 4x4. Both are
-  consistent, unique, progressively solvable without guesses, and contain zero
-  FACT clues. Standard has average/max support 2/2; Advanced has 2.308/4 and
-  begins with two real supporting clues plus one public verdict.
+- The production suite contains two puzzles at each of 3x3, 4x4, and 5x5. All
+  six are consistent, unique, progressively solvable without guesses, and
+  contain zero FACT clues. Same-size Hamming distances are 5/11/16 and no
+  structural fingerprint comparison is flagged suspicious.
 - A contradicted manual submission creates only a controller/UI-session lock.
   It does not enter the public KB, reveal a clue, expose the opposite status, or
   prevent Hint/Solve Next/Auto Solve from making real deductions.
@@ -110,6 +110,9 @@ or CNF verification.
   production FACT anchors, overly linear clue ownership, experiment globbing,
   and unlimited opposite-verdict retry after a contradiction. No protected
   solver/engine semantic change was needed.
+- **Phase 8.7 expansion:** four new main puzzles, six-puzzle experiments,
+  forced-frontier/support/solution fingerprints, pairwise non-clone evidence,
+  and responsive 5x5 presentation were added without protected solver changes.
 
 ## Prohibited shortcuts verified absent
 
@@ -117,3 +120,20 @@ or CNF verification.
 - No hidden-solution/unrevealed-clue access by agent or GUI.
 - No guess-based reveal and no arbitrary-model verdict.
 - No fabricated Git hash, experiment, team percentage, report, video, or link.
+
+## Phase 8.7 puzzle-expansion evidence
+
+| ID | Name | Size/tier | Initial public cells | Unique/progressive | Support avg/max | Solution fingerprint |
+|---|---|---|---|---|---:|---|
+| `intermediate-cipher-3x3` | The Cipher Courtyard | 3x3 Intermediate | B1, A3 | true / true | 2.000 / 2 | `ICICCIICC` |
+| `advanced-lantern-4x4` | The Lantern Assembly | 4x4 Advanced | B1, A2, D4 | true / true | 2.000 / 2 | `ICICICCICCIICICI` |
+| `expert-orbit-5x5` | The Celestial Registry | 5x5 Expert | A1, C2, E3, B4, D5 | true / true | 2.250 / 5 | `CICCIICICCCCIICICCIICIICI` |
+| `expert-parity-5x5` | The Obsidian Concord | 5x5 Expert | E1, D2, B3, A4, C5, E5 | true / true | 2.105 / 4 | `IICICCICCIICCICCIICCICICI` |
+
+All four new puzzles have one clue per unique coordinate, unique clue IDs,
+zero FACT clues, at least one region/counting constraint where required, and a
+forced target at every non-terminal public state. The two 5x5 puzzles use both
+extensions but have different clue/region histograms, initial layouts, target
+and reveal sequences, support signatures, and dependency shapes (single-frontier
+route versus branched forced frontier). Production LogicAgent, CNF, DPLL,
+semantic evaluator, support extractor, and uniqueness checker remain generic.

@@ -21,10 +21,10 @@ ROOT = Path(__file__).parents[1]
 
 
 class ExperimentRunnerTests(unittest.TestCase):
-    def test_suite_records_every_distributable_3x3_and_4x4_with_required_metrics(self) -> None:
+    def test_suite_records_every_distributable_3x3_4x4_and_5x5_with_required_metrics(self) -> None:
         report = run_suite(hint_runs=2)
         self.assertEqual(report["puzzle_set"], [path.name for path in puzzle_paths()])
-        self.assertEqual({result["size"] for result in report["results"]}, {3, 4})
+        self.assertEqual({result["size"] for result in report["results"]}, {3, 4, 5})
         for result in report["results"]:
             with self.subTest(puzzle=result["puzzle_file"]):
                 self.assertEqual(result["status"], "PASS")

@@ -6,7 +6,7 @@ This repository contains a complete desktop implementation of Griductive for
 CSC14003 Project 2: canonical clue semantics, automatic CNF, a team-implemented
 DPLL solver, a public-only entailment agent, progressive deduction with trace
 and uniqueness checks, two clue extensions, a responsive Tkinter GUI, and a
-validated 3x3/4x4 puzzle suite.
+validated six-puzzle 3x3/4x4/5x5 production suite.
 
 ## Requirements
 
@@ -26,7 +26,7 @@ python main.py
 ```
 
 The default puzzle is the production Standard `puzzles/standard_deduction_3x3.json`.
-Use **Puzzles** to choose a shipped Standard or Advanced puzzle without leaving
+Use **Puzzles** to choose a shipped Standard, Intermediate, Advanced, or Expert puzzle without leaving
 the application. **Load** remains available for an external/local JSON puzzle.
 
 ## Test
@@ -50,7 +50,7 @@ For the public-only deduction/support profile of each puzzle:
 python -m experiments.analyze_puzzles
 ```
 
-The command runs every production-listed 3x3/4x4 puzzle and overwrites
+The command runs every production-listed 3x3/4x4/5x5 puzzle and overwrites
 `experiments/results/final_regression.json` with machine-readable raw results.
 Failures are retained and cause a non-zero exit code.
 
@@ -74,6 +74,9 @@ Failures are retained and cause a non-zero exit code.
   scrolling, Back-without-reset, and lifecycle-safe Play
 - Phase 8.6 hardening: production-only catalog, FACT-free non-linear deduction
   progression, test-only legacy fixtures, and per-run manual contradiction lock
+- Phase 8.7 expansion: one additional 3x3, one additional 4x4, and two
+  structurally distinct 5x5 production puzzles; fingerprint/non-clone analysis;
+  dense responsive 5x5 cards and controls
 
 The final experiment runner, report-support notes, demo script, requirement
 matrix, and known-limitations record are also included. The team must still

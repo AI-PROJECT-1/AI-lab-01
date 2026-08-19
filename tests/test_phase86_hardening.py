@@ -26,6 +26,14 @@ from tests.fixture_paths import PUZZLE_FIXTURES
 
 STANDARD_ID = "standard-deduction-3x3"
 ADVANCED_ID = "advanced-deduction-4x4"
+PRODUCTION_IDS = (
+    STANDARD_ID,
+    "intermediate-cipher-3x3",
+    ADVANCED_ID,
+    "advanced-lantern-4x4",
+    "expert-orbit-5x5",
+    "expert-parity-5x5",
+)
 
 
 class StaticAgent:
@@ -48,12 +56,11 @@ class ProductionPuzzleHardeningTests(unittest.TestCase):
 
     def test_catalog_and_experiment_set_are_production_only(self) -> None:
         ids = tuple(entry.puzzle_id for entry in PUZZLE_CATALOG)
-        self.assertEqual(ids, (STANDARD_ID, ADVANCED_ID))
+        self.assertEqual(ids, PRODUCTION_IDS)
         self.assertNotIn("Tutorial", {entry.difficulty for entry in PUZZLE_CATALOG})
         self.assertNotIn("sample-3x3-fact-chain", ids)
-        self.assertEqual(tuple(path.name for path in puzzle_paths()), (
-            "standard_deduction_3x3.json",
-            "advanced_deduction_4x4.json",
+        self.assertEqual(tuple(path.name for path in puzzle_paths()), tuple(
+            puzzle_path(puzzle_id).name for puzzle_id in PRODUCTION_IDS
         ))
         screen_copy = (Path(__file__).parents[1] / "gui" / "puzzle_select.py").read_text(encoding="utf-8")
         self.assertNotIn("Tutorial", screen_copy)

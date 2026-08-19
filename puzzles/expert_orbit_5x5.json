@@ -1,0 +1,421 @@
+{
+  "id": "expert-orbit-5x5",
+  "title": "The Celestial Registry",
+  "size": 5,
+  "cards": [
+    {
+      "cell": "A1",
+      "name": "Ivo",
+      "profession": "Astronomer",
+      "status": "CRIMINAL",
+      "initially_revealed": true,
+      "clue": {
+        "id": "EA-01",
+        "type": "EXACTLY",
+        "k": 4,
+        "region": {
+          "type": "EXPLICIT",
+          "cells": [
+            "A1",
+            "C2",
+            "E3",
+            "B4",
+            "D5",
+            "B1"
+          ]
+        },
+        "text": "Exactly 4 people in the marked cells A1, C2, E3, B4, D5, B1 are Criminal."
+      }
+    },
+    {
+      "cell": "B1",
+      "name": "Junia",
+      "profession": "Botanist",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-02",
+        "type": "IMPLIES",
+        "characters": [
+          "E1",
+          "B1"
+        ],
+        "text": "If E1 is Criminal, then B1 is Criminal."
+      }
+    },
+    {
+      "cell": "C1",
+      "name": "Kasper",
+      "profession": "Clockmaker",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-06",
+        "type": "DIFFERENT",
+        "characters": [
+          "C1",
+          "E5"
+        ],
+        "text": "C1 and E5 have different statuses."
+      }
+    },
+    {
+      "cell": "D1",
+      "name": "Lyra",
+      "profession": "Diver",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-10",
+        "type": "SAME",
+        "characters": [
+          "D1",
+          "C4"
+        ],
+        "text": "D1 and C4 have the same status."
+      }
+    },
+    {
+      "cell": "E1",
+      "name": "Miro",
+      "profession": "Engraver",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-03",
+        "type": "DIFFERENT",
+        "characters": [
+          "E1",
+          "D2"
+        ],
+        "text": "E1 and D2 have different statuses."
+      }
+    },
+    {
+      "cell": "A2",
+      "name": "Nadia",
+      "profession": "Falconer",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-09",
+        "type": "DIFFERENT",
+        "characters": [
+          "A2",
+          "D1"
+        ],
+        "text": "A2 and D1 have different statuses."
+      }
+    },
+    {
+      "cell": "B2",
+      "name": "Oren",
+      "profession": "Geographer",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-08",
+        "type": "DIFFERENT",
+        "characters": [
+          "B2",
+          "A2"
+        ],
+        "text": "B2 and A2 have different statuses."
+      }
+    },
+    {
+      "cell": "C2",
+      "name": "Petra",
+      "profession": "Herbalist",
+      "status": "INNOCENT",
+      "initially_revealed": true,
+      "clue": {
+        "id": "EA-22",
+        "type": "DIFFERENT",
+        "characters": [
+          "C2",
+          "A1"
+        ],
+        "text": "C2 and A1 have different statuses."
+      }
+    },
+    {
+      "cell": "D2",
+      "name": "Quinlan",
+      "profession": "Instrument Maker",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-04",
+        "type": "IMPLIES",
+        "characters": [
+          "D2",
+          "A3"
+        ],
+        "text": "If D2 is Criminal, then A3 is Criminal."
+      }
+    },
+    {
+      "cell": "E2",
+      "name": "Romy",
+      "profession": "Journalist",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-18",
+        "type": "IMPLIES",
+        "characters": [
+          "E2",
+          "A5"
+        ],
+        "text": "If E2 is Criminal, then A5 is Criminal."
+      }
+    },
+    {
+      "cell": "A3",
+      "name": "Silas",
+      "profession": "Kiln Operator",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-05",
+        "type": "IMPLIES",
+        "characters": [
+          "A3",
+          "C1"
+        ],
+        "text": "If A3 is Criminal, then C1 is Criminal."
+      }
+    },
+    {
+      "cell": "B3",
+      "name": "Thalia",
+      "profession": "Lexicographer",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-14",
+        "type": "DIFFERENT",
+        "characters": [
+          "B3",
+          "D3"
+        ],
+        "text": "B3 and D3 have different statuses."
+      }
+    },
+    {
+      "cell": "C3",
+      "name": "Una",
+      "profession": "Meteorologist",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-21",
+        "type": "EXACTLY",
+        "k": 2,
+        "region": {
+          "type": "COLUMN",
+          "index": 3
+        },
+        "text": "Exactly 2 people in Column C are Criminal."
+      }
+    },
+    {
+      "cell": "D3",
+      "name": "Vance",
+      "profession": "Numismatist",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-15",
+        "type": "IMPLIES",
+        "characters": [
+          "A4",
+          "D3"
+        ],
+        "text": "If A4 is Criminal, then D3 is Criminal."
+      }
+    },
+    {
+      "cell": "E3",
+      "name": "Willa",
+      "profession": "Oceanographer",
+      "status": "CRIMINAL",
+      "initially_revealed": true,
+      "clue": {
+        "id": "EA-23",
+        "type": "SAME",
+        "characters": [
+          "E3",
+          "A1"
+        ],
+        "text": "E3 and A1 have the same status."
+      }
+    },
+    {
+      "cell": "A4",
+      "name": "Xander",
+      "profession": "Papermaker",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-16",
+        "type": "IMPLIES",
+        "characters": [
+          "C5",
+          "A4"
+        ],
+        "text": "If C5 is Criminal, then A4 is Criminal."
+      }
+    },
+    {
+      "cell": "B4",
+      "name": "Yvette",
+      "profession": "Quarry Engineer",
+      "status": "CRIMINAL",
+      "initially_revealed": true,
+      "clue": {
+        "id": "EA-24",
+        "type": "SAME",
+        "characters": [
+          "B4",
+          "A1"
+        ],
+        "text": "B4 and A1 have the same status."
+      }
+    },
+    {
+      "cell": "C4",
+      "name": "Zephyr",
+      "profession": "Radiographer",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-11",
+        "type": "ODD",
+        "region": {
+          "type": "EXPLICIT",
+          "cells": [
+            "C4",
+            "E4"
+          ]
+        },
+        "text": "An odd number of people in the pair C4, E4 are Criminal."
+      }
+    },
+    {
+      "cell": "D4",
+      "name": "Alina",
+      "profession": "Seismologist",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-13",
+        "type": "DIFFERENT",
+        "characters": [
+          "D4",
+          "B3"
+        ],
+        "text": "D4 and B3 have different statuses."
+      }
+    },
+    {
+      "cell": "E4",
+      "name": "Bram",
+      "profession": "Typesetter",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-12",
+        "type": "EXACTLY",
+        "k": 1,
+        "region": {
+          "type": "NEIGHBORS",
+          "center": "E5"
+        },
+        "text": "Exactly 1 people in the neighbors of E5 are Criminal."
+      }
+    },
+    {
+      "cell": "A5",
+      "name": "Cleo",
+      "profession": "Upholsterer",
+      "status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-19",
+        "type": "DIFFERENT",
+        "characters": [
+          "A5",
+          "B5"
+        ],
+        "text": "A5 and B5 have different statuses."
+      }
+    },
+    {
+      "cell": "B5",
+      "name": "Dorian",
+      "profession": "Vintner",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-20",
+        "type": "EXACTLY",
+        "k": 3,
+        "region": {
+          "type": "ROW",
+          "index": 3
+        },
+        "text": "Exactly 3 people in Row 3 are Criminal."
+      }
+    },
+    {
+      "cell": "C5",
+      "name": "Esme",
+      "profession": "Weaver",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-17",
+        "type": "DIFFERENT",
+        "characters": [
+          "C5",
+          "E2"
+        ],
+        "text": "C5 and E2 have different statuses."
+      }
+    },
+    {
+      "cell": "D5",
+      "name": "Finn",
+      "profession": "Youth Counselor",
+      "status": "CRIMINAL",
+      "initially_revealed": true,
+      "clue": {
+        "id": "EA-25",
+        "type": "SAME",
+        "characters": [
+          "D5",
+          "A1"
+        ],
+        "text": "D5 and A1 have the same status."
+      }
+    },
+    {
+      "cell": "E5",
+      "name": "Giselle",
+      "profession": "Zoologist",
+      "status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "id": "EA-07",
+        "type": "DIFFERENT",
+        "characters": [
+          "E5",
+          "B2"
+        ],
+        "text": "E5 and B2 have different statuses."
+      }
+    }
+  ]
+}

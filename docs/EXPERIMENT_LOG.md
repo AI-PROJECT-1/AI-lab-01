@@ -68,3 +68,31 @@ figures above while preserving fast completion.
   deductions.
 - Legacy direct-chain files remain test fixtures and are excluded from the
   production catalog and experiment manifest.
+
+## Phase 8.7 production expansion run - 2026-08-19
+
+Baseline commit: `c347ef05f808a94c90f5529139f80cf10abca8cf`.
+Both experiment commands were rerun with 25 fresh Hint samples per puzzle.
+
+| Puzzle | Size | Initial/full clauses | SAT calls | Decisions | Propagations | Backtracks | Whole solve (s) | Median support (s) | Avg/max support |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| The Atrium Ledger | 3x3 | 9 / 23 | 34 | 6 | 208 | 0 | 0.002668 | 0.000340 | 2.000 / 2 |
+| The Cipher Courtyard | 3x3 | 8 / 20 | 38 | 10 | 226 | 0 | 0.002386 | 0.000396 | 2.000 / 2 |
+| The Meridian Conspiracy | 4x4 | 13 / 60 | 66 | 92 | 804 | 1 | 0.019980 | 0.001233 | 2.308 / 4 |
+| The Lantern Assembly | 4x4 | 11 / 33 | 50 | 0 | 381 | 0 | 0.005155 | 0.000569 | 2.000 / 2 |
+| The Celestial Registry | 5x5 | 39 / 96 | 216 | 0 | 3176 | 0 | 0.087805 | 0.004375 | 2.250 / 5 |
+| The Obsidian Concord | 5x5 | 26 / 70 | 54 | 0 | 890 | 0 | 0.019417 | 0.002099 | 2.105 / 4 |
+
+All encodings use `N²` primary variables and zero auxiliary variables. All 6/6
+production puzzles passed consistency, complete-solution uniqueness, and
+progressive no-guess completion. The quality artifact records every unresolved
+and forced frontier, chosen target, public support set, clue/region histograms,
+solution fingerprint, and pairwise structural comparison. Same-size solution
+Hamming distances were 5, 11, and 16; no pair was identical, a full complement,
+or flagged as a suspicious structural duplicate.
+
+The two Expert puzzles are deliberately different: Celestial is a mostly
+single-frontier 20-step regional/implication route with support signature
+`5,2,...,2,4`; Obsidian opens with six forced candidates and follows a branched
+19-step DAG with signature `2,4,2,...,2`. Exact floating-point results remain in
+the generated JSON and are machine-specific.

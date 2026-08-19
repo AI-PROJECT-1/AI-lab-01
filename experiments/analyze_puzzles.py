@@ -3,10 +3,13 @@
 from __future__ import annotations
 
 import argparse
+from collections import Counter
+from itertools import combinations
 import json
 from pathlib import Path
 
 from agent.logic_agent import LogicAgent
+from core.enums import Classification, ClueType, RegionType, Status
 from core.public_state import PublicKnowledgeState, RevealedClue
 from game.game_engine import GameEngine
 from game.puzzle_loader import PuzzleLoader
@@ -43,6 +46,18 @@ def analyze_puzzle(path: Path) -> dict[str, object]:
 
     while not engine.public_state().is_complete:
         state = engine.public_state()
+        classifications = LogicAgent().classify_all(state)
+        unresolved_ids = [
+            character.id
+            for character in state.characters
+            if state.status_of(character.id) is None
+        ]
+        forced_ids = [
+            character_id
+            for character_id in unresolved_ids
+            if classifications[character_id]
+            in (Classification.CRIMINAL, Classification.INNOCENT)
+        ]
         hint = LogicAgent().get_hint(state)
         if hint.deduction is None:
             break
@@ -62,6 +77,8 @@ def analyze_puzzle(path: Path) -> dict[str, object]:
         steps.append(
             {
                 "step": len(steps) + 1,
+                "unresolved_ids": unresolved_ids,
+                "forced_character_ids": forced_ids,
                 "target": result.character_id,
                 "verdict": result.forced_status.value,
                 "supporting_clue_count": len(clue_ids),
@@ -84,6 +101,18 @@ def analyze_puzzle(path: Path) -> dict[str, object]:
     )
     extensions = sorted(set(clue_types) & {"IMPLIES", "ODD"})
     uniqueness = LogicAgent().check_uniqueness(complete_clue_state(puzzle))
+    solution_fingerprint = "".join(
+        "C" if card.hidden_status is Status.CRIMINAL else "I"
+        for card in puzzle.ordered_cards
+    )
+    clue_counts = Counter(card.clue.type.value for card in puzzle.cards)
+    clue_type_histogram = {clue_type.value: clue_counts[clue_type.value] for clue_type in ClueType}
+    region_counts = Counter(
+        card.clue.region.kind.value
+        for card in puzzle.cards
+        if card.clue.region is not None
+    )
+    region_type_histogram = {region.value: region_counts[region.value] for region in RegionType}
     return {
         "puzzle_file": path.name,
         "puzzle_id": puzzle.id,
@@ -96,6 +125,12 @@ def analyze_puzzle(path: Path) -> dict[str, object]:
         "clue_types": clue_types,
         "regions": regions,
         "extensions": extensions,
+        "solution_fingerprint": solution_fingerprint,
+        "clue_type_histogram": clue_type_histogram,
+        "region_type_histogram": region_type_histogram,
+        "clue_ownership_map": {
+            card.character.id: card.clue.id for card in puzzle.ordered_cards
+        },
         "fact_clues": sum(card.clue.type.value == "FACT" for card in puzzle.cards),
         "direct_answer_fact_ids": [
             card.clue.id for card in puzzle.cards if card.clue.type.value == "FACT"
@@ -111,6 +146,14 @@ def analyze_puzzle(path: Path) -> dict[str, object]:
         "single_component_deductions": sum(size == 1 for size in support_sizes),
         "support_size_1_count": sum(size == 1 for size in support_sizes),
         "support_size_gte_2_count": sum(size >= 2 for size in support_sizes),
+        "support_size_sequence": support_sizes,
+        "supporting_component_sequence": [
+            {
+                "clue_ids": step["supporting_clue_ids"],
+                "known_verdict_ids": step["supporting_known_verdict_ids"],
+            }
+            for step in steps
+        ],
         "direct_single_fact_deductions": sum(step["direct_single_fact"] for step in steps),
         "unique": uniqueness.is_unique,
         "consistent": uniqueness.is_consistent,
@@ -119,10 +162,72 @@ def analyze_puzzle(path: Path) -> dict[str, object]:
     }
 
 
+def _pairwise_fingerprints(profiles: list[dict[str, object]]) -> list[dict[str, object]]:
+    comparisons: list[dict[str, object]] = []
+    for left, right in combinations(profiles, 2):
+        if left["size"] != right["size"]:
+            continue
+        left_solution = str(left["solution_fingerprint"])
+        right_solution = str(right["solution_fingerprint"])
+        comparison = {
+            "left": left["puzzle_id"],
+            "right": right["puzzle_id"],
+            "size": left["size"],
+            "solution_hamming_distance": sum(
+                a != b for a, b in zip(left_solution, right_solution, strict=True)
+            ),
+            "solutions_are_full_complements": all(
+                a != b for a, b in zip(left_solution, right_solution, strict=True)
+            ),
+            "same_initial_reveals": left["initial_revealed_cells"] == right["initial_revealed_cells"],
+            "same_extensions": left["extensions"] == right["extensions"],
+            "same_clue_ownership_map": left["clue_ownership_map"] == right["clue_ownership_map"],
+            "same_target_sequence": left["deduction_target_sequence"] == right["deduction_target_sequence"],
+            "same_reveal_owner_sequence": left["reveal_owner_sequence"] == right["reveal_owner_sequence"],
+            "same_support_sequence": left["support_size_sequence"] == right["support_size_sequence"],
+            "same_supporting_components": left["supporting_component_sequence"]
+            == right["supporting_component_sequence"],
+            "same_clue_type_histogram": left["clue_type_histogram"] == right["clue_type_histogram"],
+            "same_region_type_histogram": left["region_type_histogram"] == right["region_type_histogram"],
+        }
+        comparison["suspicious_structural_duplicate"] = (
+            comparison["solution_hamming_distance"] == 0
+            or (
+                comparison["solutions_are_full_complements"]
+                and all(
+                    comparison[field]
+                    for field in (
+                        "same_initial_reveals",
+                        "same_extensions",
+                        "same_target_sequence",
+                        "same_support_sequence",
+                        "same_clue_type_histogram",
+                        "same_region_type_histogram",
+                    )
+                )
+            )
+            or all(
+                comparison[field]
+                for field in (
+                    "same_initial_reveals",
+                    "same_target_sequence",
+                    "same_reveal_owner_sequence",
+                    "same_support_sequence",
+                    "same_clue_type_histogram",
+                    "same_region_type_histogram",
+                )
+            )
+        )
+        comparisons.append(comparison)
+    return comparisons
+
+
 def analyze_suite() -> dict[str, object]:
+    profiles = [analyze_puzzle(path) for path in puzzle_paths()]
     return {
-        "schema_version": 1,
-        "puzzles": [analyze_puzzle(path) for path in puzzle_paths()],
+        "schema_version": 2,
+        "puzzles": profiles,
+        "same_size_pairwise_fingerprints": _pairwise_fingerprints(profiles),
     }
 
 
